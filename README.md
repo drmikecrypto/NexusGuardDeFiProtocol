@@ -12,6 +12,14 @@ NexusGuard offers comprehensive insurance solutions for DeFi projects with featu
 - Multi-layered security auditing
 - Emergency response system
 
+## Copyright and License
+
+© 2024 NexusGuard Protocol. All rights reserved.
+
+Licensed under the MIT License. See `LICENSE` file for more information.
+
+The NexusGuard name, logo, and all associated intellectual property are owned by NexusGuard Protocol.
+
 ## Architecture
 
 The protocol consists of three main components:
