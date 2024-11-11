@@ -6,14 +6,12 @@
     <title>Documentation - NexusGuard Protocol</title>
     <link href="styles.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
-<!-- Prism.js for code highlighting -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-solidity.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-typescript.min.js"></script>
+    <!-- Add Prism.js for code highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-solidity.min.js"></script>
 </head>
-<body class="bg-[#000000]">
+<body class="bg-[#000000] text-white">
     <div class="flex min-h-screen">
         <!-- Sidebar Navigation -->
         <aside class="w-64 border-r border-blue-900/30 bg-[#0A1A2F] fixed h-full overflow-y-auto">
@@ -21,7 +19,7 @@
                 <a href="index.html" class="text-2xl font-bold gradient-text">NexusGuard</a>
                 <nav class="mt-8">
                     <div class="space-y-2">
-                        <a href="#introduction" class="doc-link">1. Introduction</a>
+                        <a href="#introduction" class="doc-link active">1. Introduction</a>
                         <a href="#protocol-overview" class="doc-link">2. Protocol Overview</a>
                         <a href="#technical-architecture" class="doc-link">3. Technical Architecture</a>
                         <a href="#smart-contracts" class="doc-link">4. Smart Contracts</a>
@@ -45,24 +43,75 @@
                 </nav>
             </div>
         </aside>
-<div class="max-w-4xl mx-auto px-8 py-12" id="mainContent">
-    <div class="animate-pulse">
-        <div class="h-8 bg-gray-700 rounded w-3/4 mb-6"></div>
-        <div class="space-y-4">
-            <div class="h-4 bg-gray-700 rounded w-full"></div>
-            <div class="h-4 bg-gray-700 rounded w-5/6"></div>
-            <div class="h-4 bg-gray-700 rounded w-4/6"></div>
-        </div>
-    </div>
-</div>
+
         <!-- Main Content -->
         <main class="flex-1 ml-64">
             <div class="max-w-4xl mx-auto px-8 py-12" id="mainContent">
-                <!-- Content will be dynamically loaded here -->
+                <!-- Default content (Introduction) -->
+                <div class="doc-content">
+                    <h1 class="text-4xl font-bold mb-8 gradient-text">Introduction</h1>
+                    
+                    <div class="bg-[#111] p-6 rounded-lg border border-blue-500/20 mb-8">
+                        <p class="text-lg text-gray-300">
+                            NexusGuard is a pioneering decentralized insurance protocol specifically engineered for DeFi projects on the Sonic blockchain.
+                        </p>
+                    </div>
+
+                    <h2 class="text-2xl font-bold mb-4">The DeFi Insurance Challenge</h2>
+                    <p class="text-gray-300 mb-6">
+                        The exponential growth of decentralized finance has created an urgent need for robust insurance solutions. 
+                        As the DeFi ecosystem expands, traditional insurance models have proven inadequate in addressing the unique 
+                        challenges posed by blockchain-based financial protocols.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-[#111] p-6 rounded-lg border border-blue-500/20">
+                            <h3 class="text-xl font-bold mb-4 text-blue-400">Key Challenges</h3>
+                            <ul class="space-y-2 text-gray-300">
+                                <li>• Smart contract vulnerabilities</li>
+                                <li>• Oracle failures</li>
+                                <li>• Governance attacks</li>
+                                <li>• Flash loan exploits</li>
+                                <li>• Cross-chain bridge failures</li>
+                                <li>• Protocol-specific risks</li>
+                            </ul>
+                        </div>
+                        <div class="bg-[#111] p-6 rounded-lg border border-purple-500/20">
+                            <h3 class="text-xl font-bold mb-4 text-purple-400">Our Solution</h3>
+                            <ul class="space-y-2 text-gray-300">
+                                <li>• Dynamic multi-factor risk assessment</li>
+                                <li>• Real-time risk monitoring</li>
+                                <li>• Automated risk mitigation</li>
+                                <li>• Market condition integration</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
 
-    <script src="docs.js"></script>
+    <script>
+        // Simple navigation handler
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('.doc-link');
+            
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    links.forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    link.classList.add('active');
+                    
+                    // Get the section ID
+                    const sectionId = link.getAttribute('href').replace('#', '');
+                    console.log('Loading section:', sectionId);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
