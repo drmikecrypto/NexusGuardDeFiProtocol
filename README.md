@@ -1,6 +1,3 @@
-markdown
-
-Copy
 # NexusGuard Protocol
 
 > Decentralized insurance protocol for DeFi projects on Sonic blockchain
