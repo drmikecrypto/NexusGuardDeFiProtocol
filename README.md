@@ -78,6 +78,7 @@ graph TB
     end
     
     A --> B & C & D
+
 ### Coverage Flow
 
 ```mermaid
