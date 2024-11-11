@@ -6,63 +6,214 @@
     <title>Documentation - NexusGuard Protocol</title>
     <link href="styles.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet">
 </head>
 <body class="bg-[#000000]">
     <div class="flex min-h-screen">
         <!-- Sidebar Navigation -->
-<aside class="w-64 border-r border-blue-900/30 bg-[#070E1A] fixed h-full overflow-y-auto">
-    <div class="p-6">
-        <a href="index.html" class="text-2xl font-bold gradient-text mb-8 block">NexusGuard</a>
-        <nav class="space-y-1">
-            <!-- Introduction Section -->
-            <div class="doc-section">
-                <button class="doc-link flex items-center justify-between w-full" onclick="toggleSection('introduction')">
-                    <span>Introduction</span>
-                    <svg class="w-4 h-4 transform transition-transform" id="introduction-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                </button>
-                <div class="pl-4 hidden" id="introduction-subsections">
-                    <a href="#defi-insurance-challenge" class="doc-sublink">The DeFi Insurance Challenge</a>
-                    <a href="#nexusguard-solution" class="doc-sublink">The NexusGuard Solution</a>
-                </div>
+        <aside class="w-72 border-r border-blue-900/30 bg-[#070E1A] fixed h-full overflow-y-auto">
+            <div class="p-6">
+                <a href="index.html" class="text-2xl font-bold gradient-text mb-8 block">NexusGuard</a>
+                <nav class="space-y-1">
+                    <!-- Abstract -->
+                    <div class="doc-section">
+                        <button class="doc-link flex items-center justify-between w-full" onclick="toggleSection('abstract')">
+                            <span>Abstract</span>
+                            <svg class="w-4 h-4 transform transition-transform" id="abstract-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Introduction -->
+                    <div class="doc-section">
+                        <button class="doc-link flex items-center justify-between w-full" onclick="toggleSection('introduction')">
+                            <span>1. Introduction</span>
+                            <svg class="w-4 h-4 transform transition-transform" id="introduction-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="pl-4 hidden" id="introduction-subsections">
+                            <a href="#defi-insurance-challenge" class="doc-sublink">1.1 The DeFi Insurance Challenge</a>
+                            <a href="#nexusguard-solution" class="doc-sublink">1.2 The NexusGuard Solution</a>
+                        </div>
+                    </div>
+
+                    <!-- Protocol Architecture -->
+                    <div class="doc-section">
+                        <button class="doc-link flex items-center justify-between w-full" onclick="toggleSection('protocol-architecture')">
+                            <span>2. Protocol Architecture</span>
+                            <svg class="w-4 h-4 transform transition-transform" id="protocol-architecture-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="pl-4 hidden" id="protocol-architecture-subsections">
+                            <a href="#core-components" class="doc-sublink">2.1 Core Components</a>
+                        </div>
+                    </div>
+
+                    <!-- Technical Implementation -->
+                    <div class="doc-section">
+                        <button class="doc-link flex items-center justify-between w-full" onclick="toggleSection('technical-implementation')">
+                            <span>3. Technical Implementation</span>
+                            <svg class="w-4 h-4 transform transition-transform" id="technical-implementation-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="pl-4 hidden" id="technical-implementation-subsections">
+                            <a href="#smart-contract-architecture" class="doc-sublink">3.1 Smart Contract Architecture</a>
+                            <a href="#risk-assessment-engine" class="doc-sublink">3.2 Risk Assessment Engine</a>
+                        </div>
+                    </div>
+
+                    <!-- Risk Management System -->
+                    <div class="doc-section">
+                        <button class="doc-link flex items-center justify-between w-full" onclick="toggleSection('risk-management')">
+                            <span>4. Risk Management System</span>
+                            <svg class="w-4 h-4 transform transition-transform" id="risk-management-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="pl-4 hidden" id="risk-management-subsections">
+                            <a href="#dynamic-risk-assessment" class="doc-sublink">4.1 Dynamic Risk Assessment</a>
+                            <a href="#risk-mitigation-strategies" class="doc-sublink">4.2 Risk Mitigation Strategies</a>
+                        </div>
+                    </div>
+
+                    <!-- Economic Model -->
+                    <div class="doc-section">
+                        <button class="doc-link flex items-center justify-between w-full" onclick="toggleSection('economic-model')">
+                            <span>5. Economic Model</span>
+                            <svg class="w-4 h-4 transform transition-transform" id="economic-model-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="pl-4 hidden" id="economic-model-subsections">
+                            <a href="#token-economics" class="doc-sublink">5.1 Token Economics</a>
+                            <a href="#premium-management" class="doc-sublink">5.2 Premium Management</a>
+                            <a href="#yield-generation" class="doc-sublink">5.3 Yield Generation</a>
+                            <a href="#tokenomics" class="doc-sublink">5.4 Tokenomics</a>
+                            <div class="pl-4">
+                                <a href="#token-distribution" class="doc-sublink">5.4.1 Token Distribution</a>
+                                <a href="#token-utility" class="doc-sublink">5.4.2 Token Utility</a>
+                                <a href="#token-economics-model" class="doc-sublink">5.4.3 Token Economics Model</a>
+                                <a href="#token-supply-dynamics" class="doc-sublink">5.4.4 Token Supply Dynamics</a>
+                                <a href="#emission-schedule" class="doc-sublink">5.4.5 Emission Schedule</a>
+                                <a href="#incentive-mechanisms" class="doc-sublink">5.4.6 Incentive Mechanisms</a>
+                                <a href="#long-term-sustainability" class="doc-sublink">5.4.7 Long-term Sustainability</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Governance and Security -->
+                    <div class="doc-section">
+                        <button class="doc-link flex items-center justify-between w-full" onclick="toggleSection('governance-security')">
+                            <span>6. Governance and Security</span>
+                            <svg class="w-4 h-4 transform transition-transform" id="governance-security-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="pl-4 hidden" id="governance-security-subsections">
+                            <a href="#decentralized-governance" class="doc-sublink">6.1 Decentralized Governance</a>
+                            <a href="#security-mechanisms" class="doc-sublink">6.2 Security Mechanisms</a>
+                        </div>
+                    </div>
+
+                    <!-- Applications and Development -->
+                    <div class="doc-section">
+                        <button class="doc-link flex items-center justify-between w-full" onclick="toggleSection('applications-development')">
+                            <span>7. Applications and Development</span>
+                            <svg class="w-4 h-4 transform transition-transform" id="applications-development-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="pl-4 hidden" id="applications-development-subsections">
+                            <a href="#real-world-use-cases" class="doc-sublink">7.1 Real-World Use Cases</a>
+                            <a href="#development-roadmap" class="doc-sublink">7.2 Development Roadmap</a>
+                        </div>
+                    </div>
+
+                    <!-- Technical Specifications -->
+                    <div class="doc-section">
+                        <button class="doc-link flex items-center justify-between w-full" onclick="toggleSection('technical-specifications')">
+                            <span>8. Technical Specifications</span>
+                            <svg class="w-4 h-4 transform transition-transform" id="technical-specifications-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="pl-4 hidden" id="technical-specifications-subsections">
+                            <a href="#protocol-parameters" class="doc-sublink">8.1 Protocol Parameters</a>
+                            <a href="#performance-specifications" class="doc-sublink">8.2 Performance Specifications</a>
+                        </div>
+                    </div>
+
+                    <!-- Integration Guidelines -->
+                    <div class="doc-section">
+                        <button class="doc-link flex items-center justify-between w-full" onclick="toggleSection('integration-guidelines')">
+                            <span>9. Integration Guidelines</span>
+                            <svg class="w-4 h-4 transform transition-transform" id="integration-guidelines-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="pl-4 hidden" id="integration-guidelines-subsections">
+                            <a href="#getting-started" class="doc-sublink">9.1 Getting Started</a>
+                            <a href="#implementation-examples" class="doc-sublink">9.2 Implementation Examples</a>
+                        </div>
+                    </div>
+
+                    <!-- Mathematical Appendix -->
+                    <div class="doc-section">
+                        <button class="doc-link flex items-center justify-between w-full" onclick="toggleSection('mathematical-appendix')">
+                            <span>10. Mathematical Appendix</span>
+                            <svg class="w-4 h-4 transform transition-transform" id="mathematical-appendix-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="pl-4 hidden" id="mathematical-appendix-subsections">
+                            <a href="#risk-assessment-formulas" class="doc-sublink">10.1 Risk Assessment Formulas</a>
+                            <a href="#premium-calculation-model" class="doc-sublink">10.2 Premium Calculation Model</a>
+                            <a href="#capital-efficiency-model" class="doc-sublink">10.3 Capital Efficiency Model</a>
+                        </div>
+                    </div>
+
+                    <!-- Glossary -->
+                    <div class="doc-section">
+                        <button class="doc-link flex items-center justify-between w-full" onclick="toggleSection('glossary')">
+                            <span>11. Glossary of Terms</span>
+                            <svg class="w-4 h-4 transform transition-transform" id="glossary-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Conclusion -->
+                    <div class="doc-section">
+                        <button class="doc-link flex items-center justify-between w-full" onclick="toggleSection('conclusion')">
+                            <span>12. Conclusion</span>
+                            <svg class="w-4 h-4 transform transition-transform" id="conclusion-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="pl-4 hidden" id="conclusion-subsections">
+                            <a href="#key-achievements" class="doc-sublink">12.1 Key Achievements</a>
+                            <a href="#future-research" class="doc-sublink">12.2 Future Research Directions</a>
+                        </div>
+                    </div>
+                </nav>
             </div>
+        </aside>
 
-            <!-- Protocol Architecture Section -->
-            <div class="doc-section">
-                <button class="doc-link flex items-center justify-between w-full" onclick="toggleSection('protocol')">
-                    <span>Protocol Architecture</span>
-                    <svg class="w-4 h-4 transform transition-transform" id="protocol-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                </button>
-                <div class="pl-4 hidden" id="protocol-subsections">
-                    <a href="#core-components" class="doc-sublink">Core Components</a>
-                </div>
-            </div>
-
-            <!-- Continue with other sections... -->
-        </nav>
-    </div>
-</aside>
-
-        <!-- Main Content Area -->
-        <main class="flex-1 ml-64 bg-[#0F172A]">
+        <!-- Main Content -->
+        <main class="flex-1 ml-72 bg-[#0F172A]">
             <div class="max-w-4xl mx-auto px-8 py-12" id="mainContent">
                 <!-- Content will be dynamically loaded here -->
-                <div class="doc-content">
-                    <h1 class="text-4xl font-bold mb-8 text-white">Welcome to NexusGuard Documentation</h1>
-                    <p class="text-gray-300 mb-6">
-                        Select a topic from the left sidebar to get started.
-                    </p>
-                </div>
             </div>
         </main>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-solidity.min.js"></script>
-    <script src="docs.js"></script>
+    <script src="documentation.js"></script>
 </body>
 </html>
