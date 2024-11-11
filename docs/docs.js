@@ -54,6 +54,7 @@ const documentationContent = {
             </div>
         `
     },
+    };
 // Add click handlers for navigation
 document.addEventListener('DOMContentLoaded', function() {
     const mainContent = document.getElementById('mainContent');
