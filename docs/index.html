@@ -54,20 +54,38 @@
         </div>
     </footer>
 </body>
-    <nav class="bg-gray-900 text-white">
+   <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-lg">
     <div class="container mx-auto px-4">
         <div class="flex justify-between items-center py-4">
             <div class="flex items-center">
-                <a href="index.html" class="text-xl font-bold">NexusGuard</a>
+                <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                    NexusGuard
+                </a>
             </div>
-            <div class="flex space-x-6">
-                <a href="index.html" class="hover:text-blue-400">Home</a>
-                <a href="documentation.html" class="hover:text-blue-400">Docs</a>
-                <a href="roadmap.html" class="hover:text-blue-400">Roadmap</a>
-                <a href="team.html" class="hover:text-blue-400">Team</a>
-                <a href="https://github.com/drmikecrypto/NexusGuardDeFiProtocol" target="_blank" class="hover:text-blue-400">GitHub</a>
-                <a href="https://medium.com/@drmikecrypto" target="_blank" class="hover:text-blue-400">Medium</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="hover:text-blue-600 transition-colors">Home</a>
+                <a href="documentation.html" class="hover:text-blue-600 transition-colors">Docs</a>
+                <a href="roadmap.html" class="hover:text-blue-600 transition-colors">Roadmap</a>
+                <a href="team.html" class="hover:text-blue-600 transition-colors">Team</a>
+                <a href="https://github.com/drmikecrypto/NexusGuardDeFiProtocol" target="_blank" class="hover:text-blue-600 transition-colors">GitHub</a>
+                <a href="https://medium.com/@YourMediumUsername" target="_blank" class="hover:text-blue-600 transition-colors">Medium</a>
             </div>
+            <button class="md:hidden" onclick="toggleMobileMenu()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="hidden md:hidden">
+        <div class="px-4 py-2 space-y-3">
+            <a href="index.html" class="block hover:text-blue-600">Home</a>
+            <a href="documentation.html" class="block hover:text-blue-600">Docs</a>
+            <a href="roadmap.html" class="block hover:text-blue-600">Roadmap</a>
+            <a href="team.html" class="block hover:text-blue-600">Team</a>
+            <a href="https://github.com/drmikecrypto/NexusGuardDeFiProtocol" target="_blank" class="block hover:text-blue-600">GitHub</a>
+            <a href="https://medium.com/@drmikecrypto" target="_blank" class="block hover:text-blue-600">Medium</a>
         </div>
     </div>
 </nav>
