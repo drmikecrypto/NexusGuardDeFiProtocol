@@ -59,7 +59,7 @@ sequenceDiagram
 ```
 
 
-```markdown
+```
 ## 🔮 Core Protocol Components
 
 <div align="center">
