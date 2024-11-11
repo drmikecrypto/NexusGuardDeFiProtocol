@@ -1,1 +1,76 @@
+/* Animations */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-out;
+}
 
+.animate-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Card hover effects */
+.feature-card {
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Gradient animations */
+.gradient-bg {
+    background: linear-gradient(-45deg, #3b82f6, #6366f1, #2563eb, #4f46e5);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Modern button style */
+.modern-button {
+    background: linear-gradient(45deg, #3b82f6, #6366f1);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.modern-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+}
+
+/* Timeline style */
+.timeline-item {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 2rem;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background: linear-gradient(to bottom, #3b82f6, #6366f1);
+}
+
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #3b82f6;
+}
