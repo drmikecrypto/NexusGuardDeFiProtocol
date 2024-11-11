@@ -11,36 +11,41 @@
 <body class="bg-[#000000]">
     <div class="flex min-h-screen">
         <!-- Sidebar Navigation -->
-        <aside class="w-64 border-r border-blue-900/30 bg-[#070E1A] fixed h-full overflow-y-auto">
-            <div class="p-6">
-                <a href="index.html" class="text-2xl font-bold gradient-text mb-8 block">NexusGuard</a>
-                <nav class="space-y-1">
-                    <!-- Updated navigation to match whitepaper ToC -->
-                    <div class="doc-section">
-                        <a href="#introduction" class="doc-link">1. Introduction</a>
-                        <div class="pl-4 space-y-1">
-                            <a href="#defi-insurance-challenge" class="doc-sublink">1.1 The DeFi Insurance Challenge</a>
-                            <a href="#nexusguard-solution" class="doc-sublink">1.2 The NexusGuard Solution</a>
-                        </div>
-                    </div>
-                    <div class="doc-section">
-                        <a href="#protocol-architecture" class="doc-link">2. Protocol Architecture</a>
-                        <div class="pl-4 space-y-1">
-                            <a href="#core-components" class="doc-sublink">2.1 Core Components</a>
-                        </div>
-                    </div>
-                    <div class="doc-section">
-                        <a href="#technical-implementation" class="doc-link">3. Technical Implementation</a>
-                        <div class="pl-4 space-y-1">
-                            <a href="#smart-contract-architecture" class="doc-sublink">3.1 Smart Contract Architecture</a>
-                            <a href="#risk-assessment-engine" class="doc-sublink">3.2 Risk Assessment Engine</a>
-                        </div>
-                    </div>
-                    <!-- Continue with all sections from whitepaper -->
-                    <!-- ... Add all sections following the same pattern ... -->
-                </nav>
+<aside class="w-64 border-r border-blue-900/30 bg-[#070E1A] fixed h-full overflow-y-auto">
+    <div class="p-6">
+        <a href="index.html" class="text-2xl font-bold gradient-text mb-8 block">NexusGuard</a>
+        <nav class="space-y-1">
+            <!-- Introduction Section -->
+            <div class="doc-section">
+                <button class="doc-link flex items-center justify-between w-full" onclick="toggleSection('introduction')">
+                    <span>Introduction</span>
+                    <svg class="w-4 h-4 transform transition-transform" id="introduction-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+                <div class="pl-4 hidden" id="introduction-subsections">
+                    <a href="#defi-insurance-challenge" class="doc-sublink">The DeFi Insurance Challenge</a>
+                    <a href="#nexusguard-solution" class="doc-sublink">The NexusGuard Solution</a>
+                </div>
             </div>
-        </aside>
+
+            <!-- Protocol Architecture Section -->
+            <div class="doc-section">
+                <button class="doc-link flex items-center justify-between w-full" onclick="toggleSection('protocol')">
+                    <span>Protocol Architecture</span>
+                    <svg class="w-4 h-4 transform transition-transform" id="protocol-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+                <div class="pl-4 hidden" id="protocol-subsections">
+                    <a href="#core-components" class="doc-sublink">Core Components</a>
+                </div>
+            </div>
+
+            <!-- Continue with other sections... -->
+        </nav>
+    </div>
+</aside>
 
         <!-- Main Content Area -->
         <main class="flex-1 ml-64 bg-[#0F172A]">
