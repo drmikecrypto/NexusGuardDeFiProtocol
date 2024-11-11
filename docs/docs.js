@@ -126,7 +126,26 @@ document.addEventListener('DOMContentLoaded', function() {
         uint256 risk;
         bool active;
     }
+    function toggleSection(sectionId) {
+    const subsections = document.getElementById(`${sectionId}-subsections`);
+    const arrow = document.getElementById(`${sectionId}-arrow`);
+    
+    subsections.classList.toggle('hidden');
+    arrow.classList.toggle('rotate-180');
+}
 
+function loadContent(contentId) {
+    const mainContent = document.getElementById('mainContent');
+    const content = documentationContent[contentId];
+    
+    if (content) {
+        mainContent.innerHTML = content;
+        // Highlight code blocks if present
+        if (typeof Prism !== 'undefined') {
+            Prism.highlightAll();
+        }
+    }
+}
     function optimizeYieldAllocation(
         uint256 availableLiquidity
     ) internal returns (uint256[] memory allocations) {
