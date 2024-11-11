@@ -56,8 +56,6 @@ sequenceDiagram
     Protocol->>Coverage: Issue Coverage
 ```
 
-Here's a visually appealing way to present the core contracts:
-
 ```markdown
 
 ## Core Protocol Components
