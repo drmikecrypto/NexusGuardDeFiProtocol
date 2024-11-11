@@ -66,7 +66,7 @@ sequenceDiagram
 | `NexusGuardDeFiProtocolV1.sol` | Core protocol logic |
 ```
 
-```markdown
+
 ### Core Contracts
 
 ```mermaid
