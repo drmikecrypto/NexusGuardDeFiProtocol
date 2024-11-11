@@ -20,7 +20,7 @@ NexusGuard is a decentralized insurance protocol that provides comprehensive cov
 
 ## Architecture
 
-```mermaid
+
 graph TD
     A[External Interface] --> B[Protocol Core]
     B --> C[Storage Layer]
