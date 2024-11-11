@@ -167,7 +167,3 @@ interface INexusGuard {
 </div>
 ```
 
-Connect
-Website: nexusguard.io
-Twitter: @NexusGuard
-Discord: NexusGuard Community
