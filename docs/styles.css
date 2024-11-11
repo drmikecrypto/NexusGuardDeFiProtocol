@@ -533,24 +533,50 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
 }
 /* Documentation Layout */
+aside {
+    background-color: #070E1A;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(59, 130, 246, 0.5) rgba(0, 0, 0, 0);
+}
+
+.doc-section {
+    margin-bottom: 0.5rem;
+}
+
 .doc-link {
     display: block;
     padding: 0.5rem;
-    color: var(--text-secondary);
-    transition: all 0.3s ease;
-    border-radius: 0.375rem;
+    color: #94A3B8;
     font-size: 0.875rem;
+    border-radius: 0.375rem;
+    transition: all 0.3s ease;
 }
 
-.doc-link:hover {
-    color: var(--text);
-    background: rgba(255, 255, 255, 0.05);
-    padding-left: 1rem;
+.doc-sublink {
+    display: block;
+    padding: 0.25rem 0.5rem;
+    color: #64748B;
+    font-size: 0.813rem;
+    transition: all 0.3s ease;
+}
+
+.doc-link:hover, .doc-sublink:hover {
+    color: #F8FAFC;
+    background: rgba(59, 130, 246, 0.1);
 }
 
 .doc-link.active {
-    color: var(--primary);
+    color: #3B82F6;
     background: rgba(59, 130, 246, 0.1);
+    font-weight: 500;
+}
+
+main {
+    background-color: #0F172A;
+}
+
+.doc-content {
+    color: #E2E8F0;
 }
 
 /* Code block styling */
