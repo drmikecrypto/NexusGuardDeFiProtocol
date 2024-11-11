@@ -3,7 +3,12 @@
 const documentationContent = {
     'introduction': {
         title: 'Introduction',
-        content: `
+        content: `...`
+    },
+    'protocol-overview': {
+        title: 'Protocol Overview',
+        content: `...`
+    },
             <div class="doc-content">
                 <h1>Introduction</h1>
                 <div class="info-card mb-8">
