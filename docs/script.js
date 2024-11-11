@@ -25,3 +25,26 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', animateOnScroll);
     animateOnScroll();
 });
+
+// Roadmap animations
+document.addEventListener('DOMContentLoaded', function() {
+    const roadmapItems = document.querySelectorAll('.roadmap-item');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                
+                // Animate list items
+                const listItems = entry.target.querySelectorAll('.fade-in-item');
+                listItems.forEach((item, index) => {
+                    item.style.animationDelay = `${index * 0.2}s`;
+                });
+            }
+        });
+    }, {
+        threshold: 0.3
+    });
+
+    roadmapItems.forEach(item => observer.observe(item));
+});
