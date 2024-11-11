@@ -501,3 +501,34 @@ h1, h2, h3, h4, h5, h6 {
         transparent 70%
     );
 }
+/* Enhanced Link Interactions */
+.modern-card {
+    position: relative;
+}
+
+.modern-card a {
+    position: relative;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.modern-card a:hover svg {
+    transform: translateX(4px);
+}
+
+.modern-card svg {
+    transition: transform 0.3s ease;
+}
+
+/* Hover State Enhancement */
+.modern-card:hover a {
+    opacity: 1;
+}
+
+/* Ensure clickable area */
+.modern-card a {
+    padding: 0.5rem 0;
+    margin: -0.5rem 0;
+    display: inline-flex;
+    align-items: center;
+}
