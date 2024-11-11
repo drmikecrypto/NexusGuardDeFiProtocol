@@ -1,35 +1,100 @@
 // docs.js - Part 1
 
 const documentationContent = {
-    // Previous sections remain the same...
+    'introduction': {
+        title: 'Introduction',
+        content: `
+            <div class="doc-content">
+                <h1>Introduction</h1>
+                <div class="info-card mb-8">
+                    <p class="text-lg">NexusGuard is a pioneering decentralized insurance protocol specifically engineered for DeFi projects on the Sonic blockchain.</p>
+                </div>
+                
+                <h2>The DeFi Insurance Challenge</h2>
+                <p>The exponential growth of decentralized finance has created an urgent need for robust insurance solutions. As the DeFi ecosystem expands, traditional insurance models have proven inadequate in addressing the unique challenges posed by blockchain-based financial protocols.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-[#111] p-6 rounded-lg border border-blue-500/20">
+                        <h3 class="text-xl font-semibold mb-4">Key Challenges</h3>
+                        <ul class="space-y-2">
+                            <li>• Smart contract vulnerabilities</li>
+                            <li>• Oracle failures</li>
+                            <li>• Governance attacks</li>
+                            <li>• Flash loan exploits</li>
+                            <li>• Cross-chain bridge failures</li>
+                            <li>• Protocol-specific risks</li>
+                        </ul>
+                    </div>
+                    <div class="bg-[#111] p-6 rounded-lg border border-purple-500/20">
+                        <h3 class="text-xl font-semibold mb-4">Our Solution</h3>
+                        <ul class="space-y-2">
+                            <li>• Dynamic multi-factor risk assessment</li>
+                            <li>• Real-time risk monitoring</li>
+                            <li>• Automated risk mitigation</li>
+                            <li>• Market condition integration</li>
+                        </ul>
+                    </div>
+                </div>
 
-    'smart-contracts': {
-        title: 'Smart Contracts',
-        content: `
-            <h2 class="text-3xl font-bold mb-6">Smart Contract Architecture</h2>
-            <div class="space-y-6">
-                <div class="bg-white p-6 rounded-lg shadow-sm">
-                    <h3 class="text-xl font-bold mb-4">Core Protocol Implementation</h3>
-                    <pre class="bg-gray-100 p-4 rounded overflow-x-auto">
-                    'defi-coverage': {
-        title: 'DeFi Coverage',
-        content: `
-            <h2 class="text-3xl font-bold mb-6">DeFi Coverage Protection</h2>
-            <div class="space-y-6">
-                <!-- Add DeFi Coverage specific content -->
+                <h2>Coverage Mechanisms</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-[#111] p-4 rounded-lg border border-blue-500/20">
+                        <h4 class="font-semibold mb-2">Smart Contract Protection</h4>
+                        <p class="text-sm text-gray-400">Comprehensive coverage against vulnerabilities and exploits</p>
+                    </div>
+                    <div class="bg-[#111] p-4 rounded-lg border border-purple-500/20">
+                        <h4 class="font-semibold mb-2">Protocol Coverage</h4>
+                        <p class="text-sm text-gray-400">Protection against technical failures and malfunctions</p>
+                    </div>
+                    <div class="bg-[#111] p-4 rounded-lg border border-cyan-500/20">
+                        <h4 class="font-semibold mb-2">Bridge Protection</h4>
+                        <p class="text-sm text-gray-400">Coverage for cross-chain operations and bridges</p>
+                    </div>
+                </div>
             </div>
         `
     },
+// Add click handlers for navigation
+document.addEventListener('DOMContentLoaded', function() {
+    const mainContent = document.getElementById('mainContent');
+    const links = document.querySelectorAll('.doc-link');
 
-    'risk-assessment': {
-        title: 'Smart Risk Assessment',
-        content: `
-            <h2 class="text-3xl font-bold mb-6">Smart Risk Assessment System</h2>
-            <div class="space-y-6">
-                <!-- Add Risk Assessment specific content -->
-            </div>
-        `
-    },
+    // Function to load content
+    function loadContent(sectionId) {
+        const section = documentationContent[sectionId];
+        if (section) {
+            // Add loading animation
+            mainContent.classList.add('animate-pulse');
+            
+            setTimeout(() => {
+                mainContent.innerHTML = section.content;
+                mainContent.classList.remove('animate-pulse');
+                
+                // Initialize Prism.js for code highlighting
+                Prism.highlightAll();
+                
+                // Update active state
+                links.forEach(link => link.classList.remove('active'));
+                document.querySelector(`[href="#${sectionId}"]`).classList.add('active');
+                
+                // Scroll to top
+                mainContent.scrollIntoView({ behavior: 'smooth' });
+            }, 200);
+        }
+    }
+     // Add click handlers to navigation
+    links.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const sectionId = e.currentTarget.getAttribute('href').replace('#', '');
+            loadContent(sectionId);
+        });
+    });
+
+    // Load default section or from hash
+    const defaultSection = window.location.hash ? window.location.hash.replace('#', '') : 'introduction';
+    loadContent(defaultSection);
+});
 
 'yield-strategies': {
     title: 'Yield Strategies',
