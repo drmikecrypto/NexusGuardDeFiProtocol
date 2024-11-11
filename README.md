@@ -58,30 +58,192 @@ sequenceDiagram
 
 ```
 
-## Core Protocol Components
 
-### Smart Contract Architecture
+```markdown
+## 🔮 Core Protocol Components
 
 <div align="center">
 
-| Contract | Function | Features |
-|:---------|:---------|:---------|
-| 🏛️ `NexusGuardStorage` | State Management | • Access Control<br>• Data Models<br>• Risk Tracking |
-| 🛡️ `NexusGuardInsurance` | Coverage Systems | • Premium Calculation<br>• Claims Processing<br>• Risk Assessment |
-| 🏪 `NexusGuardGovernance` | Protocol Control | • Voting Mechanism<br>• Parameter Updates<br>• Proposal System |
-| 🔗 `NexusGuardDeFiProtocolV1` | Core Logic | • Component Integration<br>• External Interface<br>• Upgrade Control |
+### ⚡ Smart Contract Architecture
 
-</div>
+<table>
+  <tr>
+    <th width="25%" align="center">🔐 Contract</th>
+    <th width="25%" align="center">💫 Function</th>
+    <th width="50%" align="center">✨ Features</th>
+  </tr>
+  <tr>
+    <td align="center">
+      <b>NexusGuardStorage</b><br>
+      <sub><sup>Foundation Layer</sup></sub>
+    </td>
+    <td align="center">
+      <b>State Management</b><br>
+      <sub><sup>Data & Access Control</sup></sub>
+    </td>
+    <td>
+      <ul>
+        <li>🔒 Secure Access Control System</li>
+        <li>📊 Advanced Data Modeling</li>
+        <li>📈 Real-time Risk Tracking</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <b>NexusGuardInsurance</b><br>
+      <sub><sup>Coverage Layer</sup></sub>
+    </td>
+    <td align="center">
+      <b>Coverage Systems</b><br>
+      <sub><sup>Risk & Claims</sup></sub>
+    </td>
+    <td>
+      <ul>
+        <li>💰 Dynamic Premium Calculation</li>
+        <li>⚖️ Automated Claims Processing</li>
+        <li>📊 Risk Assessment Engine</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <b>NexusGuardGovernance</b><br>
+      <sub><sup>Control Layer</sup></sub>
+    </td>
+    <td align="center">
+      <b>Protocol Control</b><br>
+      <sub><sup>Governance & Voting</sup></sub>
+    </td>
+    <td>
+      <ul>
+        <li>🏛️ Decentralized Voting System</li>
+        <li>⚙️ Parameter Optimization</li>
+        <li>📜 Proposal Management</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <b>NexusGuardDeFiProtocol</b><br>
+      <sub><sup>Protocol Core</sup></sub>
+    </td>
+    <td align="center">
+      <b>Core Logic</b><br>
+      <sub><sup>Integration Hub</sup></sub>
+    </td>
+    <td>
+      <ul>
+        <li>🔄 Seamless Component Integration</li>
+        <li>🌐 External Interface Management</li>
+        <li>🔄 Upgrade Coordination System</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
-### Protocol Flow
+### 🔄 Protocol Flow
 
 ```mermaid
 flowchart TD
-    A[Interface] --> B[Core]
-    B --> C[Storage]
-    B --> D[Insurance]
-    B --> E[Governance]
+    A[🌐 Interface] --> B[⚡ Core]
+    B --> C[💾 Storage]
+    B --> D[🛡️ Insurance]
+    B --> E[⚖️ Governance]
+    
+    style A fill:#ff9900,stroke:#333,stroke-width:2px
+    style B fill:#ff3366,stroke:#333,stroke-width:2px
+    style C fill:#3399ff,stroke:#333,stroke-width:2px
+    style D fill:#33cc33,stroke:#333,stroke-width:2px
+    style E fill:#9933cc,stroke:#333,stroke-width:2px
 ```
+
+### 🎯 Access Control Matrix
+
+<table>
+  <tr>
+    <th width="25%" align="center">🔐 Component</th>
+    <th width="25%" align="center">🔑 Access Level</th>
+    <th width="25%" align="center">👥 Controllers</th>
+    <th width="25%" align="center">🎭 Permissions</th>
+  </tr>
+  <tr>
+    <td align="center">
+      <b>Storage</b><br>
+      <sub>Data Layer</sub>
+    </td>
+    <td align="center">
+      <b>Restricted</b><br>
+      <sub>High Security</sub>
+    </td>
+    <td align="center">
+      <b>Admin & Core</b><br>
+      <sub>System Level</sub>
+    </td>
+    <td align="center">
+      <span>⭐⭐⭐⭐⭐</span><br>
+      <sub>Maximum</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <b>Insurance</b><br>
+      <sub>Business Layer</sub>
+    </td>
+    <td align="center">
+      <b>Public/Protected</b><br>
+      <sub>Mixed Access</sub>
+    </td>
+    <td align="center">
+      <b>Users & Core</b><br>
+      <sub>Hybrid Level</sub>
+    </td>
+    <td align="center">
+      <span>⭐⭐⭐⭐</span><br>
+      <sub>High</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <b>Governance</b><br>
+      <sub>Control Layer</sub>
+    </td>
+    <td align="center">
+      <b>Token Gated</b><br>
+      <sub>Stake Based</sub>
+    </td>
+    <td align="center">
+      <b>Community</b><br>
+      <sub>DAO Level</sub>
+    </td>
+    <td align="center">
+      <span>⭐⭐⭐</span><br>
+      <sub>Medium</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <b>Protocol</b><br>
+      <sub>Core Layer</sub>
+    </td>
+    <td align="center">
+      <b>System</b><br>
+      <sub>Automated</sub>
+    </td>
+    <td align="center">
+      <b>Autonomous</b><br>
+      <sub>Code Level</sub>
+    </td>
+    <td align="center">
+      <span>⭐⭐⭐⭐⭐</span><br>
+      <sub>Maximum</sub>
+    </td>
+  </tr>
+</table>
+
+</div>
+```
+
 
 ### Component Interaction
 
