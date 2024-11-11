@@ -31,26 +31,107 @@ const documentationContent = {
         `
     },
 
-    'yield-strategies': {
-        title: 'Yield Generation',
-        content: `
-            <h2 class="text-3xl font-bold mb-6">Yield Generation Strategies</h2>
+'yield-strategies': {
+    title: 'Yield Strategies',
+    content: `
+        <div class="doc-content">
+            <h2>Yield Generation Strategies</h2>
+            
             <div class="space-y-6">
-                <!-- Add Yield Strategies specific content -->
-            </div>
-        `
-    },
-
-    'claims-process': {
-        title: 'Claims Processing',
-        content: `
-            <h2 class="text-3xl font-bold mb-6">Claims Processing System</h2>
-            <div class="space-y-6">
-                <!-- Add Claims Processing specific content -->
-            </div>
-        `
+                <div class="bg-[#111] p-6 rounded-lg border border-blue-500/20">
+                    <h3>Core Yield Components</h3>
+                    <div class="code-block">
+                        <pre><code>contract YieldManager {
+    struct YieldStrategy {
+        uint256 allocation;
+        uint256 expectedAPY;
+        uint256 risk;
+        bool active;
     }
-};
+
+    function optimizeYieldAllocation(
+        uint256 availableLiquidity
+    ) internal returns (uint256[] memory allocations) {
+        return calculateOptimalAllocations(
+            availableLiquidity,
+            getCurrentYieldOpportunities()
+        );
+    }
+
+    function harvestYields() external {
+        // Yield harvesting logic
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-[#111] p-6 rounded-lg border border-blue-500/20">
+                        <h4 class="text-xl font-semibold mb-4">Strategy Types</h4>
+                        <ul class="space-y-2">
+                            <li>• Lending Markets</li>
+                            <li>• Liquidity Provision</li>
+                            <li>• Yield Farming</li>
+                            <li>• Options Writing</li>
+                        </ul>
+                    </div>
+                    <div class="bg-[#111] p-6 rounded-lg border border-blue-500/20">
+                        <h4 class="text-xl font-semibold mb-4">Risk Management</h4>
+                        <ul class="space-y-2">
+                            <li>• Strategy Diversification</li>
+                            <li>• Risk-Adjusted Returns</li>
+                            <li>• Dynamic Rebalancing</li>
+                            <li>• Impermanent Loss Protection</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-[#111] p-6 rounded-lg border border-blue-500/20">
+                    <h3>Yield Optimization Algorithm</h3>
+                    <div class="code-block">
+                        <pre><code>function optimizeYieldAllocation(
+    StrategyInfo[] memory strategies,
+    uint256 totalLiquidity
+) internal pure returns (uint256[] memory) {
+    uint256[] memory allocations = new uint256[](strategies.length);
+    
+    // Sort strategies by risk-adjusted returns
+    strategies = sortByRiskAdjustedReturn(strategies);
+    
+    // Allocate based on Kelly Criterion
+    for (uint256 i = 0; i < strategies.length; i++) {
+        allocations[i] = calculateKellyAllocation(
+            strategies[i],
+            totalLiquidity
+        );
+    }
+    
+    return allocations;
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="bg-[#111] p-6 rounded-lg border border-blue-500/20">
+                    <h3>Performance Metrics</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-4 bg-black/30 rounded-lg">
+                            <h4 class="font-semibold mb-2">Expected APY</h4>
+                            <p class="text-2xl text-blue-500">12-25%</p>
+                        </div>
+                        <div class="p-4 bg-black/30 rounded-lg">
+                            <h4 class="font-semibold mb-2">Risk Score</h4>
+                            <p class="text-2xl text-purple-500">Low-Medium</p>
+                        </div>
+                        <div class="p-4 bg-black/30 rounded-lg">
+                            <h4 class="font-semibold mb-2">Rebalancing</h4>
+                            <p class="text-2xl text-cyan-500">Weekly</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `
+}
 <code>contract NexusGuardDeFiProtocolV1 is
     Initializable,
     NexusGuardGovernance,
