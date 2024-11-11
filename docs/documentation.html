@@ -4,62 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentation - NexusGuard Protocol</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="docs.css">
+    <link href="styles.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-50 font-inter">
+<body class="bg-[#000000]">
     <div class="flex min-h-screen">
         <!-- Sidebar Navigation -->
-        <aside class="w-64 bg-white border-r border-gray-200 fixed h-full overflow-y-auto">
+        <aside class="w-64 border-r border-gray-800 bg-[#111] fixed h-full overflow-y-auto">
             <div class="p-6">
-                <h2 class="text-lg font-bold text-gray-900">Documentation</h2>
+                <a href="index.html" class="text-2xl font-bold gradient-text">NexusGuard</a>
+                <nav class="mt-8">
+                    <div class="space-y-2">
+                        <a href="#introduction" class="doc-link">1. Introduction</a>
+                        <a href="#protocol-overview" class="doc-link">2. Protocol Overview</a>
+                        <a href="#technical-architecture" class="doc-link">3. Technical Architecture</a>
+                        <a href="#smart-contracts" class="doc-link">4. Smart Contracts</a>
+                        <a href="#risk-assessment" class="doc-link">5. Risk Assessment</a>
+                        <a href="#coverage-types" class="doc-link">6. Coverage Types</a>
+                        <a href="#premium-model" class="doc-link">7. Premium Model</a>
+                        <a href="#claims-processing" class="doc-link">8. Claims Processing</a>
+                        <a href="#tokenomics" class="doc-link">9. Tokenomics</a>
+                        <a href="#staking" class="doc-link">10. Staking System</a>
+                        <a href="#governance" class="doc-link">11. Governance</a>
+                        <a href="#yield-strategies" class="doc-link">12. Yield Strategies</a>
+                        <a href="#security" class="doc-link">13. Security Features</a>
+                        <a href="#integration" class="doc-link">14. Integration Guide</a>
+                        <a href="#api-reference" class="doc-link">15. API Reference</a>
+                        <a href="#audits" class="doc-link">16. Audit Reports</a>
+                        <a href="#roadmap" class="doc-link">17. Roadmap</a>
+                        <a href="#whitepaper" class="doc-link">18. Whitepaper</a>
+                        <a href="#glossary" class="doc-link">19. Glossary</a>
+                        <a href="#faq" class="doc-link">20. FAQ</a>
+                    </div>
+                </nav>
             </div>
-            <nav class="px-4 py-2">
-                <ul class="space-y-2" id="docNav">
-                    <!-- Main Documentation Links -->
-                    <li><a href="#introduction" class="nav-link">1. Introduction</a></li>
-                    <li><a href="#protocol-overview" class="nav-link">2. Protocol Overview</a></li>
-                    <li><a href="#architecture" class="nav-link">3. Technical Architecture</a></li>
-                    <li><a href="#smart-contracts" class="nav-link">4. Smart Contracts</a></li>
-                    <li><a href="#risk-assessment" class="nav-link">5. Risk Assessment</a></li>
-                    <li><a href="#coverage-types" class="nav-link">6. Coverage Types</a></li>
-                    <li><a href="#premium-calculation" class="nav-link">7. Premium Model</a></li>
-                    <li><a href="#claims-process" class="nav-link">8. Claims Processing</a></li>
-                    <li><a href="#tokenomics" class="nav-link">9. Tokenomics</a></li>
-                    <li><a href="#staking" class="nav-link">10. Staking System</a></li>
-                    <li><a href="#governance" class="nav-link">11. Governance</a></li>
-                    <li><a href="#yield-strategies" class="nav-link">12. Yield Strategies</a></li>
-                    <li><a href="#security" class="nav-link">13. Security Features</a></li>
-                    <li><a href="#integration" class="nav-link">14. Integration Guide</a></li>
-                    <li><a href="#api-reference" class="nav-link">15. API Reference</a></li>
-                    <li><a href="#audits" class="nav-link">16. Audit Reports</a></li>
-                    <li><a href="#roadmap" class="nav-link">17. Roadmap</a></li>
-                    <li><a href="#whitepaper" class="nav-link">18. Whitepaper</a></li>
-                    <li><a href="#glossary" class="nav-link">19. Glossary</a></li>
-                    
-                    <!-- FAQ Section -->
-                    <li class="relative" id="faqSection">
-                        <button class="faq-toggle w-full text-left flex items-center justify-between text-gray-700 hover:text-blue-600 py-2">
-                            20. FAQ
-                            <svg class="w-4 h-4 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                            </svg>
-                        </button>
-                        
-                        <!-- FAQ Questions -->
-                        <div class="faq-questions hidden pl-4 mt-2 space-y-2 text-sm">
-                            <!-- FAQ questions will be inserted here via JavaScript -->
-                        </div>
-                    </li>
-                </ul>
-            </nav>
         </aside>
 
-        <!-- Main Content Area -->
-        <main class="ml-64 flex-1 p-8">
-            <div class="max-w-4xl mx-auto" id="mainContent">
-                <!-- Content will be loaded here -->
+        <!-- Main Content -->
+        <main class="flex-1 ml-64">
+            <div class="max-w-4xl mx-auto px-8 py-12" id="mainContent">
+                <!-- Content will be dynamically loaded here -->
             </div>
         </main>
     </div>
