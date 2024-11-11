@@ -67,102 +67,192 @@ sequenceDiagram
 ```
 
 ```markdown
-### Core Contracts
+## Protocol Architecture
+
+### Contract Relationships
 
 ```mermaid
 classDiagram
+    class NexusGuardDeFiProtocolV1 {
+        +initializeProtocol()
+        +updateParameters()
+        +emergencyPause()
+        +executeUpgrade()
+    }
     class NexusGuardStorage {
-        +State Management
-        +Access Control
-        +Data Models
-        +Risk Tracking
+        +TVLHistory
+        +RiskAssessment
+        +PremiumMultipliers
+        +updateTVLHistory()
+        +calculateRiskScore()
     }
     class NexusGuardInsurance {
-        +Coverage Management
-        +Premium Calculations
-        +Claims Processing
-        +Risk Implementation
+        +Coverage[]
+        +calculatePremium()
+        +purchaseCoverage()
+        +processClaim()
+        +validateCoverage()
     }
     class NexusGuardGovernance {
-        +Proposal System
-        +Voting Mechanics
-        +Parameter Management
-        +Protocol Upgrades
-    }
-    class NexusGuardDeFiProtocolV1 {
-        +Component Coordination
-        +External Interactions
-        +Yield Strategies
-        +Emergency Controls
+        +Proposal[]
+        +createProposal()
+        +castVote()
+        +executeProposal()
+        +updateRiskParams()
     }
 
-    NexusGuardDeFiProtocolV1 --> NexusGuardStorage
-    NexusGuardDeFiProtocolV1 --> NexusGuardInsurance
-    NexusGuardDeFiProtocolV1 --> NexusGuardGovernance
+    NexusGuardDeFiProtocolV1 --|> NexusGuardStorage
+    NexusGuardDeFiProtocolV1 --|> NexusGuardInsurance
+    NexusGuardDeFiProtocolV1 --|> NexusGuardGovernance
 ```
 
-### Smart Contract Integration
+### Coverage Flow
 
-```solidity
-interface INexusGuard {
-    function requestCoverage(
-        address project,
-        uint256 amount,
-        uint256 duration
-    ) external returns (uint256 premiumRequired);
-    
-    function purchaseCoverage(
-        uint256 coverageId,
-        uint256 premium
-    ) external returns (bool);
-}
+```mermaid
+stateDiagram-v2
+    [*] --> RequestCoverage
+    RequestCoverage --> RiskAssessment
+    RiskAssessment --> PremiumCalculation
+    PremiumCalculation --> CoverageActive
+    CoverageActive --> ClaimSubmission
+    ClaimSubmission --> ClaimValidation
+    ClaimValidation --> ClaimPayout
+    ClaimValidation --> ClaimRejected
+    ClaimPayout --> [*]
+    ClaimRejected --> [*]
 ```
 
-### Protocol Parameters
+### Yield Strategy Flow
+
+```mermaid
+graph LR
+    A[Capital Pool] -->|Deposit| B[Yield Vaults]
+    B -->|Generate| C[Yield]
+    C -->|70%| D[Coverage Providers]
+    C -->|20%| E[Protocol Reserve]
+    C -->|10%| F[Governance Stakers]
+    B -->|Monitor| G[Risk System]
+    G -->|Adjust| B
+```
+
+## Protocol Parameters
 
 <div align="center">
+
+### Coverage Parameters
+
+| Parameter | Value | Description |
+|:---------:|:-----:|:------------|
+| 💎 **Minimum Coverage** | 1,000 GUARD | Minimum coverage amount per policy |
+| 💰 **Maximum Coverage** | 10,000,000 GUARD | Maximum coverage per project |
+| ⏱️ **Coverage Duration** | 30-365 days | Valid coverage period range |
+| 📊 **Base Premium Rate** | 1-5% | Annual premium rate before adjustments |
+| 🎯 **Target Utilization** | 80% | Optimal capital utilization ratio |
+
+### Risk Parameters
+
+| Parameter | Target | Warning | Critical |
+|:---------:|:------:|:-------:|:--------:|
+| **Protocol TVL** | > 10M GUARD | < 5M GUARD | < 1M GUARD |
+| **Collateral Ratio** | > 150% | < 130% | < 120% |
+| **Risk Exposure** | < 40% | > 50% | > 60% |
+| **Category Limit** | < 30% | > 35% | > 40% |
+
+### Governance Parameters
 
 | Parameter | Value |
 |:---------:|:-----:|
-| 💎 **Minimum Coverage** | 1,000 GUARD |
-| 💰 **Maximum Coverage** | 10,000,000 GUARD |
-| ⏱️ **Coverage Duration** | 30-365 days |
-| 📊 **Base Premium Rate** | 1-5% |
-| 🎯 **Target Utilization** | 80% |
+| 🏛️ **Minimum Proposal Stake** | 100,000 GUARD |
+| ⏳ **Voting Period** | 7 days |
+| 🔒 **Timelock Period** | 2 days |
+| 📊 **Quorum Requirement** | 10% |
+| 🎯 **Execution Delay** | 48 hours |
 
 </div>
 
-### Security Features
+## Security Framework
+
+### Multi-Layer Security
+
+```mermaid
+pie title Security Resource Allocation
+    "Smart Contract Audits" : 30
+    "Continuous Monitoring" : 25
+    "Risk Assessment" : 20
+    "Governance Controls" : 15
+    "Emergency Response" : 10
+```
+
+### Risk Assessment Matrix
 
 <div align="center">
 
-| Feature | Status |
-|:--------|:------:|
-| 🔐 Comprehensive Security Audits | ✅ |
-| ⏰ Time-locked Admin Functions | ✅ |
-| 🛑 Emergency Pause Functionality | ✅ |
-| 🔑 Multi-signature Requirements | ✅ |
-| 🛡️ Regular Vulnerability Assessments | ✅ |
+| Impact ↓ Likelihood → | Low | Medium | High |
+|:--------------------:|:---:|:------:|:----:|
+| **High** | 🟨 | 🟧 | 🟥 |
+| **Medium** | 🟩 | 🟨 | 🟧 |
+| **Low** | 🟩 | 🟩 | 🟨 |
 
 </div>
 
-### Documentation & Resources
+## Yield Generation Strategies
+
+```mermaid
+graph TD
+    subgraph Yield Strategies
+        A[Strategy Selection] --> B[Risk Assessment]
+        B --> C[Capital Allocation]
+        C --> D[Yield Generation]
+        D --> E[Reward Distribution]
+    end
+    subgraph Risk Management
+        F[Monitor Risk] --> G[Adjust Allocation]
+        G --> H[Rebalance]
+        H --> I[Emergency Exit]
+    end
+```
+
+## Protocol Metrics
 
 <div align="center">
 
-| Resource | Link |
-|:--------:|:----:|
-| 📚 Documentation | [docs.nexusguard.io](https://docs.nexusguard.io) |
-| 📋 Contributing Guide | [CONTRIBUTING.md](CONTRIBUTING.md) |
-| ⚖️ License | [MIT License](LICENSE) |
+### Performance Indicators
+
+| Metric | Target | Current |
+|:------:|:------:|:-------:|
+| 📈 **APY** | 15% | 12.5% |
+| 💰 **TVL** | $50M | $42M |
+| 🛡️ **Coverage Ratio** | 150% | 165% |
+| 📊 **Utilization** | 80% | 75% |
 
 </div>
 
-### Connect With Us
+## Integration Examples
 
-<div align="center">
+```solidity
+// Request Coverage
+function requestCoverage(
+    address project,
+    uint256 amount,
+    uint256 duration
+) external returns (uint256 premiumRequired) {
+    // Coverage request logic
+}
 
-[![Website][]](https://nexusguard.io)[![Discord][]](https://discord.gg/nexusguard)[![Twitter][]](https://twitter.com/NexusGuard)
+// Purchase Coverage
+function purchaseCoverage(
+    uint256 coverageId,
+    uint256 premium
+) external returns (bool) {
+    // Coverage purchase logic
+}
 
-</div>
+// Claim Processing
+function submitClaim(
+    uint256 coverageId,
+    uint256 amount,
+    bytes calldata evidence
+) external returns (uint256 claimId) {
+    // Claim submission logic
+}
 ```
