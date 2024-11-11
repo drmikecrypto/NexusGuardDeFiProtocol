@@ -206,30 +206,61 @@ graph TD
 
 ## Integration Examples
 
+markdown
+
+### Core Integration Functions
+
 ```solidity
-// Request Coverage
+/// @notice Request coverage for a DeFi project
+/// @param project Address of the DeFi project
+/// @param amount Coverage amount requested
+/// @param duration Coverage duration in days
+/// @return premiumRequired Premium amount to be paid
 function requestCoverage(
     address project,
     uint256 amount,
     uint256 duration
-) external returns (uint256 premiumRequired) {
-    // Coverage request logic
-}
+) external returns (uint256 premiumRequired);
 
-// Purchase Coverage
+/// @notice Purchase coverage after premium calculation
+/// @param coverageId Unique identifier for coverage request
+/// @param premium Amount of premium to be paid
+/// @return success Boolean indicating coverage purchase success
 function purchaseCoverage(
     uint256 coverageId,
     uint256 premium
-) external returns (bool) {
-    // Coverage purchase logic
-}
+) external returns (bool);
 
-// Claim Processing
+/// @notice Submit an insurance claim
+/// @param coverageId Unique identifier for active coverage
+/// @param amount Claim amount requested
+/// @param evidence Supporting evidence for the claim
+/// @return claimId Unique identifier for submitted claim
 function submitClaim(
     uint256 coverageId,
     uint256 amount,
     bytes calldata evidence
-) external returns (uint256 claimId) {
-    // Claim submission logic
-}
-```
+) external returns (uint256 claimId);
+Quick Integration Example
+solidity
+
+Copy
+// 1. Request Coverage Quote
+uint256 premium = nexusGuard.requestCoverage(
+    projectAddress,
+    1000 ether,  // 1000 tokens coverage
+    30 days
+);
+
+// 2. Purchase Coverage
+bool success = nexusGuard.purchaseCoverage(
+    coverageId,
+    premium
+);
+
+// 3. Submit Claim (if needed)
+uint256 claimId = nexusGuard.submitClaim(
+    coverageId,
+    500 ether,  // 500 tokens claim
+    evidenceData
+);
