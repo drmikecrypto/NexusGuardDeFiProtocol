@@ -313,3 +313,55 @@ h1, h2, h3, h4, h5, h6 {
     border: 2px solid;
     border-image: linear-gradient(to right, var(--primary), var(--secondary)) 1;
 }
+/* Roadmap Animations */
+.pulse-animation {
+    animation: pulse 2s infinite;
+    position: relative;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 20px rgba(99, 102, 241, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+    }
+}
+
+.roadmap-item {
+    transition: all 0.6s ease-out;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.roadmap-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-in-item {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Gradient text effect */
+.gradient-text {
+    background: linear-gradient(to right, #60a5fa, #818cf8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
