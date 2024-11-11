@@ -85,6 +85,81 @@
         offset: 100
     });
 </script>
+    <!-- Modal -->
+<div id="solutionsModal" class="fixed inset-0 z-50 hidden">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+    
+    <!-- Modal Content -->
+    <div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl">
+        <div class="bg-[#111] border border-blue-500/20 rounded-xl p-6 m-4 shadow-2xl">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gradient">DeFi Coverage Solutions</h3>
+                <button id="closeModal" class="text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Content -->
+            <div class="space-y-6">
+                <div class="space-y-4">
+                    <h4 class="text-xl font-semibold text-blue-400">Smart Contract Coverage</h4>
+                    <p class="text-gray-300">
+                        Comprehensive protection against vulnerabilities, bugs, and exploits in smart contract code.
+                        Our advanced monitoring system continuously scans for potential threats and anomalies.
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="text-xl font-semibold text-purple-400">Protocol Coverage</h4>
+                    <p class="text-gray-300">
+                        Protection against technical failures, oracle malfunctions, and governance attacks.
+                        Includes coverage for various DeFi-specific risks.
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="text-xl font-semibold text-cyan-400">Coverage Features</h4>
+                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-300">24/7 Monitoring</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-300">Instant Claims</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-300">Flexible Coverage</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-300">Dynamic Pricing</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <button class="px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-full font-medium transition-colors">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 <!-- Roadmap Section -->
 <section id="roadmap" class="py-20 bg-black">
