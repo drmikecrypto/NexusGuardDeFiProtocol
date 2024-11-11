@@ -4,66 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roadmap - NexusGuard Protocol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-50">
-    <!-- Copy the navigation here -->
+<body class="bg-black text-white font-outfit">
+    <!-- Copy Navbar from index.html -->
 
-    <!-- Roadmap Header -->
-    <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20">
-        <div class="container mx-auto px-4 text-center">
-            <h1 class="text-4xl font-bold mb-4">Development Roadmap</h1>
-            <p class="text-xl">Our Journey to Revolutionize DeFi Insurance</p>
-        </div>
-    </header>
-
-    <!-- Roadmap Section -->
-    <section class="py-20">
-        <div class="container mx-auto px-4">
-            <div class="max-w-4xl mx-auto">
-                <!-- Phase 1 -->
-                <div class="relative pl-8 pb-16 border-l-2 border-blue-600">
-                    <div class="absolute left-[-8px] top-0 w-4 h-4 rounded-full bg-blue-600"></div>
-                    <div class="ml-8">
-                        <h3 class="text-2xl font-bold mb-4">Phase 1: Foundation (Current)</h3>
-                        <ul class="space-y-2 text-gray-600">
-                            <li>✓ Core smart contract development</li>
-                            <li>✓ Basic documentation</li>
-                            <li>✓ Initial website launch</li>
-                            <li>• Security audit preparation</li>
-                        </ul>
+    <section class="py-20 pt-32">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl font-bold mb-16 text-center gradient-text">Development Roadmap</h2>
+            
+            <div class="relative">
+                <!-- Vertical Line -->
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-blue-600"></div>
+                
+                <!-- Roadmap Items -->
+                <div class="relative z-10 space-y-24">
+                    <!-- Phase 1 -->
+                    <div class="flex items-center" data-aos="fade-right">
+                        <div class="w-1/2 pr-16 text-right">
+                            <h3 class="text-2xl font-bold mb-4">Phase 1: Foundation</h3>
+                            <p class="text-gray-400">Q1 2025</p>
+                            <ul class="space-y-2 mt-4">
+                                <li>Core protocol development</li>
+                                <li>Smart contract implementation</li>
+                                <li>Initial security audits</li>
+                            </ul>
+                        </div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-blue-600 rounded-full"></div>
+                        <div class="w-1/2 pl-16"></div>
                     </div>
-                </div>
 
-                <!-- Phase 2 -->
-                <div class="relative pl-8 pb-16 border-l-2 border-gray-300">
-                    <div class="absolute left-[-8px] top-0 w-4 h-4 rounded-full bg-gray-300"></div>
-                    <div class="ml-8">
-                        <h3 class="text-2xl font-bold mb-4">Phase 2: Development</h3>
-                        <ul class="space-y-2 text-gray-600">
-                            <li>• Security audit</li>
-                            <li>• Testnet deployment</li>
-                            <li>• Community building</li>
-                            <li>• Partnership development</li>
-                        </ul>
+                    <!-- Phase 2 -->
+                    <div class="flex items-center" data-aos="fade-left">
+                        <div class="w-1/2 pr-16"></div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-blue-600 rounded-full"></div>
+                        <div class="w-1/2 pl-16">
+                            <h3 class="text-2xl font-bold mb-4">Phase 2: Enhancement</h3>
+                            <p class="text-gray-400">Q2 2025</p>
+                            <ul class="space-y-2 mt-4">
+                                <li>Advanced risk models</li>
+                                <li>Dynamic premium adjustment</li>
+                                <li>Yield strategy integration</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Phase 3 -->
-                <div class="relative pl-8 pb-16 border-l-2 border-gray-300">
-                    <div class="absolute left-[-8px] top-0 w-4 h-4 rounded-full bg-gray-300"></div>
-                    <div class="ml-8">
-                        <h3 class="text-2xl font-bold mb-4">Phase 3: Launch</h3>
-                        <ul class="space-y-2 text-gray-600">
-                            <li>• Mainnet launch</li>
-                            <li>• Initial coverage offerings</li>
-                            <li>• Governance implementation</li>
-                            <li>• Marketing campaign</li>
-                        </ul>
-                    </div>
+                    <!-- Add more phases -->
                 </div>
             </div>
         </div>
     </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
 </body>
 </html>
