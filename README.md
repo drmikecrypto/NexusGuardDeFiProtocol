@@ -36,6 +36,21 @@ graph TD;
     E --> K[Proposal System];
     E --> L[Voting System];
     E --> M[Parameter Control];
+sequenceDiagram
+    participant User
+    participant Protocol
+    participant Risk
+    participant Coverage
+    
+    User->>Protocol: Request Coverage
+    Protocol->>Risk: Assess Risk
+    Risk-->>Protocol: Risk Score
+    Protocol->>Coverage: Calculate Premium
+    Coverage-->>Protocol: Premium Amount
+    Protocol-->>User: Coverage Quote
+    User->>Protocol: Accept & Pay Premium
+    Protocol->>Coverage: Issue Coverage
+
 Core Contracts
 NexusGuardStorage.sol: State and access management
 NexusGuardInsurance.sol: Coverage and premium calculations
