@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - NexusGuard Protocol</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Copy the navigation from index.html here -->
+
+    <!-- Documentation Header -->
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl font-bold mb-4">Technical Documentation</h1>
+            <p class="text-xl">Understanding NexusGuard Protocol</p>
+        </div>
+    </header>
+
+    <!-- Documentation Content -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <!-- Smart Contracts -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold mb-8">Smart Contracts</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-bold mb-4">Core Protocol</h3>
+                        <ul class="space-y-2">
+                            <li>• Insurance Policy Management</li>
+                            <li>• Premium Calculation</li>
+                            <li>• Claims Processing</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-bold mb-4">Governance</h3>
+                        <ul class="space-y-2">
+                            <li>• Decentralized Voting</li>
+                            <li>• Parameter Updates</li>
+                            <li>• Risk Management</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Integration Guide -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold mb-8">Integration Guide</h2>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <pre class="bg-gray-100 p-4 rounded"><code>
+// Request Coverage
+const coverage = await nexusGuard.requestCoverage(
+    projectAddress,
+    coverageAmount,
+    duration
+);
+
+// Purchase Coverage
+const tx = await nexusGuard.purchaseCoverage(
+    coverageId,
+    premium
+);
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
