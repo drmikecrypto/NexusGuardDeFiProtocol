@@ -532,3 +532,74 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-flex;
     align-items: center;
 }
+/* Documentation Layout */
+.doc-link {
+    display: block;
+    padding: 0.5rem;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+}
+
+.doc-link:hover {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.05);
+    padding-left: 1rem;
+}
+
+.doc-link.active {
+    color: var(--primary);
+    background: rgba(59, 130, 246, 0.1);
+}
+
+/* Code block styling */
+.code-block {
+    background: #1a1a1a;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.code-block pre {
+    font-family: 'Fira Code', monospace;
+    line-height: 1.5;
+}
+
+/* Documentation content styling */
+.doc-content h2 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.doc-content h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+.doc-content p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.doc-content ul {
+    color: var(--text-secondary);
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+    list-style-type: disc;
+}
+
+.doc-content li {
+    margin-bottom: 0.5rem;
+}
