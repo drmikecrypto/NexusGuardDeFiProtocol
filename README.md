@@ -26,9 +26,17 @@ graph TD
     B --> C[Storage Layer]
     B --> D[Insurance Layer]
     B --> E[Governance Layer]
+    
     C --> F[State Management]
-    D --> G[Coverage Management]
-    E --> H[Risk Management]
+    C --> G[Access Control]
+    
+    D --> H[Coverage Management]
+    D --> I[Premium Calculation]
+    D --> J[Claims Processing]
+    
+    E --> K[Proposal System]
+    E --> L[Voting System]
+    E --> M[Parameter Control]
 Core Contracts
 NexusGuardStorage.sol: State and access management
 NexusGuardInsurance.sol: Coverage and premium calculations
@@ -50,11 +58,19 @@ interface INexusGuard {
         uint256 premium
     ) external returns (bool);
 }
+Key Protocol Parameters
+Parameter	Value
+Minimum Coverage	1,000 GUARD
+Maximum Coverage	10,000,000 GUARD
+Coverage Duration	30-365 days
+Base Premium Rate	1-5%
+Target Utilization	80%
 Security
-Audited by leading security firms
-Regular vulnerability assessments
-Time-locked admin functions
-Emergency pause functionality
+✓ Comprehensive security audits
+✓ Time-locked admin functions
+✓ Emergency pause functionality
+✓ Multi-signature requirements
+✓ Regular vulnerability assessments
 Technical Documentation
 Detailed documentation is available at docs.nexusguard.io
 
