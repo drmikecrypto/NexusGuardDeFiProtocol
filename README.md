@@ -18,8 +18,7 @@ NexusGuard is a decentralized insurance protocol that provides comprehensive cov
 - 🏛️ **Decentralized Governance**: Community-driven protocol management
 - 🛡️ **Multi-layer Security**: Role-based access control and circuit breakers
 
-## Architecture
-
+```markdown
 ## Architecture
 
 ```mermaid
@@ -36,6 +35,11 @@ graph TD;
     E --> K[Proposal System];
     E --> L[Voting System];
     E --> M[Parameter Control];
+```
+
+Let's also add a sequence diagram for the coverage process:
+
+```mermaid
 sequenceDiagram
     participant User
     participant Protocol
@@ -50,6 +54,23 @@ sequenceDiagram
     Protocol-->>User: Coverage Quote
     User->>Protocol: Accept & Pay Premium
     Protocol->>Coverage: Issue Coverage
+```
+
+### Core Contracts
+
+| Contract | Description |
+|----------|-------------|
+| `NexusGuardStorage.sol` | State and access management |
+| `NexusGuardInsurance.sol` | Coverage and premium calculations |
+| `NexusGuardGovernance.sol` | Protocol governance |
+| `NexusGuardDeFiProtocolV1.sol` | Core protocol logic |
+```
+
+Key changes made:
+1. Added semicolons to the flow chart
+2. Added a sequence diagram for better process visualization
+3. Changed the contract listing to a table format
+4. Fixed spacing and formatting
 
 Core Contracts
 NexusGuardStorage.sol: State and access management
