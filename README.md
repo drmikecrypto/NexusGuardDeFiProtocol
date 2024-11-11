@@ -20,23 +20,22 @@ NexusGuard is a decentralized insurance protocol that provides comprehensive cov
 
 ## Architecture
 
+## Architecture
+
 ```mermaid
-graph TD
-    A[External Interface] --> B[Protocol Core]
-    B --> C[Storage Layer]
-    B --> D[Insurance Layer]
-    B --> E[Governance Layer]
-    
-    C --> F[State Management]
-    C --> G[Access Control]
-    
-    D --> H[Coverage Management]
-    D --> I[Premium Calculation]
-    D --> J[Claims Processing]
-    
-    E --> K[Proposal System]
-    E --> L[Voting System]
-    E --> M[Parameter Control]
+graph TD;
+    A[External Interface] --> B[Protocol Core];
+    B --> C[Storage Layer];
+    B --> D[Insurance Layer];
+    B --> E[Governance Layer];
+    C --> F[State Management];
+    C --> G[Access Control];
+    D --> H[Coverage Management];
+    D --> I[Premium Calculation];
+    D --> J[Claims Processing];
+    E --> K[Proposal System];
+    E --> L[Voting System];
+    E --> M[Parameter Control];
 Core Contracts
 NexusGuardStorage.sol: State and access management
 NexusGuardInsurance.sol: Coverage and premium calculations
