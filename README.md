@@ -206,8 +206,6 @@ graph TD
 
 ## Integration Examples
 
-markdown
-
 ### Core Integration Functions
 
 ```solidity
@@ -241,10 +239,12 @@ function submitClaim(
     uint256 amount,
     bytes calldata evidence
 ) external returns (uint256 claimId);
-Quick Integration Example
+
+**## Quick Integration Example**
+
 solidity
 
-Copy
+
 // 1. Request Coverage Quote
 uint256 premium = nexusGuard.requestCoverage(
     projectAddress,
