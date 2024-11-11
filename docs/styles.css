@@ -135,8 +135,6 @@ h1, h2, h3, h4, h5, h6 {
     animation: slideIn 0.6s ease-out forwards;
 }
 
-/* Keep all your existing styles up to the original Roadmap Styles section, then replace the roadmap-related styles with these: */
-
 /* Roadmap Styles */
 .timeline-dot {
     width: 24px;
