@@ -66,28 +66,18 @@ sequenceDiagram
 | `NexusGuardDeFiProtocolV1.sol` | Core protocol logic |
 ```
 
-```mermaid
-
-graph LR
-    subgraph Core Protocol
-        A[NexusGuardDeFiProtocolV1]
+graph TB
+    subgraph Core
+        A((NexusGuard))
     end
     
-    subgraph Components
+    subgraph Modules
         B[Storage]
         C[Insurance]
         D[Governance]
     end
     
-    A --> B
-    A --> C
-    A --> D
-    
-    style A fill:#f96,stroke:#333,stroke-width:2px
-    style B fill:#9cf,stroke:#333,stroke-width:2px
-    style C fill:#9cf,stroke:#333,stroke-width:2px
-    style D fill:#9cf,stroke:#333,stroke-width:2px
-```
+    A --> B & C & D
 ### Coverage Flow
 
 ```mermaid
