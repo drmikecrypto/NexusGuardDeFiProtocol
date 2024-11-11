@@ -66,46 +66,46 @@ sequenceDiagram
 | `NexusGuardDeFiProtocolV1.sol` | Core protocol logic |
 ```
 
-```markdown
 ## Protocol Architecture
 
 ### Contract Relationships
 
 ```mermaid
 classDiagram
-    class NexusGuardDeFiProtocolV1 {
+    NexusGuardDeFiProtocolV1 --|> NexusGuardStorage
+    NexusGuardDeFiProtocolV1 --|> NexusGuardInsurance
+    NexusGuardDeFiProtocolV1 --|> NexusGuardGovernance
+    
+    class NexusGuardDeFiProtocolV1{
         +initializeProtocol()
         +updateParameters()
         +emergencyPause()
         +executeUpgrade()
     }
-    class NexusGuardStorage {
+    
+    class NexusGuardStorage{
         +TVLHistory
         +RiskAssessment
         +PremiumMultipliers
         +updateTVLHistory()
         +calculateRiskScore()
     }
-    class NexusGuardInsurance {
+    
+    class NexusGuardInsurance{
         +Coverage[]
         +calculatePremium()
         +purchaseCoverage()
         +processClaim()
         +validateCoverage()
     }
-    class NexusGuardGovernance {
+    
+    class NexusGuardGovernance{
         +Proposal[]
         +createProposal()
         +castVote()
         +executeProposal()
         +updateRiskParams()
     }
-
-    NexusGuardDeFiProtocolV1 --|> NexusGuardStorage
-    NexusGuardDeFiProtocolV1 --|> NexusGuardInsurance
-    NexusGuardDeFiProtocolV1 --|> NexusGuardGovernance
-```
-
 ### Coverage Flow
 
 ```mermaid
