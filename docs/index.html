@@ -9,6 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
+    <head>
+    <!-- ... other head elements ... -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</head>
 </head>
 <body class="bg-black text-white font-outfit">
     <!-- Navbar -->
@@ -74,56 +79,73 @@
         </div>
     </section>
 </body>
-    <!-- Roadmap Section -->
-<section id="roadmap" class="py-20 bg-[#111]">
+<!-- Roadmap Section -->
+<section id="roadmap" class="py-20 bg-black">
     <div class="container mx-auto px-6">
-        <h2 class="text-5xl font-bold mb-16 text-center gradient-text">Development Roadmap</h2>
+        <h2 class="text-5xl font-bold mb-16 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
+            Development Roadmap
+        </h2>
         
         <div class="relative">
-            <!-- Timeline Line -->
-            <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-blue-600 to-purple-600"></div>
+            <!-- Vertical Timeline Line -->
+            <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-blue-600/30"></div>
 
             <!-- Timeline Items -->
             <div class="space-y-24">
                 <!-- Q1 2025 -->
-                <div class="roadmap-item opacity-0" data-aos="fade-right">
-                    <div class="relative flex items-center">
-                        <div class="w-1/2 pr-16 text-right">
-                            <div class="bg-[#1a1a1a] p-6 rounded-lg border border-blue-600/20 hover:border-blue-600/40 transition-all duration-300 transform hover:-translate-y-1">
-                                <h3 class="text-2xl font-bold mb-2 text-blue-500">Phase 1: Foundation</h3>
+                <div data-aos="fade-right" data-aos-duration="1000" class="relative">
+                    <div class="flex items-center">
+                        <div class="w-1/2 pr-16">
+                            <div class="bg-[#111] p-6 rounded-xl border border-blue-500/20 hover:border-blue-500/40 transition-all duration-300 transform hover:-translate-y-1">
+                                <div class="flex items-center mb-4">
+                                    <div class="gradient-dot"></div>
+                                    <h3 class="text-2xl font-bold text-blue-500 ml-3">Phase 1: Foundation</h3>
+                                </div>
                                 <p class="text-blue-400 mb-4">Q1 2025</p>
-                                <ul class="space-y-2 text-gray-400">
-                                    <li class="fade-in-item">• Core protocol development</li>
-                                    <li class="fade-in-item">• Smart contract implementation</li>
-                                    <li class="fade-in-item">• Initial security audits</li>
+                                <ul class="space-y-3">
+                                    <li class="text-gray-300 flex items-center">
+                                        <span class="text-blue-500 mr-2">→</span>
+                                        Core protocol development
+                                    </li>
+                                    <li class="text-gray-300 flex items-center">
+                                        <span class="text-blue-500 mr-2">→</span>
+                                        Smart contract implementation
+                                    </li>
+                                    <li class="text-gray-300 flex items-center">
+                                        <span class="text-blue-500 mr-2">→</span>
+                                        Initial security audits
+                                    </li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="absolute left-1/2 transform -translate-x-1/2">
-                            <div class="w-8 h-8 bg-blue-600 rounded-full pulse-animation">
-                                <div class="w-4 h-4 bg-blue-300 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-                            </div>
-                        </div>
+                        <div class="timeline-dot"></div>
                     </div>
                 </div>
 
                 <!-- Q2 2025 -->
-                <div class="roadmap-item opacity-0" data-aos="fade-left">
-                    <div class="relative flex items-center">
-                        <div class="w-1/2"></div>
-                        <div class="absolute left-1/2 transform -translate-x-1/2">
-                            <div class="w-8 h-8 bg-purple-600 rounded-full pulse-animation">
-                                <div class="w-4 h-4 bg-purple-300 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-                            </div>
-                        </div>
+                <div data-aos="fade-left" data-aos-duration="1000" class="relative">
+                    <div class="flex items-center justify-end">
+                        <div class="timeline-dot"></div>
                         <div class="w-1/2 pl-16">
-                            <div class="bg-[#1a1a1a] p-6 rounded-lg border border-purple-600/20 hover:border-purple-600/40 transition-all duration-300 transform hover:-translate-y-1">
-                                <h3 class="text-2xl font-bold mb-2 text-purple-500">Phase 2: Enhancement</h3>
+                            <div class="bg-[#111] p-6 rounded-xl border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 transform hover:-translate-y-1">
+                                <div class="flex items-center mb-4">
+                                    <div class="gradient-dot purple"></div>
+                                    <h3 class="text-2xl font-bold text-purple-500 ml-3">Phase 2: Enhancement</h3>
+                                </div>
                                 <p class="text-purple-400 mb-4">Q2 2025</p>
-                                <ul class="space-y-2 text-gray-400">
-                                    <li class="fade-in-item">• Advanced risk models</li>
-                                    <li class="fade-in-item">• Dynamic premium adjustment</li>
-                                    <li class="fade-in-item">• Yield strategy integration</li>
+                                <ul class="space-y-3">
+                                    <li class="text-gray-300 flex items-center">
+                                        <span class="text-purple-500 mr-2">→</span>
+                                        Advanced risk models
+                                    </li>
+                                    <li class="text-gray-300 flex items-center">
+                                        <span class="text-purple-500 mr-2">→</span>
+                                        Dynamic premium adjustment
+                                    </li>
+                                    <li class="text-gray-300 flex items-center">
+                                        <span class="text-purple-500 mr-2">→</span>
+                                        Yield strategy integration
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -131,44 +153,59 @@
                 </div>
 
                 <!-- Q3-Q4 2025 -->
-                <div class="roadmap-item opacity-0" data-aos="fade-right">
-                    <div class="relative flex items-center">
-                        <div class="w-1/2 pr-16 text-right">
-                            <div class="bg-[#1a1a1a] p-6 rounded-lg border border-indigo-600/20 hover:border-indigo-600/40 transition-all duration-300 transform hover:-translate-y-1">
-                                <h3 class="text-2xl font-bold mb-2 text-indigo-500">Phase 3: Scaling</h3>
-                                <p class="text-indigo-400 mb-4">Q3-Q4 2025</p>
-                                <ul class="space-y-2 text-gray-400">
-                                    <li class="fade-in-item">• Cross-chain integration</li>
-                                    <li class="fade-in-item">• Advanced analytics</li>
-                                    <li class="fade-in-item">• Partner ecosystem development</li>
+                <div data-aos="fade-right" data-aos-duration="1000" class="relative">
+                    <div class="flex items-center">
+                        <div class="w-1/2 pr-16">
+                            <div class="bg-[#111] p-6 rounded-xl border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300 transform hover:-translate-y-1">
+                                <div class="flex items-center mb-4">
+                                    <div class="gradient-dot cyan"></div>
+                                    <h3 class="text-2xl font-bold text-cyan-500 ml-3">Phase 3: Scaling</h3>
+                                </div>
+                                <p class="text-cyan-400 mb-4">Q3-Q4 2025</p>
+                                <ul class="space-y-3">
+                                    <li class="text-gray-300 flex items-center">
+                                        <span class="text-cyan-500 mr-2">→</span>
+                                        Cross-chain integration
+                                    </li>
+                                    <li class="text-gray-300 flex items-center">
+                                        <span class="text-cyan-500 mr-2">→</span>
+                                        Advanced analytics platform
+                                    </li>
+                                    <li class="text-gray-300 flex items-center">
+                                        <span class="text-cyan-500 mr-2">→</span>
+                                        Partner ecosystem development
+                                    </li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="absolute left-1/2 transform -translate-x-1/2">
-                            <div class="w-8 h-8 bg-indigo-600 rounded-full pulse-animation">
-                                <div class="w-4 h-4 bg-indigo-300 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-                            </div>
-                        </div>
+                        <div class="timeline-dot cyan"></div>
                     </div>
                 </div>
 
                 <!-- Q1 2026 -->
-                <div class="roadmap-item opacity-0" data-aos="fade-left">
-                    <div class="relative flex items-center">
-                        <div class="w-1/2"></div>
-                        <div class="absolute left-1/2 transform -translate-x-1/2">
-                            <div class="w-8 h-8 bg-cyan-600 rounded-full pulse-animation">
-                                <div class="w-4 h-4 bg-cyan-300 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-                            </div>
-                        </div>
+                <div data-aos="fade-left" data-aos-duration="1000" class="relative">
+                    <div class="flex items-center justify-end">
+                        <div class="timeline-dot green"></div>
                         <div class="w-1/2 pl-16">
-                            <div class="bg-[#1a1a1a] p-6 rounded-lg border border-cyan-600/20 hover:border-cyan-600/40 transition-all duration-300 transform hover:-translate-y-1">
-                                <h3 class="text-2xl font-bold mb-2 text-cyan-500">Phase 4: Evolution</h3>
-                                <p class="text-cyan-400 mb-4">Q1 2026</p>
-                                <ul class="space-y-2 text-gray-400">
-                                    <li class="fade-in-item">• AI-powered risk assessment</li>
-                                    <li class="fade-in-item">• Multi-chain expansion</li>
-                                    <li class="fade-in-item">• DAO governance launch</li>
+                            <div class="bg-[#111] p-6 rounded-xl border border-green-500/20 hover:border-green-500/40 transition-all duration-300 transform hover:-translate-y-1">
+                                <div class="flex items-center mb-4">
+                                    <div class="gradient-dot green"></div>
+                                    <h3 class="text-2xl font-bold text-green-500 ml-3">Phase 4: Evolution</h3>
+                                </div>
+                                <p class="text-green-400 mb-4">Q1 2026</p>
+                                <ul class="space-y-3">
+                                    <li class="text-gray-300 flex items-center">
+                                        <span class="text-green-500 mr-2">→</span>
+                                        AI-powered risk assessment
+                                    </li>
+                                    <li class="text-gray-300 flex items-center">
+                                        <span class="text-green-500 mr-2">→</span>
+                                        Multi-chain expansion
+                                    </li>
+                                    <li class="text-gray-300 flex items-center">
+                                        <span class="text-green-500 mr-2">→</span>
+                                        DAO governance launch
+                                    </li>
                                 </ul>
                             </div>
                         </div>
