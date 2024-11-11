@@ -66,38 +66,4 @@
 
     <script src="docs.js"></script>
 </body>
-    // Add to docs.js
-const documentationContent = {
-    'introduction': {
-        title: 'Introduction',
-        content: `
-            <h2 class="text-3xl font-bold mb-6">Introduction to NexusGuard</h2>
-            <p class="text-gray-600 mb-4">
-                NexusGuard introduces a pioneering decentralized insurance protocol 
-                specifically engineered for DeFi projects on the Sonic blockchain.
-            </p>
-            <!-- Add more content -->
-        `
-    },
-    'protocol-overview': {
-        title: 'Protocol Overview',
-        content: `
-            <h2 class="text-3xl font-bold mb-6">Protocol Overview</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Add protocol overview content -->
-            </div>
-        `
-    },
-    // Add more sections
-};
-
-// Update loadContent function
-function loadContent(section) {
-    const sectionId = section.replace('#', '');
-    const content = documentationContent[sectionId];
-    if (content) {
-        const mainContent = document.getElementById('mainContent');
-        mainContent.innerHTML = content.content;
-    }
-}
 </html>
