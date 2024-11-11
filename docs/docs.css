@@ -1,0 +1,26 @@
+/* Base Styles */
+.nav-link {
+    @apply text-gray-700 hover:text-blue-600 block py-2 transition-colors duration-200;
+}
+
+.faq-question {
+    @apply text-gray-600 hover:text-blue-600 block py-2 transition-colors duration-200;
+}
+
+/* FAQ Animations */
+.faq-questions {
+    transition: all 0.3s ease-in-out;
+}
+
+.rotate-arrow {
+    transform: rotate(180deg);
+}
+
+/* Content Styles */
+.content-section {
+    @apply bg-white rounded-lg shadow-sm p-6 mb-6;
+}
+
+.answer-section {
+    @apply mt-4 text-gray-600 text-sm;
+}
