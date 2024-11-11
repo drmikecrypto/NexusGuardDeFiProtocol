@@ -56,32 +56,63 @@ sequenceDiagram
     Protocol->>Coverage: Issue Coverage
 ```
 
-### Core Contracts
+Here's a visually appealing way to present the core contracts:
 
-| Contract | Description |
-|----------|-------------|
-| `NexusGuardStorage.sol` | State and access management |
-| `NexusGuardInsurance.sol` | Coverage and premium calculations |
-| `NexusGuardGovernance.sol` | Protocol governance |
-| `NexusGuardDeFiProtocolV1.sol` | Core protocol logic |
-```
+```markdown
+
+## Core Protocol Components
+
+### Smart Contract Architecture
+
+| Contract | Primary Function | Key Features |
+|:--------:|:---------------:|:------------:|
+| 🏛️ **NexusGuardStorage** | State Management | • Access Control<br>• Data Models<br>• Risk Tracking |
+| 🛡️ **NexusGuardInsurance** | Coverage Systems | • Premium Calculation<br>• Claims Processing<br>• Risk Assessment |
+| 🏪 **NexusGuardGovernance** | Protocol Control | • Voting Mechanism<br>• Parameter Updates<br>• Proposal System |
+| 🔗 **NexusGuardDeFiProtocolV1** | Core Logic | • Component Integration<br>• External Interface<br>• Upgrade Control |
+
+### Protocol Flow
 
 ```mermaid
-
-graph LR
-    A[Protocol Core]---B[Storage Layer]
-    A---C[Insurance Layer]
-    A---D[Governance Layer]
-    
-    B-->B1[State]
-    B-->B2[Access]
-    
-    C-->C1[Coverage]
-    C-->C2[Claims]
-    
-    D-->D1[Voting]
-    D-->D2[Params]
+graph TD;
+    A[External Interface] --> B[Protocol Core];
+    B --> C[Storage Layer];
+    B --> D[Insurance Layer];
+    B --> E[Governance Layer];
+    C --> F[State & Access];
+    D --> G[Coverage & Claims];
+    E --> H[Voting & Control];
 ```
+
+### Component Interaction
+
+```mermaid
+flowchart LR;
+    A((Protocol Core)) --> B[Storage];
+    A --> C[Insurance];
+    A --> D[Governance];
+    B --- B1((State));
+    B --- B2((Access));
+    C --- C1((Coverage));
+    C --- C2((Claims));
+    D --- D1((Voting));
+    D --- D2((Params));
+```
+
+### System Overview
+
+<div align="center">
+
+| Layer | Function | Access Control |
+|:-----:|:--------:|:-------------:|
+| Storage | Data Management | Admin Only |
+| Insurance | Coverage Logic | Public/Restricted |
+| Governance | Protocol Control | Token Holders |
+| Core | Integration | System Only |
+
+</div>
+```
+
 
 ### Coverage Flow
 
