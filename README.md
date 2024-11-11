@@ -66,9 +66,8 @@ sequenceDiagram
 | `NexusGuardDeFiProtocolV1.sol` | Core protocol logic |
 ```
 
-mermaid
+```mermaid
 
-Copy
 graph LR
     subgraph Core Protocol
         A[NexusGuardDeFiProtocolV1]
@@ -88,7 +87,7 @@ graph LR
     style B fill:#9cf,stroke:#333,stroke-width:2px
     style C fill:#9cf,stroke:#333,stroke-width:2px
     style D fill:#9cf,stroke:#333,stroke-width:2px
-
+```
 ### Coverage Flow
 
 ```mermaid
