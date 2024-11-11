@@ -56,30 +56,31 @@ sequenceDiagram
     Protocol->>Coverage: Issue Coverage
 ```
 
-```markdown
+```
 
 ## Core Protocol Components
 
 ### Smart Contract Architecture
 
-| Contract | Primary Function | Key Features |
-|:--------:|:---------------:|:------------:|
-| 🏛️ **NexusGuardStorage** | State Management | • Access Control<br>• Data Models<br>• Risk Tracking |
-| 🛡️ **NexusGuardInsurance** | Coverage Systems | • Premium Calculation<br>• Claims Processing<br>• Risk Assessment |
-| 🏪 **NexusGuardGovernance** | Protocol Control | • Voting Mechanism<br>• Parameter Updates<br>• Proposal System |
-| 🔗 **NexusGuardDeFiProtocolV1** | Core Logic | • Component Integration<br>• External Interface<br>• Upgrade Control |
+<div align="center">
+
+| Contract | Function | Features |
+|:---------|:---------|:---------|
+| 🏛️ `NexusGuardStorage` | State Management | • Access Control<br>• Data Models<br>• Risk Tracking |
+| 🛡️ `NexusGuardInsurance` | Coverage Systems | • Premium Calculation<br>• Claims Processing<br>• Risk Assessment |
+| 🏪 `NexusGuardGovernance` | Protocol Control | • Voting Mechanism<br>• Parameter Updates<br>• Proposal System |
+| 🔗 `NexusGuardDeFiProtocolV1` | Core Logic | • Component Integration<br>• External Interface<br>• Upgrade Control |
+
+</div>
 
 ### Protocol Flow
 
 ```mermaid
-graph TD;
-    A[External Interface] --> B[Protocol Core];
-    B --> C[Storage Layer];
-    B --> D[Insurance Layer];
-    B --> E[Governance Layer];
-    C --> F[State & Access];
-    D --> G[Coverage & Claims];
-    E --> H[Voting & Control];
+flowchart TD
+    A[Interface] --> B[Core]
+    B --> C[Storage]
+    B --> D[Insurance]
+    B --> E[Governance]
 ```
 
 ### Component Interaction
