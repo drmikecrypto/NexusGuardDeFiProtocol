@@ -6,112 +6,58 @@
     <title>Documentation - NexusGuard Protocol</title>
     <link href="styles.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Add Prism.js for code highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-solidity.min.js"></script>
 </head>
-<body class="bg-[#000000] text-white">
+<body class="bg-[#000000]">
     <div class="flex min-h-screen">
         <!-- Sidebar Navigation -->
-        <aside class="w-64 border-r border-blue-900/30 bg-[#0A1A2F] fixed h-full overflow-y-auto">
+        <aside class="w-64 border-r border-blue-900/30 bg-[#070E1A] fixed h-full overflow-y-auto">
             <div class="p-6">
-                <a href="index.html" class="text-2xl font-bold gradient-text">NexusGuard</a>
-                <nav class="mt-8">
-                    <div class="space-y-2">
-                        <a href="#introduction" class="doc-link active">1. Introduction</a>
-                        <a href="#protocol-overview" class="doc-link">2. Protocol Overview</a>
-                        <a href="#technical-architecture" class="doc-link">3. Technical Architecture</a>
-                        <a href="#smart-contracts" class="doc-link">4. Smart Contracts</a>
-                        <a href="#risk-assessment" class="doc-link">5. Risk Assessment</a>
-                        <a href="#coverage-types" class="doc-link">6. Coverage Types</a>
-                        <a href="#premium-model" class="doc-link">7. Premium Model</a>
-                        <a href="#claims-processing" class="doc-link">8. Claims Processing</a>
-                        <a href="#tokenomics" class="doc-link">9. Tokenomics</a>
-                        <a href="#staking" class="doc-link">10. Staking System</a>
-                        <a href="#governance" class="doc-link">11. Governance</a>
-                        <a href="#yield-strategies" class="doc-link">12. Yield Strategies</a>
-                        <a href="#security" class="doc-link">13. Security Features</a>
-                        <a href="#integration" class="doc-link">14. Integration Guide</a>
-                        <a href="#api-reference" class="doc-link">15. API Reference</a>
-                        <a href="#audits" class="doc-link">16. Audit Reports</a>
-                        <a href="#roadmap" class="doc-link">17. Roadmap</a>
-                        <a href="#whitepaper" class="doc-link">18. Whitepaper</a>
-                        <a href="#glossary" class="doc-link">19. Glossary</a>
-                        <a href="#faq" class="doc-link">20. FAQ</a>
+                <a href="index.html" class="text-2xl font-bold gradient-text mb-8 block">NexusGuard</a>
+                <nav class="space-y-1">
+                    <!-- Updated navigation to match whitepaper ToC -->
+                    <div class="doc-section">
+                        <a href="#introduction" class="doc-link">1. Introduction</a>
+                        <div class="pl-4 space-y-1">
+                            <a href="#defi-insurance-challenge" class="doc-sublink">1.1 The DeFi Insurance Challenge</a>
+                            <a href="#nexusguard-solution" class="doc-sublink">1.2 The NexusGuard Solution</a>
+                        </div>
                     </div>
+                    <div class="doc-section">
+                        <a href="#protocol-architecture" class="doc-link">2. Protocol Architecture</a>
+                        <div class="pl-4 space-y-1">
+                            <a href="#core-components" class="doc-sublink">2.1 Core Components</a>
+                        </div>
+                    </div>
+                    <div class="doc-section">
+                        <a href="#technical-implementation" class="doc-link">3. Technical Implementation</a>
+                        <div class="pl-4 space-y-1">
+                            <a href="#smart-contract-architecture" class="doc-sublink">3.1 Smart Contract Architecture</a>
+                            <a href="#risk-assessment-engine" class="doc-sublink">3.2 Risk Assessment Engine</a>
+                        </div>
+                    </div>
+                    <!-- Continue with all sections from whitepaper -->
+                    <!-- ... Add all sections following the same pattern ... -->
                 </nav>
             </div>
         </aside>
 
-        <!-- Main Content -->
-        <main class="flex-1 ml-64">
+        <!-- Main Content Area -->
+        <main class="flex-1 ml-64 bg-[#0F172A]">
             <div class="max-w-4xl mx-auto px-8 py-12" id="mainContent">
-                <!-- Default content (Introduction) -->
+                <!-- Content will be dynamically loaded here -->
                 <div class="doc-content">
-                    <h1 class="text-4xl font-bold mb-8 gradient-text">Introduction</h1>
-                    
-                    <div class="bg-[#111] p-6 rounded-lg border border-blue-500/20 mb-8">
-                        <p class="text-lg text-gray-300">
-                            NexusGuard is a pioneering decentralized insurance protocol specifically engineered for DeFi projects on the Sonic blockchain.
-                        </p>
-                    </div>
-
-                    <h2 class="text-2xl font-bold mb-4">The DeFi Insurance Challenge</h2>
+                    <h1 class="text-4xl font-bold mb-8 text-white">Welcome to NexusGuard Documentation</h1>
                     <p class="text-gray-300 mb-6">
-                        The exponential growth of decentralized finance has created an urgent need for robust insurance solutions. 
-                        As the DeFi ecosystem expands, traditional insurance models have proven inadequate in addressing the unique 
-                        challenges posed by blockchain-based financial protocols.
+                        Select a topic from the left sidebar to get started.
                     </p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <div class="bg-[#111] p-6 rounded-lg border border-blue-500/20">
-                            <h3 class="text-xl font-bold mb-4 text-blue-400">Key Challenges</h3>
-                            <ul class="space-y-2 text-gray-300">
-                                <li>• Smart contract vulnerabilities</li>
-                                <li>• Oracle failures</li>
-                                <li>• Governance attacks</li>
-                                <li>• Flash loan exploits</li>
-                                <li>• Cross-chain bridge failures</li>
-                                <li>• Protocol-specific risks</li>
-                            </ul>
-                        </div>
-                        <div class="bg-[#111] p-6 rounded-lg border border-purple-500/20">
-                            <h3 class="text-xl font-bold mb-4 text-purple-400">Our Solution</h3>
-                            <ul class="space-y-2 text-gray-300">
-                                <li>• Dynamic multi-factor risk assessment</li>
-                                <li>• Real-time risk monitoring</li>
-                                <li>• Automated risk mitigation</li>
-                                <li>• Market condition integration</li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
             </div>
         </main>
     </div>
 
-    <script>
-        // Simple navigation handler
-        document.addEventListener('DOMContentLoaded', function() {
-            const links = document.querySelectorAll('.doc-link');
-            
-            links.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    
-                    // Remove active class from all links
-                    links.forEach(l => l.classList.remove('active'));
-                    
-                    // Add active class to clicked link
-                    link.classList.add('active');
-                    
-                    // Get the section ID
-                    const sectionId = link.getAttribute('href').replace('#', '');
-                    console.log('Loading section:', sectionId);
-                });
-            });
-        });
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-solidity.min.js"></script>
+    <script src="docs.js"></script>
 </body>
 </html>
