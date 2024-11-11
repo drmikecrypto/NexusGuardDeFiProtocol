@@ -11,6 +11,46 @@ const documentationContent = {
                 <div class="bg-white p-6 rounded-lg shadow-sm">
                     <h3 class="text-xl font-bold mb-4">Core Protocol Implementation</h3>
                     <pre class="bg-gray-100 p-4 rounded overflow-x-auto">
+                    'defi-coverage': {
+        title: 'DeFi Coverage',
+        content: `
+            <h2 class="text-3xl font-bold mb-6">DeFi Coverage Protection</h2>
+            <div class="space-y-6">
+                <!-- Add DeFi Coverage specific content -->
+            </div>
+        `
+    },
+
+    'risk-assessment': {
+        title: 'Smart Risk Assessment',
+        content: `
+            <h2 class="text-3xl font-bold mb-6">Smart Risk Assessment System</h2>
+            <div class="space-y-6">
+                <!-- Add Risk Assessment specific content -->
+            </div>
+        `
+    },
+
+    'yield-strategies': {
+        title: 'Yield Generation',
+        content: `
+            <h2 class="text-3xl font-bold mb-6">Yield Generation Strategies</h2>
+            <div class="space-y-6">
+                <!-- Add Yield Strategies specific content -->
+            </div>
+        `
+    },
+
+    'claims-process': {
+        title: 'Claims Processing',
+        content: `
+            <h2 class="text-3xl font-bold mb-6">Claims Processing System</h2>
+            <div class="space-y-6">
+                <!-- Add Claims Processing specific content -->
+            </div>
+        `
+    }
+};
 <code>contract NexusGuardDeFiProtocolV1 is
     Initializable,
     NexusGuardGovernance,
