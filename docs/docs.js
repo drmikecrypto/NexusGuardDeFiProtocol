@@ -60,34 +60,41 @@ const documentationContent = {
         `
     },
     };
-// Add click handlers for navigation
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Content Loaded'); // Debug log
     const mainContent = document.getElementById('mainContent');
     const links = document.querySelectorAll('.doc-link');
 
-    // Function to load content
     function loadContent(sectionId) {
+        console.log('Loading section:', sectionId); // Debug log
         const section = documentationContent[sectionId];
         if (section) {
-            // Add loading animation
             mainContent.classList.add('animate-pulse');
-            
             setTimeout(() => {
                 mainContent.innerHTML = section.content;
                 mainContent.classList.remove('animate-pulse');
                 
-                // Initialize Prism.js for code highlighting
-                Prism.highlightAll();
-                
                 // Update active state
                 links.forEach(link => link.classList.remove('active'));
                 document.querySelector(`[href="#${sectionId}"]`).classList.add('active');
-                
-                // Scroll to top
-                mainContent.scrollIntoView({ behavior: 'smooth' });
             }, 200);
+        } else {
+            console.error('Section not found:', sectionId); // Debug log
         }
     }
+
+    links.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const sectionId = e.currentTarget.getAttribute('href').replace('#', '');
+            loadContent(sectionId);
+        });
+    });
+
+    // Load default section or from hash
+    const defaultSection = window.location.hash.slice(1) || 'introduction';
+    loadContent(defaultSection);
+});
      // Add click handlers to navigation
     links.forEach(link => {
         link.addEventListener('click', (e) => {
