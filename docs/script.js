@@ -48,3 +48,46 @@ document.addEventListener('DOMContentLoaded', function() {
 
     roadmapItems.forEach(item => observer.observe(item));
 });
+// Modal functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('solutionsModal');
+    const closeModal = document.getElementById('closeModal');
+    const learnMoreButtons = document.querySelectorAll('a[href="#learn-more"]');
+
+    function openModal() {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        modal.querySelector('.fixed').classList.add('modal-open');
+    }
+
+    function closeModalFunc() {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+        modal.querySelector('.fixed').classList.remove('modal-open');
+    }
+
+    // Open modal on Learn More click
+    learnMoreButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            openModal();
+        });
+    });
+
+    // Close modal on close button click
+    closeModal.addEventListener('click', closeModalFunc);
+
+    // Close modal on backdrop click
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModalFunc();
+        }
+    });
+
+    // Close modal on ESC key press
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+            closeModalFunc();
+        }
+    });
+});
