@@ -4,66 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentation - NexusGuard Protocol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Add Prism.js for code highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
 </head>
-<body class="bg-gray-50">
-    <!-- Copy the navigation from index.html here -->
-
-    <!-- Documentation Header -->
-    <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20">
-        <div class="container mx-auto px-4 text-center">
-            <h1 class="text-4xl font-bold mb-4">Technical Documentation</h1>
-            <p class="text-xl">Understanding NexusGuard Protocol</p>
-        </div>
-    </header>
-
-    <!-- Documentation Content -->
-    <section class="py-20">
-        <div class="container mx-auto px-4">
-            <!-- Smart Contracts -->
-            <div class="mb-16">
-                <h2 class="text-3xl font-bold mb-8">Smart Contracts</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <h3 class="text-xl font-bold mb-4">Core Protocol</h3>
-                        <ul class="space-y-2">
-                            <li>• Insurance Policy Management</li>
-                            <li>• Premium Calculation</li>
-                            <li>• Claims Processing</li>
+<body class="bg-gray-50 font-inter">
+    <!-- Modern Documentation Layout -->
+    <div class="flex min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-white border-r border-gray-200 fixed h-full overflow-y-auto">
+            <div class="p-6">
+                <h2 class="text-lg font-bold text-gray-900">Documentation</h2>
+            </div>
+            <nav class="px-4 py-2">
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Getting Started</h3>
+                        <ul class="mt-2 space-y-2">
+                            <li><a href="#introduction" class="text-gray-700 hover:text-blue-600">Introduction</a></li>
+                            <li><a href="#challenges" class="text-gray-700 hover:text-blue-600">DeFi Insurance Challenges</a></li>
+                            <li><a href="#solution" class="text-gray-700 hover:text-blue-600">The NexusGuard Solution</a></li>
                         </ul>
                     </div>
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <h3 class="text-xl font-bold mb-4">Governance</h3>
-                        <ul class="space-y-2">
-                            <li>• Decentralized Voting</li>
-                            <li>• Parameter Updates</li>
-                            <li>• Risk Management</li>
+                    
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Technical Details</h3>
+                        <ul class="mt-2 space-y-2">
+                            <li><a href="#architecture" class="text-gray-700 hover:text-blue-600">Protocol Architecture</a></li>
+                            <li><a href="#risk-assessment" class="text-gray-700 hover:text-blue-600">Risk Assessment</a></li>
+                            <li><a href="#tokenomics" class="text-gray-700 hover:text-blue-600">Tokenomics</a></li>
                         </ul>
                     </div>
-                </div>
-            </div>
 
-            <!-- Integration Guide -->
-            <div class="mb-16">
-                <h2 class="text-3xl font-bold mb-8">Integration Guide</h2>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <pre class="bg-gray-100 p-4 rounded"><code>
-// Request Coverage
-const coverage = await nexusGuard.requestCoverage(
-    projectAddress,
-    coverageAmount,
-    duration
-);
-
-// Purchase Coverage
-const tx = await nexusGuard.purchaseCoverage(
-    coverageId,
-    premium
-);
-                    </code></pre>
+                    <!-- Add more navigation sections -->
                 </div>
-            </div>
-        </div>
-    </section>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="ml-64 flex-1 p-8">
+            <article class="max-w-4xl mx-auto">
+                <!-- Introduction Section -->
+                <section id="introduction" class="mb-16">
+                    <h1 class="text-4xl font-bold mb-6">NexusGuard Protocol Documentation</h1>
+                    <div class="prose max-w-none">
+                        <p class="text-lg text-gray-600">
+                            NexusGuard introduces a pioneering decentralized insurance protocol specifically engineered for DeFi projects on the Sonic blockchain.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Technical Documentation -->
+                <!-- [Add more sections based on whitepaper] -->
+
+                <!-- FAQ Section -->
+                <section id="faq" class="mb-16">
+                    <h2 class="text-3xl font-bold mb-8">Frequently Asked Questions</h2>
+                    <div class="space-y-6">
+                        <!-- FAQ Item 1 -->
+                        <div class="bg-white rounded-lg shadow-sm p-6">
+                            <h3 class="text-xl font-semibold mb-3">What is NexusGuard Protocol?</h3>
+                            <p class="text-gray-600">
+                                NexusGuard is a decentralized insurance protocol built on Sonic blockchain that provides comprehensive coverage against smart contract vulnerabilities, technical failures, and other DeFi-specific risks.
+                            </p>
+                        </div>
+
+                        <!-- FAQ Item 2 -->
+                        <div class="bg-white rounded-lg shadow-sm p-6">
+                            <h3 class="text-xl font-semibold mb-3">How does the risk assessment work?</h3>
+                            <p class="text-gray-600">
+                                NexusGuard uses a sophisticated multi-factor analysis model that considers audit scores, TVL, protocol complexity, market conditions, and historical performance to calculate risk scores dynamically.
+                            </p>
+                        </div>
+
+                        <!-- Add more FAQs -->
+                    </div>
+                </section>
+            </article>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
 </body>
 </html>
