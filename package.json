@@ -1,4 +1,4 @@
-echo '{
+{
   "name": "nexusguard-documentation",
   "version": "1.0.0",
   "description": "NexusGuard Protocol Documentation",
@@ -11,4 +11,4 @@ echo '{
     "@honkit/markdown-legacy": "^4.0.7",
     "@honkit/honkit-plugin-theme-default": "^4.0.7"
   }
-}' > package.json
+}
