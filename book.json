@@ -1,32 +1,15 @@
 {
-  "title": "NexusGuard Documentation",
-  "description": "Documentation for NexusGuard DeFi Insurance Protocol",
-  "author": "Dr Mike",
-  "language": "en",
-  "structure": {
-    "readme": "README.md",
-    "summary": "SUMMARY.md"
+  "name": "nexusguard-documentation",
+  "version": "1.0.0",
+  "description": "NexusGuard Protocol Documentation",
+  "scripts": {
+    "docs:prepare": "honkit install",
+    "docs:watch": "honkit serve",
+    "docs:build": "honkit build",
+    "docs:pdf": "honkit pdf",
+    "docs:epub": "honkit epub"
   },
-  "plugins": [
-    "prism",
-    "copy-code-button",
-    "search",
-    "anchors",
-    "expandable-chapters",
-    "-sharing",
-    "theme-default"
-  ],
-  "pluginsConfig": {
-    "theme-default": {
-      "showLevel": false,
-      "logo": "assets/logo.png"
-    },
-    "prism": {
-      "lang": {
-        "solidity": "solidity",
-        "typescript": "typescript",
-        "python": "python"
-      }
-    }
+  "dependencies": {
+    "honkit": "^4.0.0"
   }
 }
