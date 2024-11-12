@@ -351,7 +351,7 @@
         </div>
     </div>
 </section>
-  <!-- Updated footer/navigation area -->
+
 <footer class="py-12 bg-[#111]">
     <div class="container mx-auto px-6">
         <div class="flex flex-wrap justify-center space-x-8">
@@ -361,6 +361,33 @@
             <a href="documentation.html" class="text-gray-400 hover:text-white">Documentation</a>
             <a href="roadmap.html" class="text-gray-400 hover:text-white">Roadmap</a>
         </div>
+        </div>
     </div>
+</div>
 </footer>
+<!-- Core Scripts -->
+<script src="script.js"></script>
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 100
+    });
+
+    // Initialize Documentation Modal
+    document.addEventListener('DOMContentLoaded', function() {
+        // Link handling for documentation
+        document.querySelectorAll('a[href^="documentation.html"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const hash = this.getAttribute('href').split('#')[1];
+                if (hash) {
+                    localStorage.setItem('docSection', hash);
+                }
+            });
+        });
+    });
+</script>
+
+</body>
 </html>
