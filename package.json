@@ -1,0 +1,18 @@
+# Navigate to your repository directory
+cd NexusGuardDeFiProtocol
+
+# Create package.json
+echo '{
+  "name": "nexusguard-documentation",
+  "version": "1.0.0",
+  "description": "NexusGuard Protocol Documentation",
+  "scripts": {
+    "docs:build": "honkit build",
+    "docs:serve": "honkit serve"
+  },
+  "devDependencies": {
+    "honkit": "^4.0.7",
+    "@honkit/markdown-legacy": "^4.0.7",
+    "@honkit/honkit-plugin-theme-default": "^4.0.7"
+  }
+}' > package.json
