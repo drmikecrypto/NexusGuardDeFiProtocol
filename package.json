@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "description": "NexusGuard Protocol Documentation",
   "scripts": {
-    "docs:build": "honkit build",
-    "docs:serve": "honkit serve"
+    "docs:prepare": "gitbook install",
+    "docs:serve": "gitbook serve",
+    "docs:build": "gitbook build"
   },
-  "devDependencies": {
-    "honkit": "^4.0.7",
-    "@honkit/markdown-legacy": "^4.0.7",
-    "@honkit/honkit-plugin-theme-default": "^4.0.7"
+  "dependencies": {
+    "gitbook-cli": "^2.3.2"
   }
 }
