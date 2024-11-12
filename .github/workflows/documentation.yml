@@ -23,13 +23,8 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
-          npm install honkit --save-dev
-          npm install @honkit/markdown-legacy@latest --save-dev
+          npm install honkit @honkit/markdown-legacy @honkit/honkit-plugin-theme-default --save-dev
 
-      - name: Setup GitBook
-        run: |
-          npm run docs:prepare || true
-          
       - name: Build
         run: npm run docs:build
 
@@ -38,4 +33,3 @@ jobs:
         with:
           folder: _book
           branch: gh-pages
-          clean: true
