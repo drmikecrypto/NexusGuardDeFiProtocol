@@ -1,7 +1,3 @@
-# Navigate to your repository directory
-cd NexusGuardDeFiProtocol
-
-# Create package.json
 echo '{
   "name": "nexusguard-documentation",
   "version": "1.0.0",
