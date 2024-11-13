@@ -1,0 +1,15 @@
+# Table of contents
+
+* [Abstract](abstract.md)
+* [Introduction](introduction/README.md)
+  * [The DeFi Insurance Challenge](introduction/defi-insurance-challenge.md)
+  * [The NexusGuard Solution](introduction/nexusguard-solution.md)
+* [Protocol Architecture](protocol/README.md)
+  * [Core Components](protocol/core-components.md)
+* [Technical Implementation](technical/README.md)
+  * [Smart Contract Architecture](implementation/smart-contract-architecture.md)
+  * [Risk Assessment Engine](implementation/risk-assessment-engine.md)
+* [Economic Model](economic-model/README.md)
+  * [Token Economics](economic-model/tokenomics/token-economics.md)
+  * [Premium Management](economic-model/premium-management.md)
+  * [Yield Generation](economic-model/yield-generation.md)
