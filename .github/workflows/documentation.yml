@@ -1,20 +1,127 @@
 # .github/workflows/documentation.yml
-name: Documentation
+name: Documentation & Build
+
+# Trigger on push to main and pull requests
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [20.x] # Specify Node.js version
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
         with:
-          node-version: '20' # Update to a supported version
+          fetch-depth: 0 # Fetch all history for git info
+          
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm' # Cache npm dependencies
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+        
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install dependencies
         run: |
-          npm install
-          npm run build
+          npm ci || npm install
+          npm audit fix || true # Run audit fix but don't fail if can't fix everything
+
+      - name: Build documentation
+        run: npm run docs:build
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096 # Increase memory limit if needed
+          
+      - name: Run tests
+        run: npm test || true # Add if you have tests
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: docs/.vitepress/dist # Adjust this path to your build output
+
+  # Deploy job
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+
+  # Security scanning
+  security:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Run security scan
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+
+  # Lint and format check
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci || npm install
+      - name: Run linting
+        run: |
+          npm run lint || true
+          npm run format-check || true
+
+  # Notification on completion
+  notify:
+    needs: [build, deploy, security, lint]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Check build status
+        if: ${{ contains(needs.*.result, 'failure') }}
+        run: exit 1
+      - name: Send notification
+        if: always()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_COLOR: ${{ contains(needs.*.result, 'failure') && 'danger' || 'good' }}
+          SLACK_MESSAGE: 'Documentation build and deployment ${{ contains(needs.*.result, "failure") && "failed" || "succeeded" }}'
+          SLACK_TITLE: Documentation Workflow Status

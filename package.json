@@ -1,13 +1,22 @@
 {
   "name": "nexusguard-defi-protocol",
   "version": "1.0.0",
-  "description": "Decentralized insurance protocol for DeFi projects",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:serve": "vitepress serve docs"
   },
+  "dependencies": {
+    "vitepress": "1.0.0-rc.31",
+    "@docsearch/css": "^3.8.0",
+    "@docsearch/js": "^3.8.0",
+    "vue": "^3.5.12"
+  },
   "devDependencies": {
-    "vitepress": "^1.0.0-rc.31"
+    "@vitejs/plugin-vue": "^5.1.5",
+    "vite": "^5.4.11"
   }
 }
