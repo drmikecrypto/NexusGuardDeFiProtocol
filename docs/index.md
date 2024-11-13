@@ -4,17 +4,17 @@ layout: home
 hero:
   name: NexusGuard Protocol
   text: Advanced DeFi Insurance Protocol
-  tagline: Securing the future of decentralized finance through innovative risk management
+  tagline: Securing the future of decentralized finance through innovative risk management and comprehensive coverage solutions
   image:
     src: /images/logo.svg
-    alt: NexusGuard Protocol Logo
+    alt: NexusGuard Protocol
   actions:
     - theme: brand
       text: Get Started
       link: /introduction/
     - theme: alt
-      text: View Documentation
-      link: /documentation
+      text: Read Documentation
+      link: /documentation/
     - theme: alt
       text: View on GitHub
       link: https://github.com/drmikecrypto/NexusGuardDeFiProtocol
@@ -22,161 +22,305 @@ hero:
 features:
   - icon: 🛡️
     title: Smart Contract Coverage
-    details: Comprehensive protection against vulnerabilities, exploits, and technical failures in DeFi protocols
+    details: Comprehensive protection against vulnerabilities, bugs, and exploits in smart contract code. Our advanced monitoring system continuously scans for potential threats.
     link: /protocol/coverage
+    linkText: Learn about coverage →
   
   - icon: 📊
-    title: Dynamic Risk Assessment
-    details: AI-powered real-time risk monitoring and automated adjustments using advanced risk models
+    title: Risk Assessment
+    details: AI-powered risk analysis and real-time monitoring of protocol vulnerabilities. Dynamic risk scoring and automated adjustments.
     link: /protocol/risk-assessment
+    linkText: Explore risk models →
   
   - icon: 💰
     title: Yield Generation
-    details: Efficient capital utilization through ERC4626 vaults and sophisticated yield strategies
+    details: Optimized capital utilization through advanced yield farming strategies. ERC4626-compliant vaults maximize returns while maintaining security.
     link: /economic-model/yield-generation
-  
-  - icon: 🏛️
-    title: Decentralized Governance
-    details: Community-driven protocol management with stake-based voting and proposal systems
-    link: /governance/
-  
-  - icon: 🔒
-    title: Multi-layer Security
-    details: Role-based access control, circuit breakers, and comprehensive security framework
-    link: /protocol/security
+    linkText: View strategies →
   
   - icon: ⚡
     title: Claims Processing
-    details: Automated claims validation and instant payout system for verified incidents
+    details: Automated claims validation and instant payout system for verified incidents. Stake-based validation ensures fair and efficient processing.
     link: /protocol/claims
-
-highlights:
-  - title: Protocol Parameters
-    items:
-      - title: Coverage Limits
-        details: Support for coverage amounts from 1,000 to 10,000,000 GUARD tokens
-        icon: 💎
-      - title: Premium Rates
-        details: Dynamic 1-5% annual premium rates adjusted based on risk assessment
-        icon: 📊
-      - title: Duration Options
-        details: Flexible coverage periods ranging from 30 to 365 days
-        icon: ⏱️
-
-  - title: Risk Management
-    items:
-      - title: Real-time Monitoring
-        details: Continuous assessment of protocol health and risk factors
-        icon: 📈
-      - title: Automated Adjustments
-        details: Dynamic premium and coverage adjustments based on market conditions
-        icon: ⚖️
-      - title: Safety Measures
-        details: Multiple security layers including audits and emergency responses
-        icon: 🔐
-
-  - title: Yield Strategies
-    items:
-      - title: Capital Efficiency
-        details: Optimized yield generation through diversified strategies
-        icon: 📈
-      - title: Risk-Adjusted Returns
-        details: Balanced approach to maximize returns while maintaining security
-        icon: 🎯
-      - title: Reward Distribution
-        details: Fair distribution of yields among stakeholders
-        icon: 💸
+    linkText: Learn about claims →
+  
+  - icon: 🏛️
+    title: Decentralized Governance
+    details: Community-driven protocol management through the GUARD token. Stake-based voting and proposal systems for protocol evolution.
+    link: /governance/
+    linkText: View governance →
+  
+  - icon: 🔒
+    title: Multi-layer Security
+    details: Comprehensive security framework including audits, monitoring, and emergency responses. Role-based access control and circuit breakers.
+    link: /protocol/security
+    linkText: Explore security →
 ---
 
 <script setup>
 import { VPTeamMembers } from 'vitepress/theme'
+import { ref } from 'vue'
+
+const protocolMetrics = ref([
+  {
+    value: '150%',
+    label: 'Coverage Ratio',
+    description: 'Maintaining strong coverage reserves'
+  },
+  {
+    value: '$50M',
+    label: 'Target TVL',
+    description: 'Projected total value locked'
+  },
+  {
+    value: '15%',
+    label: 'Target APY',
+    description: 'Estimated annual yield'
+  },
+  {
+    value: '80%',
+    label: 'Utilization',
+    description: 'Optimal capital efficiency'
+  }
+])
+
+const highlights = ref([
+  {
+    title: 'Dynamic Risk Assessment',
+    items: [
+      'Real-time monitoring of protocols',
+      'AI-powered risk analysis',
+      'Automated risk adjustments',
+      'Market condition integration'
+    ]
+  },
+  {
+    title: 'Coverage Mechanisms',
+    items: [
+      'Smart contract vulnerability protection',
+      'Protocol failure coverage',
+      'Governance attack insurance',
+      'Bridge failure protection'
+    ]
+  },
+  {
+    title: 'Operational Excellence',
+    items: [
+      'Automated claims processing',
+      'Stake-based validation',
+      'Efficient capital utilization',
+      'Yield generation strategies'
+    ]
+  }
+])
 </script>
 
-<Features />
+<template>
+  <div class="landing-content">
+    <Features class="features-section" />
+    
+    <div class="metrics-section">
+      <h2>Protocol Metrics</h2>
+      <div class="metrics-grid">
+        <div v-for="metric in protocolMetrics" 
+             :key="metric.label" 
+             class="metric-card">
+          <div class="metric-value">{{ metric.value }}</div>
+          <div class="metric-label">{{ metric.label }}</div>
+          <div class="metric-description">{{ metric.description }}</div>
+        </div>
+      </div>
+    </div>
 
-<div class="divider"></div>
+    <div class="highlights-section">
+      <h2>Protocol Highlights</h2>
+      <div class="highlights-grid">
+        <div v-for="highlight in highlights" 
+             :key="highlight.title" 
+             class="highlight-card">
+          <h3>{{ highlight.title }}</h3>
+          <ul>
+            <li v-for="item in highlight.items" 
+                :key="item">{{ item }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-<div class="protocol-metrics">
-  <h2>Protocol Metrics</h2>
-  <div class="metrics-grid">
-    <div class="metric">
-      <span class="metric-value">15%</span>
-      <span class="metric-label">Target APY</span>
-    </div>
-    <div class="metric">
-      <span class="metric-value">$50M</span>
-      <span class="metric-label">Target TVL</span>
-    </div>
-    <div class="metric">
-      <span class="metric-value">150%</span>
-      <span class="metric-label">Coverage Ratio</span>
-    </div>
-    <div class="metric">
-      <span class="metric-value">80%</span>
-      <span class="metric-label">Target Utilization</span>
+    <Roadmap class="roadmap-section" />
+    
+    <Partners class="partners-section" />
+
+    <div class="cta-section">
+      <h2>Ready to Get Started?</h2>
+      <p>Explore our documentation to learn more about NexusGuard Protocol</p>
+      <div class="cta-buttons">
+        <a href="/introduction/" class="cta-button primary">Start Building</a>
+        <a href="/documentation/" class="cta-button secondary">Read Docs</a>
+      </div>
     </div>
   </div>
-</div>
-
-<Roadmap />
-
-<div class="divider"></div>
-
-<Partners />
+</template>
 
 <style scoped>
-.divider {
-  margin: 4rem 0;
-  border-bottom: 1px solid var(--vp-c-divider);
+.landing-content {
+  padding-bottom: 4rem;
 }
 
-.protocol-metrics {
-  padding: 4rem 0;
+.metrics-section {
+  padding: 4rem 2rem;
+  background: var(--vp-c-bg-soft);
+}
+
+.metrics-section h2,
+.highlights-section h2 {
   text-align: center;
+  margin-bottom: 3rem;
+  font-size: 2.5rem;
+  color: var(--vp-c-brand);
 }
 
 .metrics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
-  margin: 2rem auto;
-  max-width: 1000px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.metric {
-  padding: 2rem;
-  background: var(--vp-c-bg-soft);
+.metric-card {
+  background: var(--vp-c-bg);
   border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
   transition: transform 0.3s ease;
 }
 
-.metric:hover {
+.metric-card:hover {
   transform: translateY(-5px);
 }
 
 .metric-value {
-  display: block;
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: bold;
   color: var(--vp-c-brand);
 }
 
 .metric-label {
-  display: block;
-  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  color: var(--vp-c-text-1);
+}
+
+.metric-description {
   font-size: 0.9rem;
   color: var(--vp-c-text-2);
 }
 
-@media (max-width: 768px) {
-  .metrics-grid {
-    grid-template-columns: 1fr 1fr;
-  }
+.highlights-section {
+  padding: 4rem 2rem;
 }
 
-@media (max-width: 480px) {
-  .metrics-grid {
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.highlight-card {
+  background: var(--vp-c-bg-soft);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.highlight-card h3 {
+  color: var(--vp-c-brand);
+  margin-bottom: 1.5rem;
+}
+
+.highlight-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.highlight-card li {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.highlight-card li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--vp-c-brand);
+}
+
+.cta-section {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--vp-c-bg-soft);
+}
+
+.cta-section h2 {
+  font-size: 2.5rem;
+  color: var(--vp-c-brand);
+  margin-bottom: 1rem;
+}
+
+.cta-section p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: var(--vp-c-text-2);
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 0.8rem 1.6rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.cta-button.primary {
+  background: var(--vp-c-brand);
+  color: white;
+}
+
+.cta-button.secondary {
+  background: var(--vp-c-bg);
+  color: var(--vp-c-brand);
+  border: 1px solid var(--vp-c-brand);
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .metrics-grid,
+  .highlights-grid {
     grid-template-columns: 1fr;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+  }
+
+  .metrics-section,
+  .highlights-section,
+  .cta-section {
+    padding: 2rem 1rem;
   }
 }
 </style>
