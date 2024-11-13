@@ -1,88 +1,76 @@
+/* docs/.vitepress/theme/styles/main.css */
 :root {
+  /* Brand Colors */
   --vp-c-brand: #646cff;
   --vp-c-brand-light: #747bff;
   --vp-c-brand-lighter: #9499ff;
   --vp-c-brand-dark: #535bf2;
   --vp-c-brand-darker: #454ce1;
-  
-  --vp-c-sponsor: #db2777;
-  --vp-c-tip: #4ade80;
-  --vp-c-warning: #fbbf24;
-  --vp-c-danger: #f43f5e;
+
+  /* Animations */
+  --animation-duration: 0.3s;
+  --animation-timing: ease;
+
+  /* Components */
+  --card-border-radius: 12px;
+  --card-padding: 2rem;
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.VPNav {
-  border-bottom: 1px solid var(--vp-c-divider);
+/* Global Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.VPHomeHero .main {
-  margin-top: 2rem;
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-.VPHomeHero .image-src {
-  max-width: 200px;
-  max-height: 200px;
+/* Common Component Styles */
+.section-container {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.custom-layout {
-  background-color: var(--vp-c-bg-soft);
-  padding: 1.5rem;
-  border-radius: 8px;
-}
-
-.vp-doc h1 {
-  font-size: 2.6rem;
-  font-weight: 600;
-}
-
-.vp-doc h2 {
-  border-top: none;
-  margin-top: 2rem;
-}
-
-.vp-doc a {
-  font-weight: 500;
-  text-decoration: none;
-  transition: color 0.25s;
-}
-
-.vp-doc a:hover {
+.section-title {
+  text-align: center;
+  margin-bottom: 3rem;
+  font-size: 2.5rem;
   color: var(--vp-c-brand);
 }
 
-.vp-doc table {
-  width: 100%;
-  border-collapse: collapse;
+.card {
+  background: var(--vp-c-bg-soft);
+  border-radius: var(--card-border-radius);
+  padding: var(--card-padding);
+  transition: transform var(--animation-duration) var(--animation-timing);
+  box-shadow: var(--card-shadow);
 }
 
-.vp-doc tr:nth-child(2n) {
-  background-color: var(--vp-c-bg-soft);
+.card:hover {
+  transform: translateY(-5px);
 }
 
-.vp-doc th,
-.vp-doc td {
-  padding: 12px 16px;
-  border: 1px solid var(--vp-c-divider);
-}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .section-container {
+    padding: 2rem 1rem;
+  }
 
-.custom-block {
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  padding: 16px 16px 8px;
-  margin: 16px 0;
-}
-
-.custom-block.tip {
-  border-color: var(--vp-c-tip);
-  background-color: var(--vp-c-tip-soft);
-}
-
-.custom-block.warning {
-  border-color: var(--vp-c-warning);
-  background-color: var(--vp-c-warning-soft);
-}
-
-.custom-block.danger {
-  border-color: var(--vp-c-danger);
-  background-color: var(--vp-c-danger-soft);
+  .section-title {
+    font-size: 2rem;
+  }
 }
