@@ -1,4 +1,3 @@
-// docs/.vitepress/theme/index.ts
 import DefaultTheme from 'vitepress/theme'
 import { type Theme } from 'vitepress'
 import Layout from './Layout.vue'
@@ -13,6 +12,7 @@ export default {
   extends: DefaultTheme,
   Layout,
   enhanceApp({ app }) {
+    // Register all components globally
     app.component('Roadmap', Roadmap)
     app.component('Partners', Partners)
     app.component('Features', Features)
