@@ -1,0 +1,19 @@
+{
+  "title": "NexusGuard Documentation",
+  "description": "Documentation for NexusGuard DeFi Insurance Protocol",
+  "author": "Dr Mike",
+  "language": "en",
+  "plugins": [
+    "code",
+    "search",
+    "hints",
+    "theme-default",
+    "expandable-chapters",
+    "copy-code-button"
+  ],
+  "pluginsConfig": {
+    "theme-default": {
+      "showLevel": false
+    }
+  }
+}

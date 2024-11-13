@@ -1,31 +1,38 @@
 {
-  "name": "nexusguarddefiprotocol",
+  "name": "nexusguard-defi-protocol",
   "version": "1.0.0",
-  "description": "> Decentralized insurance protocol for DeFi projects on Sonic blockchain",
+  "description": "Decentralized insurance protocol for DeFi projects on Sonic blockchain",
   "main": "index.js",
   "directories": {
     "doc": "docs",
     "test": "test"
   },
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "defi",
+    "insurance",
+    "blockchain",
+    "sonic"
+  ],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "gitbook-cli": "^2.3.2",
-    "honkit": "^6.0.2"
-  },
   "dependencies": {
-    "bash-color": "^0.0.4",
-    "graceful-fs": "^4.2.11",
-    "npm": "^5.1.0",
-    "npmi": "^1.0.1",
-    "optimist": "^0.6.1",
-    "os-homedir": "^1.0.2",
-    "os-tmpdir": "^1.0.2",
-    "q": "^1.5.0",
-    "user-home": "^2.0.0"
+    "vitepress": "1.0.0-rc.31",
+    "@docsearch/css": "^3.8.0",
+    "@docsearch/js": "^3.8.0",
+    "vue": "^3.5.12",
+    "graceful-fs": "^4.2.11"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.5",
+    "vite": "^5.4.11"
   }
 }
