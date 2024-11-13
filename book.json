@@ -1,19 +1,28 @@
 {
-  "title": "NexusGuard Documentation",
-  "description": "Documentation for NexusGuard DeFi Insurance Protocol",
-  "author": "Dr Mike",
-  "language": "en",
+  "title": "NexusGuard Protocol Documentation",
+  "description": "Documentation for the NexusGuard DeFi Insurance Protocol",
+  "structure": {
+    "readme": "docs/abstract.md",
+    "summary": "SUMMARY.md"
+  },
   "plugins": [
-    "code",
-    "search",
-    "hints",
-    "theme-default",
     "expandable-chapters",
-    "copy-code-button"
+    "copy-code-button",
+    "github",
+    "edit-link",
+    "anchors",
+    "search",
+    "-lunr",
+    "-search",
+    "search-pro"
   ],
   "pluginsConfig": {
-    "theme-default": {
-      "showLevel": false
+    "github": {
+      "url": "https://github.com/drmikecrypto/NexusGuardDeFiProtocol"
+    },
+    "edit-link": {
+      "base": "https://github.com/drmikecrypto/NexusGuardDeFiProtocol/edit/main",
+      "label": "Edit This Page"
     }
   }
 }
