@@ -64,22 +64,15 @@ jobs:
 
   # Deploy job
   deploy:
-    # Add a dependency to the build job
     needs: build
-    
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
     permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
-    
-    # Deploy to the github-pages environment
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' # Only deploy on main branch
-    
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
@@ -89,11 +82,9 @@ jobs:
   security:
     needs: build
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
       - name: Run security scan
         uses: snyk/actions/node@master
         env:
@@ -104,18 +95,14 @@ jobs:
   # Lint and format check
   lint:
     runs-on: ubuntu-latest
-    
     steps:
       - uses: actions/checkout@v3
-      
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-          
       - name: Install dependencies
         run: npm ci || npm install
-        
       - name: Run linting
         run: |
           npm run lint || true
@@ -126,12 +113,10 @@ jobs:
     needs: [build, deploy, security, lint]
     runs-on: ubuntu-latest
     if: always()
-    
     steps:
       - name: Check build status
         if: ${{ contains(needs.*.result, 'failure') }}
         run: exit 1
-        
       - name: Send notification
         if: always()
         uses: rtCamp/action-slack-notify@v2
