@@ -2,6 +2,7 @@
   "name": "nexusguard-defi-protocol",
   "version": "1.0.0",
   "description": "Decentralized insurance protocol for DeFi projects on Sonic blockchain",
+  "type": "module",
   "main": "index.js",
   "directories": {
     "doc": "docs",
@@ -29,12 +30,12 @@
     "vitepress": "1.0.0-rc.31",
     "@docsearch/css": "^3.8.0",
     "@docsearch/js": "^3.8.0",
-    "vue": "^3.5.12",
+    "vue": "^3.3.11",
     "graceful-fs": "^4.2.11"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.5",
-    "vite": "^5.4.11",
+    "vite": "^5.0.10",
     "@types/node": "^20.0.0",
     "markdown-it": "^14.0.0",
     "sass": "^1.69.0"
