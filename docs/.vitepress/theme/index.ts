@@ -3,7 +3,8 @@ import { type Theme } from 'vitepress'
 import Layout from './Layout.vue'
 import './styles/main.css'
 
-// Lazy load components for better performance
+// Lazy load components
+const MobileMenu = () => import('./components/MobileMenu.vue')
 const Roadmap = () => import('./components/Roadmap.vue')
 const Partners = () => import('./components/Partners.vue')
 const Features = () => import('./components/Features.vue')
@@ -14,7 +15,8 @@ export default {
   extends: DefaultTheme,
   Layout,
   enhanceApp({ app }) {
-    // Register components
+    // Register components globally
+    app.component('MobileMenu', MobileMenu)
     app.component('Roadmap', Roadmap)
     app.component('Partners', Partners)
     app.component('Features', Features)
