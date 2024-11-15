@@ -1,13 +1,26 @@
 <script setup lang="ts">
 import { useData, useRoute } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
-import { computed, onMounted, ref, watch, onBeforeUnmount } from 'vue'
+import { computed, onMounted, ref, watch, onBeforeUnmount, onErrorCaptured } from 'vue'
 import type { Theme } from 'vitepress'
 import MobileMenu from './components/MobileMenu.vue'
 import ProtocolMetrics from './components/ProtocolMetrics.vue'
 import Roadmap from './components/Roadmap.vue'
 import Partners from './components/Partners.vue'
 import Features from './components/Features.vue'
+
+// Error handling
+const error = ref(null)
+
+onErrorCaptured((err, instance, info) => {
+  error.value = {
+    message: err.message,
+    component: instance?.$.type.name,
+    info
+  }
+  console.error('Error captured in Layout:', error.value)
+  return false // Prevent error from propagating
+})
 
 // Setup VitePress data
 const { Layout } = DefaultTheme
@@ -217,25 +230,32 @@ watch(
   }
 )
 </script>
-
 <template>
-  <!-- Skip to main content link -->
-  <a 
-    ref="skipToMainRef"
-    href="#main-content"
-    class="skip-to-main"
-    @click="scrollToSection('main-content')"
-  >
-    Skip to main content
-  </a>
+  <!-- Error boundary -->
+  <div v-if="error" class="error-boundary">
+    <h1>Something went wrong</h1>
+    <pre>{{ error }}</pre>
+  </div>
+  
+  <!-- Main content if no error -->
+  <template v-else>
+    <!-- Skip to main content link -->
+    <a 
+      ref="skipToMainRef"
+      href="#main-content"
+      class="skip-to-main"
+      @click="scrollToSection('main-content')"
+    >
+      Skip to main content
+    </a>
 
-  <!-- Screen reader announcements -->
-  <div 
-    id="announcer" 
-    class="sr-only" 
-    aria-live="polite" 
-    aria-atomic="true"
-  ></div>
+    <!-- Screen reader announcements -->
+    <div 
+      id="announcer" 
+      class="sr-only" 
+      aria-live="polite" 
+      aria-atomic="true"
+    ></div>
 
   <Layout>
     <!-- Progress bar -->
@@ -370,6 +390,19 @@ watch(
 </template>
 
 <style scoped>
+  .error-boundary {
+  padding: 20px;
+  color: red;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--vp-c-bg);
+  z-index: 1000;
+  overflow: auto;
+}
+
 /* Base styles */
 .container {
   margin: 0 auto;
