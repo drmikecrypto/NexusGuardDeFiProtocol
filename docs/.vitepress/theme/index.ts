@@ -48,17 +48,18 @@ export default {
       console.error('Info:', info)
     }
 
-    // Router hooks using the correct VitePress router API
-    if (router) {
-      router.beforeEach((to: any, from: any, next: () => void) => {
-        try {
-          console.log(`Route changing from ${from.path} to ${to.path}`)
-          next()
-        } catch (error) {
-          console.error('Router error:', error)
-          next()
-        }
-      })
+  // Router hooks using the correct VitePress router API
+if (router) {
+  router.beforeEach((to: any, from: any, next: () => void) => {
+    try {
+      console.log(`Route changing from ${from.path} to ${to.path}`)
+      next()
+    } catch (error) {
+      console.error('Router error:', error)
+      next()
+    }
+  })
+}
 
       // Handle route errors through app-level error boundary
       app.config.errorHandler = (error: unknown) => {
