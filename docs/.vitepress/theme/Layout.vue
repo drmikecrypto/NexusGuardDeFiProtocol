@@ -1,5 +1,221 @@
 <script setup lang="ts">
-// ... (keep all the existing script code) ...
+import { useData, useRoute } from 'vitepress'
+import DefaultTheme from 'vitepress/theme'
+import { computed, onMounted, ref, watch, onBeforeUnmount } from 'vue'
+import type { Theme } from 'vitepress'
+import MobileMenu from './components/MobileMenu.vue'
+import ProtocolMetrics from './components/ProtocolMetrics.vue'
+import Roadmap from './components/Roadmap.vue'
+import Partners from './components/Partners.vue'
+import Features from './components/Features.vue'
+
+// Setup VitePress data
+const { Layout } = DefaultTheme
+const { frontmatter, theme, page } = useData()
+const route = useRoute()
+
+// Core computations
+const isHomePage = computed(() => route.path === '/')
+const showHero = computed(() => frontmatter.value.hero && isHomePage.value)
+const showFeatures = computed(() => frontmatter.value.features && isHomePage.value)
+const showFooter = computed(() => theme.value.footer && !frontmatter.value.footer)
+
+// Interactive and accessibility features
+const isHeaderVisible = ref(true)
+const lastScrollPosition = ref(0)
+const headerHeight = ref(0)
+const scrollProgress = ref(0)
+const activeSection = ref('')
+const isDarkMode = ref(false)
+const isMobileMenuOpen = ref(false)
+const isReducedMotion = ref(false)
+const skipToMainRef = ref<HTMLAnchorElement | null>(null)
+
+// Mobile detection
+const isMobile = ref(false)
+const checkMobile = () => {
+  isMobile.value = window.innerWidth <= 768
+}
+
+// Update section tracking
+const updateActiveSection = () => {
+  const sections = document.querySelectorAll('.content-section')
+  let found = false
+
+  sections.forEach((section) => {
+    const rect = section.getBoundingClientRect()
+    if (!found && rect.top <= 100 && rect.bottom >= 100) {
+      activeSection.value = section.id
+      found = true
+      announceSection(section.getAttribute('aria-label') || section.id)
+    }
+  })
+}
+
+// Section observer setup
+const setupSectionObserver = () => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        const element = entry.target as HTMLElement
+        if (entry.isIntersecting) {
+          element.classList.add('visible')
+        }
+      })
+    },
+    {
+      threshold: 0.1,
+      rootMargin: '-20% 0px -20% 0px'
+    }
+  )
+
+  document.querySelectorAll('.content-section').forEach(section => {
+    observer.observe(section)
+  })
+
+  return observer
+}
+
+// Scroll handling with debounce
+let scrollTimeout: number
+const handleScroll = () => {
+  if (scrollTimeout) {
+    window.cancelAnimationFrame(scrollTimeout)
+  }
+
+  scrollTimeout = window.requestAnimationFrame(() => {
+    const currentScroll = window.pageYOffset
+    isHeaderVisible.value = currentScroll < lastScrollPosition.value || currentScroll < headerHeight.value
+    lastScrollPosition.value = currentScroll
+
+    // Calculate scroll progress
+    const windowHeight = document.documentElement.scrollHeight - window.innerHeight
+    scrollProgress.value = (currentScroll / windowHeight) * 100
+
+    // Update active section
+    updateActiveSection()
+  })
+}
+
+// Keyboard navigation
+const handleKeyboard = (event: KeyboardEvent) => {
+  if (event.key === 'Escape') {
+    isMobileMenuOpen.value = false
+  }
+
+  if (isMobileMenuOpen.value && event.key === 'Tab') {
+    trapFocus(event)
+  }
+}
+
+// Focus trap
+const trapFocus = (event: KeyboardEvent) => {
+  const modal = document.querySelector('.mobile-menu')
+  if (!modal) return
+
+  const focusableElements = modal.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  )
+  const firstFocusable = focusableElements[0] as HTMLElement
+  const lastFocusable = focusableElements[focusableElements.length - 1] as HTMLElement
+
+  if (event.shiftKey) {
+    if (document.activeElement === firstFocusable) {
+      lastFocusable.focus()
+      event.preventDefault()
+    }
+  } else {
+    if (document.activeElement === lastFocusable) {
+      firstFocusable.focus()
+      event.preventDefault()
+    }
+  }
+}
+
+// Screen reader announcements
+const announceSection = (sectionName: string) => {
+  const announcer = document.getElementById('announcer')
+  if (announcer) {
+    announcer.textContent = `Navigated to ${sectionName} section`
+  }
+}
+
+// Smooth scroll with reduced motion support
+const scrollToSection = (sectionId: string) => {
+  const section = document.getElementById(sectionId)
+  if (section) {
+    if (isReducedMotion.value) {
+      section.scrollIntoView()
+    } else {
+      section.scrollIntoView({ behavior: 'smooth' })
+    }
+    section.focus({ preventScroll: true })
+  }
+}
+
+// Mobile menu handling
+const toggleMobileMenu = () => {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value
+  if (isMobileMenuOpen.value) {
+    document.body.style.overflow = 'hidden'
+    // Focus first interactive element
+    setTimeout(() => {
+      const firstFocusable = document.querySelector('.mobile-menu button') as HTMLElement
+      if (firstFocusable) firstFocusable.focus()
+    }, 100)
+  } else {
+    document.body.style.overflow = ''
+  }
+}
+
+// Theme toggle
+const toggleTheme = () => {
+  isDarkMode.value = !isDarkMode.value
+  document.documentElement.classList.toggle('dark')
+  localStorage.setItem('vitepress-theme', isDarkMode.value ? 'dark' : 'light')
+  announceSection(`Switched to ${isDarkMode.value ? 'dark' : 'light'} mode`)
+}
+
+// Check accessibility preferences
+const checkReducedMotion = () => {
+  isReducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
+// Lifecycle hooks
+onMounted(() => {
+  const observer = setupSectionObserver()
+  headerHeight.value = document.querySelector('.VPNav')?.offsetHeight || 0
+  
+  // Event listeners
+  window.addEventListener('scroll', handleScroll, { passive: true })
+  window.addEventListener('keydown', handleKeyboard)
+  window.addEventListener('resize', checkMobile)
+  
+  // Initial checks
+  checkMobile()
+  checkReducedMotion()
+  isDarkMode.value = document.documentElement.classList.contains('dark')
+
+  // Cleanup
+  onBeforeUnmount(() => {
+    window.removeEventListener('scroll', handleScroll)
+    window.removeEventListener('keydown', handleKeyboard)
+    window.removeEventListener('resize', checkMobile)
+    observer.disconnect()
+    if (scrollTimeout) {
+      window.cancelAnimationFrame(scrollTimeout)
+    }
+  })
+})
+
+// Watch for route changes to close mobile menu
+watch(
+  () => route.path,
+  () => {
+    isMobileMenuOpen.value = false
+    document.body.style.overflow = ''
+  }
+)
 </script>
 
 <template>
