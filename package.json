@@ -12,9 +12,8 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "docs:dev": "vitepress dev docs",
+    "docs:dev": "vitepress dev docs --debug",
     "docs:build": "vitepress build docs",
-    "docs:serve": "vitepress serve docs",
     "docs:preview": "vitepress preview docs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
