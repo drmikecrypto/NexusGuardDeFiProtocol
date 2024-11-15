@@ -8,6 +8,7 @@ import ProtocolMetrics from './components/ProtocolMetrics.vue'
 import Roadmap from './components/Roadmap.vue'
 import Partners from './components/Partners.vue'
 import Features from './components/Features.vue'
+import { useData } from 'vitepress'
 
 // Setup VitePress data
 const { Layout } = DefaultTheme
