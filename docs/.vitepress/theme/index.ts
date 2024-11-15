@@ -48,11 +48,7 @@ export default {
       console.error('Info:', info)
     }
 
-    // Add route change handling
-    router.onError((error) => {
-      console.error('Router error:', error)
-    })
-
+    // Add route change handling (removed router.onError)
     router.beforeEach((to, from) => {
       console.log(`Route changing from ${from.path} to ${to.path}`)
     })
