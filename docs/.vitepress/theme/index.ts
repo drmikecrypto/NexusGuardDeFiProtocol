@@ -47,11 +47,11 @@ export default {
       console.error('Info:', info)
     }
 
-    // Router hooks
-    if (router) {
-      router.beforeEach((to, from) => {
+    // Router hooks using onBeforeRouteChange
+    if (router?.onBeforeRouteChange) {
+      router.onBeforeRouteChange((to) => {
         try {
-          console.log(`Route changing from ${from.path} to ${to.path}`)
+          console.log(`Route changing to ${to.path}`)
         } catch (error) {
           console.error('Router error:', error)
         }
