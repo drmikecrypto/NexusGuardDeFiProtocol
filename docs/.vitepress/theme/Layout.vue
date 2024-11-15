@@ -1,31 +1,82 @@
 <script setup lang="ts">
-import { useData, useRoute } from 'vitepress'
-import DefaultTheme from 'vitepress/theme'
-import { computed } from 'vue'
-import type { Theme } from 'vitepress'
-
-const { Layout } = DefaultTheme
-const { frontmatter, theme, page } = useData()
-const route = useRoute()
-
-const isHomePage = computed(() => route.path === '/')
-const showHero = computed(() => frontmatter.value.hero && isHomePage.value)
-const showFeatures = computed(() => frontmatter.value.features && isHomePage.value)
-const showFooter = computed(() => theme.value.footer && !frontmatter.value.footer)
-
-// Custom classes for different page types
-const pageClasses = computed(() => ({
-  'theme-default': true,
-  'page-home': isHomePage.value,
-  'page-doc': !isHomePage.value,
-  [`page-${frontmatter.value.pageClass}`]: frontmatter.value.pageClass
-}))
+// ... (keep all the existing script code) ...
 </script>
 
 <template>
+  <!-- Skip to main content link -->
+  <a 
+    ref="skipToMainRef"
+    href="#main-content"
+    class="skip-to-main"
+    @click="scrollToSection('main-content')"
+  >
+    Skip to main content
+  </a>
+
+  <!-- Screen reader announcements -->
+  <div 
+    id="announcer" 
+    class="sr-only" 
+    aria-live="polite" 
+    aria-atomic="true"
+  ></div>
+
   <Layout>
+    <!-- Progress bar -->
+    <div 
+      class="scroll-progress" 
+      :style="{ width: `${scrollProgress}%` }"
+      role="progressbar"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      :aria-valuenow="scrollProgress"
+    />
+
+    <!-- Mobile menu button -->
+    <button
+      class="mobile-menu-toggle"
+      :aria-expanded="isMobileMenuOpen"
+      aria-controls="mobile-menu"
+      @click="toggleMobileMenu"
+      v-if="isMobile"
+    >
+      <span class="sr-only">Toggle menu</span>
+      <span class="menu-icon" aria-hidden="true"></span>
+    </button>
+
+    <!-- Mobile menu -->
+    <div
+      v-if="isMobile && isMobileMenuOpen"
+      id="mobile-menu"
+      class="mobile-menu"
+      :class="{ 'is-open': isMobileMenuOpen }"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Navigation menu"
+    >
+      <MobileMenu @close="toggleMobileMenu" />
+    </div>
+
+    <!-- Theme toggle -->
+    <button 
+      class="theme-toggle"
+      @click="toggleTheme"
+      :aria-label="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+    >
+      <span class="sr-only">
+        {{ isDarkMode ? 'Switch to light mode' : 'Switch to dark mode' }}
+      </span>
+      <span aria-hidden="true">{{ isDarkMode ? '🌞' : '🌙' }}</span>
+    </button>
+
+    <!-- Main content -->
     <template #layout-top>
-      <div v-if="showHero" class="custom-hero">
+      <div 
+        v-if="showHero" 
+        class="custom-hero content-section"
+        :class="{ 'header-hidden': !isHeaderVisible }"
+        id="hero"
+      >
         <div class="container">
           <h1 class="hero-title">{{ frontmatter.hero.name }}</h1>
           <p class="hero-description">{{ frontmatter.hero.tagline }}</p>
@@ -45,12 +96,17 @@ const pageClasses = computed(() => ({
             <img 
               :src="frontmatter.hero.image.src"
               :alt="frontmatter.hero.image.alt"
+              loading="eager"
             >
           </div>
         </div>
       </div>
 
-      <div v-if="showFeatures" class="features">
+      <div 
+        v-if="showFeatures" 
+        class="features content-section" 
+        id="features"
+      >
         <div class="container">
           <div class="features-grid">
             <div 
@@ -71,6 +127,21 @@ const pageClasses = computed(() => ({
             </div>
           </div>
         </div>
+      </div>
+
+      <div v-if="isHomePage" class="home-sections">
+        <ProtocolMetrics 
+          class="metrics-section content-section" 
+          id="metrics" 
+        />
+        <Roadmap 
+          class="roadmap-section content-section" 
+          id="roadmap" 
+        />
+        <Partners 
+          class="partners-section content-section" 
+          id="partners" 
+        />
       </div>
     </template>
 
@@ -94,27 +165,107 @@ const pageClasses = computed(() => ({
     </template>
   </Layout>
 </template>
-
 <style scoped>
+/* Base styles */
+.container {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+/* Accessibility styles */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-to-main {
+  position: fixed;
+  top: -100%;
+  left: 0;
+  z-index: 100;
+  padding: 1rem;
+  background: var(--vp-c-brand);
+  color: white;
+  text-decoration: none;
+  transition: top 0.3s;
+}
+
+.skip-to-main:focus {
+  top: 0;
+}
+
+/* Progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--vp-c-brand);
+  z-index: 100;
+  transition: width 0.2s;
+}
+
+/* Theme toggle */
+.theme-toggle {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--vp-c-bg);
+  border: 1px solid var(--vp-c-divider);
+  cursor: pointer;
+  z-index: 90;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Hero section */
 .custom-hero {
-  padding: 4rem 2rem;
+  padding: 6rem 2rem 4rem;
   text-align: center;
   background: var(--vp-c-bg-soft);
+  border-bottom: 1px solid var(--vp-c-divider);
+  transition: transform 0.3s ease;
 }
 
 .hero-title {
-  font-size: 3rem;
-  font-weight: 600;
+  font-size: 3.5rem;
+  font-weight: 700;
   line-height: 1.2;
   color: var(--vp-c-text-1);
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+  background: linear-gradient(45deg, var(--vp-c-brand), var(--vp-c-brand-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .hero-description {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: var(--vp-c-text-2);
   max-width: 780px;
   margin: 0 auto 2rem;
+  line-height: 1.6;
 }
 
 .hero-actions {
@@ -125,12 +276,14 @@ const pageClasses = computed(() => ({
 }
 
 .hero-action {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   padding: 0.8rem 1.6rem;
   border-radius: 8px;
   font-weight: 500;
-  transition: all 0.25s;
+  transition: all 0.25s ease;
   text-decoration: none;
+  font-size: 1.1rem;
 }
 
 .hero-action-brand {
@@ -138,10 +291,21 @@ const pageClasses = computed(() => ({
   color: white;
 }
 
+.hero-action-brand:hover {
+  background: var(--vp-c-brand-dark);
+  transform: translateY(-2px);
+}
+
 .hero-action-alt {
   background: var(--vp-c-bg);
   color: var(--vp-c-brand);
   border: 1px solid var(--vp-c-brand);
+}
+
+.hero-action-alt:hover {
+  color: var(--vp-c-brand-dark);
+  border-color: var(--vp-c-brand-dark);
+  transform: translateY(-2px);
 }
 
 .hero-image {
@@ -151,15 +315,24 @@ const pageClasses = computed(() => ({
 .hero-image img {
   max-width: 200px;
   height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease;
 }
 
+.hero-image img:hover {
+  transform: scale(1.05);
+}
+
+/* Features section */
 .features {
   padding: 4rem 2rem;
+  background: var(--vp-c-bg);
 }
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
@@ -167,18 +340,24 @@ const pageClasses = computed(() => ({
 
 .feature-item {
   padding: 2rem;
-  background: var(--vp-c-bg);
+  background: var(--vp-c-bg-soft);
   border-radius: 12px;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  border: 1px solid var(--vp-c-divider);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .feature-item:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border-color: var(--vp-c-brand);
 }
 
 .feature-icon {
   display: inline-block;
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
 }
 
@@ -193,14 +372,106 @@ const pageClasses = computed(() => ({
   color: var(--vp-c-text-2);
   margin-bottom: 1.5rem;
   line-height: 1.6;
+  flex-grow: 1;
 }
 
 .feature-link {
   color: var(--vp-c-brand);
   text-decoration: none;
   font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  margin-top: auto;
+  transition: all 0.3s ease;
 }
 
+.feature-link:hover {
+  color: var(--vp-c-brand-dark);
+  transform: translateX(4px);
+}
+
+/* Home sections */
+.home-sections {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.content-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out;
+}
+
+.content-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.metrics-section,
+.roadmap-section,
+.partners-section {
+  padding: 4rem 0;
+  border-top: 1px solid var(--vp-c-divider);
+}
+
+/* Mobile menu */
+.mobile-menu-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--vp-c-bg);
+  border: 1px solid var(--vp-c-divider);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.menu-icon {
+  width: 24px;
+  height: 2px;
+  background: var(--vp-c-text-1);
+  position: relative;
+}
+
+.menu-icon::before,
+.menu-icon::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background: var(--vp-c-text-1);
+  transition: all 0.3s ease;
+}
+
+.menu-icon::before {
+  top: -8px;
+}
+
+.menu-icon::after {
+  bottom: -8px;
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--vp-c-bg);
+  z-index: 99;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.mobile-menu.is-open {
+  transform: translateX(0);
+}
+
+/* Footer */
 .doc-footer-nav {
   margin-top: 4rem;
   padding-top: 2rem;
@@ -219,15 +490,61 @@ const pageClasses = computed(() => ({
   color: var(--vp-c-brand);
   text-decoration: none;
   font-size: 0.9rem;
+  transition: color 0.25s;
+}
+
+.edit-link a:hover {
+  color: var(--vp-c-brand-dark);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+  
+  .container {
+    padding: 0 1.5rem;
+  }
 }
 
 @media (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  .theme-toggle {
+    bottom: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+  }
+
   .hero-title {
     font-size: 2.5rem;
+    padding: 0 1rem;
+  }
+
+  .hero-description {
+    font-size: 1.1rem;
+    padding: 0 1rem;
   }
 
   .hero-actions {
     flex-direction: column;
+    padding: 0 2rem;
   }
 
   .features-grid {
@@ -238,6 +555,47 @@ const pageClasses = computed(() => ({
     flex-direction: column;
     gap: 1rem;
     text-align: center;
+  }
+
+  .custom-hero {
+    padding: 4rem 1rem 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-image img {
+    max-width: 150px;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .hero-action {
+    border: 2px solid currentColor;
+  }
+
+  .feature-item {
+    border: 1px solid currentColor;
   }
 }
 </style>
