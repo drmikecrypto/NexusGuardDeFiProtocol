@@ -385,6 +385,7 @@ watch(
           </a>
         </div>
       </div>
+      </div>
     </template>
   </Layout>
 </template>
