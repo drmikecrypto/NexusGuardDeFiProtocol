@@ -385,13 +385,11 @@ watch(
           </a>
         </div>
       </div>
-      </div>
     </template>
   </Layout>
-</template>
-</Layout>
 </div>
 </template>
+
 <style scoped>
   .error-boundary {
   padding: 20px;
