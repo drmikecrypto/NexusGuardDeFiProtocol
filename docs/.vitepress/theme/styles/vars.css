@@ -1,1 +1,27 @@
+/* docs/.vitepress/theme/styles/vars.css */
+:root {
+  --vp-c-brand: #646cff;
+  --vp-c-brand-light: #747bff;
+  --vp-c-brand-lighter: #9499ff;
+  --vp-c-brand-dark: #535bf2;
+  --vp-c-brand-darker: #454ce1;
 
+  /* Layout */
+  --vp-layout-max-width: 1440px;
+  --vp-sidebar-width: 272px;
+  --vp-content-width: 800px;
+
+  /* Component specific */
+  --header-height: 64px;
+  --mobile-header-height: 56px;
+  --mobile-menu-width: 300px;
+}
+
+/* Dark theme overrides */
+.dark {
+  --vp-c-brand: #747bff;
+  --vp-c-brand-light: #9499ff;
+  --vp-c-brand-lighter: #bcc0ff;
+  --vp-c-brand-dark: #535bf2;
+  --vp-c-brand-darker: #454ce1;
+}
