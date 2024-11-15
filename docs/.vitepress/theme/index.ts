@@ -24,14 +24,11 @@ interface ThemeComponents {
   CodeBlock: typeof CodeBlock
 }
 
-console.log('Theme loading started...') // Debug log
-
-// Single default export
 export default {
   extends: DefaultTheme,
   Layout,
-  enhanceApp({ app, router }: EnhanceAppContext) {
-    console.log('Theme enhancement started...') // Debug log
+  enhanceApp({ app }: EnhanceAppContext) {
+    console.log('Theme enhancement started...')
     
     // Register components globally
     app.component('MobileMenu', MobileMenu)
@@ -48,19 +45,6 @@ export default {
       console.error('Info:', info)
     }
 
-    // Router hooks using the correct VitePress router API
-    if (router) {
-      router.beforeEach((to, from, next) => {
-        console.log(`Route changing from ${from.path} to ${to.path}`)
-        next()
-      })
-
-      // Handle route errors through app-level error boundary
-      app.config.errorHandler = (error) => {
-        console.error('Application error:', error)
-      }
-    }
-
     // Add theme-related global properties
     app.config.globalProperties.$theme = {
       isDark: false,
@@ -69,21 +53,9 @@ export default {
           !app.config.globalProperties.$theme.isDark
       }
     }
-  },
-
-  setup() {
-    // Theme setup logic
-    const handleTheme = () => {
-      // Theme setup logic
-    }
-
-    return {
-      handleTheme
-    }
   }
 } satisfies Theme
 
-// Export components for direct imports if needed
 export {
   MobileMenu,
   Roadmap,
@@ -93,5 +65,4 @@ export {
   CodeBlock
 }
 
-// Export types
 export type { ThemeComponents }
