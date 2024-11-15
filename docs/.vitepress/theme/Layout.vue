@@ -238,7 +238,7 @@ watch(
   </div>
   
   <!-- Main content if no error -->
-  <template v-else>
+  <div v-else>
     <!-- Skip to main content link -->
     <a 
       ref="skipToMainRef"
@@ -388,7 +388,9 @@ watch(
     </template>
   </Layout>
 </template>
-
+</Layout>
+</div>
+</template>
 <style scoped>
   .error-boundary {
   padding: 20px;
