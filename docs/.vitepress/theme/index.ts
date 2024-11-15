@@ -48,14 +48,18 @@ export default {
       console.error('Info:', info)
     }
 
-    // Add route change handling
-    router.onError((error) => {
-      console.error('Router error:', error)
-    })
+    // Router hooks using the correct VitePress router API
+    if (router) {
+      router.beforeEach((to, from, next) => {
+        console.log(`Route changing from ${from.path} to ${to.path}`)
+        next()
+      })
 
-    router.beforeEach((to, from) => {
-      console.log(`Route changing from ${from.path} to ${to.path}`)
-    })
+      // Handle route errors through app-level error boundary
+      app.config.errorHandler = (error) => {
+        console.error('Application error:', error)
+      }
+    }
 
     // Add theme-related global properties
     app.config.globalProperties.$theme = {
