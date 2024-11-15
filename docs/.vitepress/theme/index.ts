@@ -1,35 +1,9 @@
-// theme/index.ts
+// docs/.vitepress/theme/index.ts
 import DefaultTheme from 'vitepress/theme'
 import { type Theme } from 'vitepress'
 import { type EnhanceAppContext } from 'vitepress/client'
 import Layout from './Layout.vue'
 import './styles/main.css'
-
-console.log('Theme loading started...') // Debug log
-
-export default {
-  extends: DefaultTheme,
-  Layout,
-  enhanceApp({ app, router }) {
-    console.log('Theme enhancement started...') // Debug log
-    
-    // Add error handling
-    app.config.errorHandler = (err, instance, info) => {
-      console.error('Vue Error:', err)
-      console.error('Component:', instance)
-      console.error('Info:', info)
-    }
-
-    // Add route change handling
-    router.onError((error) => {
-      console.error('Router error:', error)
-    })
-
-    router.beforeEach((to, from) => {
-      console.log(`Route changing from ${from.path} to ${to.path}`)
-    })
-  }
-} satisfies Theme
 
 // Import components
 import MobileMenu from './components/MobileMenu.vue'
@@ -50,33 +24,51 @@ interface ThemeComponents {
   CodeBlock: typeof CodeBlock
 }
 
-// Export theme configuration
+console.log('Theme loading started...') // Debug log
+
+// Single default export
 export default {
   extends: DefaultTheme,
   Layout,
-  // Type-safe enhance function
-  enhanceApp(ctx: EnhanceAppContext) {
-    // Register components globally with proper types
-    ctx.app.component('MobileMenu', MobileMenu)
-    ctx.app.component('Roadmap', Roadmap)
-    ctx.app.component('Partners', Partners)
-    ctx.app.component('Features', Features)
-    ctx.app.component('ProtocolMetrics', ProtocolMetrics)
-    ctx.app.component('CodeBlock', CodeBlock)
+  enhanceApp({ app, router }: EnhanceAppContext) {
+    console.log('Theme enhancement started...') // Debug log
+    
+    // Register components globally
+    app.component('MobileMenu', MobileMenu)
+    app.component('Roadmap', Roadmap)
+    app.component('Partners', Partners)
+    app.component('Features', Features)
+    app.component('ProtocolMetrics', ProtocolMetrics)
+    app.component('CodeBlock', CodeBlock)
 
-    // Add any other app enhancements
-    ctx.app.config.globalProperties.$theme = {
-      isDark: false, // Add theme-related global properties
+    // Add error handling
+    app.config.errorHandler = (err, instance, info) => {
+      console.error('Vue Error:', err)
+      console.error('Component:', instance)
+      console.error('Info:', info)
+    }
+
+    // Add route change handling
+    router.onError((error) => {
+      console.error('Router error:', error)
+    })
+
+    router.beforeEach((to, from) => {
+      console.log(`Route changing from ${from.path} to ${to.path}`)
+    })
+
+    // Add theme-related global properties
+    app.config.globalProperties.$theme = {
+      isDark: false,
       toggleDark: () => {
-        ctx.app.config.globalProperties.$theme.isDark = 
-          !ctx.app.config.globalProperties.$theme.isDark
+        app.config.globalProperties.$theme.isDark = 
+          !app.config.globalProperties.$theme.isDark
       }
     }
   },
 
-  // Add setup hook for theme-wide functionality
   setup() {
-    // Add any theme-wide setup logic
+    // Theme setup logic
     const handleTheme = () => {
       // Theme setup logic
     }
