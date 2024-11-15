@@ -261,17 +261,19 @@ watch(
     </button>
 
     <!-- Mobile menu -->
-    <div
-      v-if="isMobile && isMobileMenuOpen"
-      id="mobile-menu"
-      class="mobile-menu"
-      :class="{ 'is-open': isMobileMenuOpen }"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Navigation menu"
-    >
-      <MobileMenu @close="toggleMobileMenu" />
-    </div>
+    <Teleport to="body">
+      <div
+        v-if="isMobile && isMobileMenuOpen"
+        id="mobile-menu"
+        class="mobile-menu"
+        :class="{ 'is-open': isMobileMenuOpen }"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation menu"
+      >
+        <MobileMenu @close="toggleMobileMenu" />
+      </div>
+    </Teleport>
 
     <!-- Theme toggle -->
     <button 
@@ -287,78 +289,63 @@ watch(
 
     <!-- Main content -->
     <template #layout-top>
-      <div 
-        v-if="showHero" 
-        class="custom-hero content-section"
-        :class="{ 'header-hidden': !isHeaderVisible }"
-        id="hero"
-      >
-        <div class="container">
-          <h1 class="hero-title">{{ frontmatter.hero.name }}</h1>
-          <p class="hero-description">{{ frontmatter.hero.tagline }}</p>
-          
-          <div v-if="frontmatter.hero.actions" class="hero-actions">
-            <a 
-              v-for="action in frontmatter.hero.actions"
-              :key="action.link"
-              :href="action.link"
-              :class="['hero-action', `hero-action-${action.theme}`]"
-            >
-              {{ action.text }}
-            </a>
-          </div>
-
-          <div v-if="frontmatter.hero.image" class="hero-image">
-            <img 
-              :src="frontmatter.hero.image.src"
-              :alt="frontmatter.hero.image.alt"
-              loading="eager"
-            >
-          </div>
-        </div>
-      </div>
-
-      <div 
-        v-if="showFeatures" 
-        class="features content-section" 
-        id="features"
-      >
-        <div class="container">
-          <div class="features-grid">
-            <div 
-              v-for="feature in frontmatter.features"
-              :key="feature.title"
-              class="feature-item"
-            >
-              <span v-if="feature.icon" class="feature-icon">{{ feature.icon }}</span>
-              <h3 class="feature-title">{{ feature.title }}</h3>
-              <p class="feature-details">{{ feature.details }}</p>
+      <main id="main-content">
+        <div 
+          v-if="showHero" 
+          class="custom-hero content-section"
+          :class="{ 'header-hidden': !isHeaderVisible }"
+          id="hero"
+        >
+          <div class="container">
+            <h1 class="hero-title">{{ frontmatter.hero.name }}</h1>
+            <p class="hero-description">{{ frontmatter.hero.tagline }}</p>
+            
+            <div v-if="frontmatter.hero.actions" class="hero-actions">
               <a 
-                v-if="feature.link"
-                :href="feature.link"
-                class="feature-link"
+                v-for="action in frontmatter.hero.actions"
+                :key="action.link"
+                :href="action.link"
+                :class="['hero-action', `hero-action-${action.theme}`]"
               >
-                {{ feature.linkText || 'Learn more →' }}
+                {{ action.text }}
               </a>
+            </div>
+
+            <div v-if="frontmatter.hero.image" class="hero-image">
+              <img 
+                :src="frontmatter.hero.image.src"
+                :alt="frontmatter.hero.image.alt"
+                loading="eager"
+              >
             </div>
           </div>
         </div>
-      </div>
 
-      <div v-if="isHomePage" class="home-sections">
-        <ProtocolMetrics 
-          class="metrics-section content-section" 
-          id="metrics" 
-        />
-        <Roadmap 
-          class="roadmap-section content-section" 
-          id="roadmap" 
-        />
-        <Partners 
-          class="partners-section content-section" 
-          id="partners" 
-        />
-      </div>
+        <div 
+          v-if="showFeatures" 
+          class="features content-section" 
+          id="features"
+        >
+          <div class="container">
+            <Features :features="frontmatter.features" />
+          </div>
+        </div>
+
+        <div v-if="isHomePage" class="home-sections">
+          <ProtocolMetrics 
+            class="metrics-section content-section" 
+            id="metrics" 
+          />
+          <Roadmap 
+            class="roadmap-section content-section" 
+            id="roadmap" 
+          />
+          <Partners 
+            class="partners-section content-section" 
+            id="partners" 
+          />
+        </div>
+      </main>
     </template>
 
     <template #aside-outline-before>
@@ -381,16 +368,17 @@ watch(
     </template>
   </Layout>
 </template>
+
 <style scoped>
 /* Base styles */
 .container {
   margin: 0 auto;
-  max-width: 1200px;
-  padding: 0 2rem;
+  max-width: var(--vp-content-width, 1200px);
+  padding: 0 24px;
   width: 100%;
 }
 
-/* Accessibility styles */
+/* Accessibility */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -430,11 +418,75 @@ watch(
   transition: width 0.2s;
 }
 
+/* Mobile menu */
+.mobile-menu-toggle {
+  position: fixed;
+  top: 8px;
+  right: 16px;
+  z-index: 100;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: var(--vp-c-bg);
+  border-radius: 8px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.25s;
+}
+
+.menu-icon {
+  width: 24px;
+  height: 2px;
+  background: var(--vp-c-text-1);
+  position: relative;
+  transition: background-color 0.25s;
+}
+
+.menu-icon::before,
+.menu-icon::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background: var(--vp-c-text-1);
+  transition: transform 0.25s;
+}
+
+.menu-icon::before {
+  transform: translateY(-8px);
+}
+
+.menu-icon::after {
+  transform: translateY(8px);
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: var(--mobile-menu-width, 320px);
+  background: var(--vp-c-bg);
+  z-index: 99;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-menu.is-open {
+  transform: translateX(0);
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+}
+
 /* Theme toggle */
 .theme-toggle {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  bottom: 24px;
+  right: 24px;
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -446,41 +498,38 @@ watch(
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-size: 1.2rem;
 }
 
 .theme-toggle:hover {
   transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: var(--vp-c-brand);
 }
 
 /* Hero section */
 .custom-hero {
-  padding: 6rem 2rem 4rem;
-  text-align: center;
+  padding: calc(var(--vp-nav-height) + 48px) 24px 48px;
   background: var(--vp-c-bg-soft);
+  text-align: center;
   border-bottom: 1px solid var(--vp-c-divider);
-  transition: transform 0.3s ease;
 }
 
 .hero-title {
-  font-size: 3.5rem;
+  font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 700;
   line-height: 1.2;
-  color: var(--vp-c-text-1);
-  margin-bottom: 1.5rem;
   letter-spacing: -0.02em;
-  background: linear-gradient(45deg, var(--vp-c-brand), var(--vp-c-brand-dark));
+  background: linear-gradient(120deg, var(--vp-c-brand), var(--vp-c-brand-dark));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
 }
 
 .hero-description {
-  font-size: 1.4rem;
-  color: var(--vp-c-text-2);
-  max-width: 780px;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  max-width: 768px;
   margin: 0 auto 2rem;
+  color: var(--vp-c-text-2);
   line-height: 1.6;
 }
 
@@ -488,18 +537,15 @@ watch(
   display: flex;
   gap: 1rem;
   justify-content: center;
-  margin-top: 2rem;
+  flex-wrap: wrap;
 }
 
 .hero-action {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.8rem 1.6rem;
+  padding: 0.75rem 1.5rem;
   border-radius: 8px;
   font-weight: 500;
-  transition: all 0.25s ease;
+  transition: all 0.25s;
   text-decoration: none;
-  font-size: 1.1rem;
 }
 
 .hero-action-brand {
@@ -524,94 +570,9 @@ watch(
   transform: translateY(-2px);
 }
 
-.hero-image {
-  margin-top: 4rem;
-}
-
-.hero-image img {
-  max-width: 200px;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  transition: transform 0.3s ease;
-}
-
-.hero-image img:hover {
-  transform: scale(1.05);
-}
-
-/* Features section */
-.features {
-  padding: 4rem 2rem;
-  background: var(--vp-c-bg);
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.feature-item {
-  padding: 2rem;
-  background: var(--vp-c-bg-soft);
-  border-radius: 12px;
-  transition: all 0.3s ease;
-  border: 1px solid var(--vp-c-divider);
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.feature-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  border-color: var(--vp-c-brand);
-}
-
-.feature-icon {
-  display: inline-block;
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.feature-title {
-  font-size: 1.4rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: var(--vp-c-text-1);
-}
-
-.feature-details {
-  color: var(--vp-c-text-2);
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
-  flex-grow: 1;
-}
-
-.feature-link {
-  color: var(--vp-c-brand);
-  text-decoration: none;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  margin-top: auto;
-  transition: all 0.3s ease;
-}
-
-.feature-link:hover {
-  color: var(--vp-c-brand-dark);
-  transform: translateX(4px);
-}
-
-/* Home sections */
-.home-sections {
-  animation: fadeIn 0.8s ease-out;
-}
-
+/* Content sections */
 .content-section {
+  padding: 64px 0;
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.8s ease-out;
@@ -622,90 +583,24 @@ watch(
   transform: translateY(0);
 }
 
-.metrics-section,
-.roadmap-section,
-.partners-section {
-  padding: 4rem 0;
-  border-top: 1px solid var(--vp-c-divider);
-}
-
-/* Mobile menu */
-.mobile-menu-toggle {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 100;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-divider);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.menu-icon {
-  width: 24px;
-  height: 2px;
-  background: var(--vp-c-text-1);
-  position: relative;
-}
-
-.menu-icon::before,
-.menu-icon::after {
-  content: '';
-  position: absolute;
-  width: 24px;
-  height: 2px;
-  background: var(--vp-c-text-1);
-  transition: all 0.3s ease;
-}
-
-.menu-icon::before {
-  top: -8px;
-}
-
-.menu-icon::after {
-  bottom: -8px;
-}
-
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--vp-c-bg);
-  z-index: 99;
-  transform: translateX(100%);
-  transition: transform 0.3s ease;
-}
-
-.mobile-menu.is-open {
-  transform: translateX(0);
-}
-
 /* Footer */
 .doc-footer-nav {
-  margin-top: 4rem;
-  padding-top: 2rem;
+  margin-top: 64px;
+  padding-top: 16px;
   border-top: 1px solid var(--vp-c-divider);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 0.9rem;
 }
 
 .last-updated {
   color: var(--vp-c-text-2);
-  font-size: 0.9rem;
 }
 
 .edit-link a {
   color: var(--vp-c-brand);
   text-decoration: none;
-  font-size: 0.9rem;
   transition: color 0.25s;
 }
 
@@ -713,26 +608,10 @@ watch(
   color: var(--vp-c-brand-dark);
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* Responsive design */
-@media (max-width: 1024px) {
-  .hero-title {
-    font-size: 3rem;
-  }
-  
+@media (max-width: 960px) {
   .container {
-    padding: 0 1.5rem;
+    padding: 0 16px;
   }
 }
 
@@ -742,57 +621,29 @@ watch(
   }
 
   .theme-toggle {
-    bottom: 1rem;
-    right: 1rem;
+    bottom: 16px;
+    right: 16px;
     width: 40px;
     height: 40px;
   }
 
-  .hero-title {
-    font-size: 2.5rem;
-    padding: 0 1rem;
-  }
-
-  .hero-description {
-    font-size: 1.1rem;
-    padding: 0 1rem;
+  .custom-hero {
+    padding: calc(var(--vp-nav-height) + 24px) 16px 32px;
   }
 
   .hero-actions {
     flex-direction: column;
-    padding: 0 2rem;
-  }
-
-  .features-grid {
-    grid-template-columns: 1fr;
+    padding: 0 32px;
   }
 
   .doc-footer-nav {
     flex-direction: column;
-    gap: 1rem;
+    gap: 8px;
     text-align: center;
   }
-
-  .custom-hero {
-    padding: 4rem 1rem 2rem;
-  }
 }
 
-@media (max-width: 480px) {
-  .hero-title {
-    font-size: 2rem;
-  }
-
-  .hero-image img {
-    max-width: 150px;
-  }
-
-  .container {
-    padding: 0 1rem;
-  }
-}
-
-/* Reduced motion preferences */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -801,17 +652,6 @@ watch(
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-}
-
-/* High contrast mode support */
-@media (forced-colors: active) {
-  .hero-action {
-    border: 2px solid currentColor;
-  }
-
-  .feature-item {
-    border: 1px solid currentColor;
   }
 }
 </style>
