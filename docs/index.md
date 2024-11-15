@@ -58,7 +58,6 @@ features:
 ---
 
 <script setup>
-import { VPTeamMembers } from 'vitepress/theme'
 import { ref } from 'vue'
 
 const protocolMetrics = ref([
@@ -117,8 +116,6 @@ const highlights = ref([
 
 <template>
   <div class="landing-content">
-    <Features class="features-section" />
-    
     <div class="metrics-section">
       <h2>Protocol Metrics</h2>
       <div class="metrics-grid">
@@ -146,10 +143,6 @@ const highlights = ref([
         </div>
       </div>
     </div>
-
-    <Roadmap class="roadmap-section" />
-    
-    <Partners class="partners-section" />
 
     <div class="cta-section">
       <h2>Ready to Get Started?</h2>
