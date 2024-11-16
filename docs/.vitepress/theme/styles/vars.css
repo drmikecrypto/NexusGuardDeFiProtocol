@@ -1,27 +1,117 @@
-/* docs/.vitepress/theme/styles/vars.css */
 :root {
+  /* Brand Colors */
   --vp-c-brand: #646cff;
   --vp-c-brand-light: #747bff;
   --vp-c-brand-lighter: #9499ff;
   --vp-c-brand-dark: #535bf2;
   --vp-c-brand-darker: #454ce1;
+  --vp-c-brand-dimm: rgba(100, 108, 255, 0.08);
 
-  /* Layout */
+  /* Semantic Colors */
+  --vp-c-success: #00dc82;
+  --vp-c-warning: #f0a020;
+  --vp-c-danger: #f43f5e;
+  --vp-c-info: #0ea5e9;
+
+  /* Layout Dimensions */
   --vp-layout-max-width: 1440px;
   --vp-sidebar-width: 272px;
   --vp-content-width: 800px;
+  --vp-content-min-width: 320px;
 
-  /* Component specific */
+  /* Component Dimensions */
   --header-height: 64px;
   --mobile-header-height: 56px;
   --mobile-menu-width: 300px;
+  
+  /* Spacing Scale */
+  --vp-space-1x: 4px;
+  --vp-space-2x: 8px;
+  --vp-space-3x: 12px;
+  --vp-space-4x: 16px;
+  --vp-space-5x: 24px;
+  --vp-space-6x: 32px;
+
+  /* Border Radius */
+  --vp-radius-sm: 4px;
+  --vp-radius-md: 8px;
+  --vp-radius-lg: 12px;
+  --vp-radius-full: 9999px;
+
+  /* Typography */
+  --vp-font-family-base: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --vp-font-family-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, monospace;
+  
+  /* Font Sizes */
+  --vp-text-xs: 0.75rem;
+  --vp-text-sm: 0.875rem;
+  --vp-text-md: 1rem;
+  --vp-text-lg: 1.125rem;
+  --vp-text-xl: 1.25rem;
+  --vp-text-2xl: 1.5rem;
+
+  /* Font Weights */
+  --vp-font-weight-normal: 400;
+  --vp-font-weight-medium: 500;
+  --vp-font-weight-semibold: 600;
+  --vp-font-weight-bold: 700;
+
+  /* Z-index Scale */
+  --vp-z-index-local: 10;
+  --vp-z-index-popup: 20;
+  --vp-z-index-overlay: 30;
+  --vp-z-index-fixed: 40;
+  --vp-z-index-modal: 50;
+
+  /* Transitions */
+  --vp-transition-duration: 0.25s;
+  --vp-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Dark theme overrides */
+/* Dark Theme Colors */
 .dark {
   --vp-c-brand: #747bff;
   --vp-c-brand-light: #9499ff;
   --vp-c-brand-lighter: #bcc0ff;
   --vp-c-brand-dark: #535bf2;
   --vp-c-brand-darker: #454ce1;
+  --vp-c-brand-dimm: rgba(116, 123, 255, 0.16);
+
+  --vp-c-success: #00dc82;
+  --vp-c-warning: #f0a020;
+  --vp-c-danger: #f43f5e;
+  --vp-c-info: #0ea5e9;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: more) {
+  :root {
+    --vp-c-brand: #0000ee;
+    --vp-c-brand-light: #0000ff;
+    --vp-c-brand-lighter: #4040ff;
+    --vp-c-brand-dark: #0000cc;
+    --vp-c-brand-darker: #0000aa;
+  }
+
+  .dark {
+    --vp-c-brand: #8080ff;
+    --vp-c-brand-light: #9090ff;
+    --vp-c-brand-lighter: #a0a0ff;
+    --vp-c-brand-dark: #6060ff;
+    --vp-c-brand-darker: #4040ff;
+  }
+}
+
+/* Mobile/Tablet Breakpoints */
+@media (max-width: 960px) {
+  :root {
+    --vp-sidebar-width: 260px;
+    --vp-content-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --header-height: var(--mobile-header-height);
+  }
 }
