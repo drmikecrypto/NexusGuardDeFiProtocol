@@ -2,60 +2,147 @@
 layout: home
 
 hero:
-  name: NexusGuard Protocol
-  text: Advanced DeFi Insurance Protocol
-  tagline: Securing the future of decentralized finance through innovative risk management and comprehensive coverage solutions
+  name: "NexusGuard Protocol"
+  text: "Enterprise-Grade DeFi Insurance Protocol"
+  tagline: "Revolutionizing DeFi security through advanced risk management, AI-powered assessment, and comprehensive coverage solutions"
   image:
     src: /images/logo.svg
     alt: NexusGuard Protocol
   actions:
     - theme: brand
-      text: Get Started
-      link: /introduction/
-    - theme: alt
-      text: Read Documentation
+      text: Quick Start
+      link: /quickstart/
+    - theme: brand
+      text: Documentation
       link: /documentation/
     - theme: alt
-      text: View on GitHub
+      text: GitHub
       link: https://github.com/drmikecrypto/NexusGuardDeFiProtocol
+    - theme: alt
+      text: Whitepaper
+      link: /whitepaper/
 
 features:
   - icon: 🛡️
-    title: Smart Contract Coverage
-    details: Comprehensive protection against vulnerabilities, bugs, and exploits in smart contract code. Our advanced monitoring system continuously scans for potential threats.
+    title: Advanced Smart Contract Coverage
+    details: Military-grade protection against vulnerabilities, exploits, and technical failures. Real-time threat monitoring with AI-powered risk detection.
     link: /protocol/coverage
-    linkText: Learn about coverage →
+    linkText: Explore Coverage →
   
-  - icon: 📊
-    title: Risk Assessment
-    details: AI-powered risk analysis and real-time monitoring of protocol vulnerabilities. Dynamic risk scoring and automated adjustments.
+  - icon: 🤖
+    title: AI-Powered Risk Assessment
+    details: Cutting-edge machine learning models for real-time risk analysis. Predictive analytics for early threat detection and automated risk scoring.
     link: /protocol/risk-assessment
-    linkText: Explore risk models →
+    linkText: View Risk Models →
   
-  - icon: 💰
-    title: Yield Generation
-    details: Optimized capital utilization through advanced yield farming strategies. ERC4626-compliant vaults maximize returns while maintaining security.
-    link: /economic-model/yield-generation
-    linkText: View strategies →
+  - icon: 💎
+    title: Optimized Yield Generation
+    details: Sophisticated yield strategies using ERC4626 vaults. Dynamic rebalancing and multi-layer risk management for sustainable returns.
+    link: /economic-model/yield
+    linkText: Learn About Yields →
   
   - icon: ⚡
-    title: Claims Processing
-    details: Automated claims validation and instant payout system for verified incidents. Stake-based validation ensures fair and efficient processing.
+    title: Instant Claims Processing
+    details: Automated validation and lightning-fast payouts. Decentralized oracle network ensures accurate and fair claims assessment.
     link: /protocol/claims
-    linkText: Learn about claims →
+    linkText: Claims Process →
   
   - icon: 🏛️
-    title: Decentralized Governance
-    details: Community-driven protocol management through the GUARD token. Stake-based voting and proposal systems for protocol evolution.
+    title: Robust Governance Framework
+    details: Advanced DAO mechanisms with quadratic voting. Multi-signature controls and time-locked execution for enhanced security.
     link: /governance/
-    linkText: View governance →
+    linkText: Governance Details →
   
-  - icon: 🔒
-    title: Multi-layer Security
-    details: Comprehensive security framework including audits, monitoring, and emergency responses. Role-based access control and circuit breakers.
-    link: /protocol/security
-    linkText: Explore security →
+  - icon: 🔐
+    title: Enterprise Security Architecture
+    details: Military-grade encryption and multi-layer security. Regular audits, bug bounties, and real-time threat monitoring.
+    link: /security/
+    linkText: Security Model →
+
+statistics:
+  - value: "$50M+"
+    label: "Total Value Locked"
+    trend: "+25% monthly"
+    
+  - value: "99.99%"
+    label: "System Uptime"
+    trend: "Industry Leading"
+    
+  - value: "<2 min"
+    label: "Claim Processing"
+    trend: "Fastest in DeFi"
+    
+  - value: "150%+"
+    label: "Coverage Ratio"
+    trend: "Above Target"
+
+ecosystem:
+  title: "NexusGuard Ecosystem"
+  partners:
+    - name: "Leading DeFi Protocols"
+      count: "25+"
+      
+    - name: "Security Auditors"
+      count: "5"
+      
+    - name: "Insurance Partners"
+      count: "10"
+      
+    - name: "Technical Integrations"
+      count: "30+"
+
+highlights:
+  - category: "Technology Stack"
+    items:
+      - "EVM Compatible Smart Contracts"
+      - "Zero-Knowledge Proofs"
+      - "Layer 2 Optimization"
+      - "Cross-Chain Architecture"
+      
+  - category: "Risk Management"
+    items:
+      - "AI-Powered Risk Scoring"
+      - "Real-time Monitoring"
+      - "Automated Circuit Breakers"
+      - "Dynamic Risk Adjustment"
+      
+  - category: "Coverage Options"
+    items:
+      - "Smart Contract Protection"
+      - "Oracle Failure Coverage"
+      - "Bridge Security Insurance"
+      - "Governance Attack Protection"
+
+footer:
+  links:
+    - title: "Resources"
+      items:
+        - text: "Documentation"
+          link: "/docs/"
+        - text: "API Reference"
+          link: "/api/"
+        - text: "Tutorials"
+          link: "/tutorials/"
+          
+    - title: "Community"
+      items:
+        - text: "Discord"
+          link: "#"
+        - text: "Twitter"
+          link: "#"
+        - text: "Forum"
+          link: "#"
+          
+    - title: "More"
+      items:
+        - text: "Blog"
+          link: "/blog/"
+        - text: "GitHub"
+          link: "https://github.com/drmikecrypto/NexusGuardDeFiProtocol"
+        - text: "Careers"
+          link: "/careers/"
 ---
+
 
 <script setup>
 import { ref } from 'vue'
@@ -156,6 +243,14 @@ const highlights = ref([
 </template>
 
 <style scoped>
+:root {
+  --nexus-primary: #3498db;
+  --nexus-secondary: #2ecc71;
+  --nexus-accent: #e74c3c;
+  --nexus-background: #f8f9fa;
+  --nexus-text: #2c3e50;
+}
+  
 .landing-content {
   padding-bottom: 4rem;
 }
