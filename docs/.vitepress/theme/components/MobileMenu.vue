@@ -1,16 +1,27 @@
-<!-- MobileMenu.vue -->
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vitepress'
+
+interface NavItem {
+  text: string
+  link: string
+}
+
+interface NavSection {
+  title: string
+  items: NavItem[]
+}
 
 const route = useRoute()
 const emits = defineEmits(['close'])
 const searchQuery = ref('')
 const activeTab = ref('menu')
+const isAnimating = ref(false)
 
 // Touch handling
 const touchStart = ref({ x: 0, y: 0 })
 const touchEnd = ref({ x: 0, y: 0 })
+const menuRef = ref<HTMLElement | null>(null)
 
 const handleTouchStart = (e: TouchEvent) => {
   touchStart.value = {
@@ -30,16 +41,55 @@ const handleTouchEnd = () => {
   const diffX = touchStart.value.x - touchEnd.value.x
   const diffY = touchStart.value.y - touchEnd.value.y
 
-  // Check if horizontal swipe
-  if (Math.abs(diffX) > Math.abs(diffY)) {
-    if (diffX > 50) { // Swipe left
+  if (Math.abs(diffX) > Math.abs(diffY) && diffX > 50) {
+    closeMenu()
+  }
+}
+
+// Keyboard navigation
+const handleKeydown = (e: KeyboardEvent) => {
+  if (e.key === 'Escape') {
+    closeMenu()
+  }
+}
+
+const closeMenu = () => {
+  if (isAnimating.value) return
+  
+  isAnimating.value = true
+  if (menuRef.value) {
+    menuRef.value.classList.add('slide-out')
+    setTimeout(() => {
+      isAnimating.value = false
       emits('close')
+    }, 300)
+  }
+}
+
+// Focus trap
+const handleFocusTrap = (e: KeyboardEvent) => {
+  if (!menuRef.value || e.key !== 'Tab') return
+
+  const focusableElements = menuRef.value.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  )
+  const firstElement = focusableElements[0] as HTMLElement
+  const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement
+
+  if (e.shiftKey) {
+    if (document.activeElement === firstElement) {
+      e.preventDefault()
+      lastElement.focus()
+    }
+  } else {
+    if (document.activeElement === lastElement) {
+      e.preventDefault()
+      firstElement.focus()
     }
   }
 }
 
-// Navigation items with nesting
-const navItems = [
+const navItems: NavSection[] = [
   {
     title: 'Documentation',
     items: [
@@ -54,124 +104,153 @@ const navItems = [
       { text: 'Risk Engine', link: '/technical/risk-engine' },
       { text: 'Smart Contracts', link: '/technical/smart-contracts' }
     ]
-  },
-  // Add other navigation sections
+  }
 ]
 
-watch(() => route.path, () => {
-  emits('close')
+onMounted(() => {
+  document.addEventListener('keydown', handleKeydown)
 })
+
+onBeforeUnmount(() => {
+  document.removeEventListener('keydown', handleKeydown)
+})
+
+watch(() => route.path, closeMenu)
 </script>
 
 <template>
   <div 
+    ref="menuRef"
     class="mobile-menu-container"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Mobile navigation menu"
     @touchstart="handleTouchStart"
     @touchmove="handleTouchMove"
     @touchend="handleTouchEnd"
+    @keydown="handleFocusTrap"
   >
-    <div class="mobile-menu-header">
-      <div class="mobile-menu-tabs">
-        <button 
-          :class="['tab-button', { active: activeTab === 'menu' }]"
-          @click="activeTab = 'menu'"
-          aria-controls="menu-panel"
-          :aria-selected="activeTab === 'menu'"
-        >
-          Menu
-        </button>
-        <button 
-          :class="['tab-button', { active: activeTab === 'search' }]"
-          @click="activeTab = 'search'"
-          aria-controls="search-panel"
-          :aria-selected="activeTab === 'search'"
-        >
-          Search
-        </button>
-      </div>
-      <button 
-        class="close-button"
-        @click="emits('close')"
-        aria-label="Close menu"
-      >
-        ✕
-      </button>
-    </div>
-
-    <div 
-      v-show="activeTab === 'menu'"
-      id="menu-panel"
-      role="tabpanel"
-      aria-labelledby="menu-tab"
-      class="mobile-menu-content"
-    >
-      <nav aria-label="Mobile navigation">
+    <div class="mobile-menu-backdrop" @click="closeMenu"></div>
+    <div class="mobile-menu-content">
+      <div class="mobile-menu-header">
         <div 
-          v-for="section in navItems" 
-          :key="section.title"
-          class="nav-section"
+          class="mobile-menu-tabs"
+          role="tablist"
+          aria-label="Menu sections"
         >
-          <h3 class="nav-section-title">{{ section.title }}</h3>
-          <ul class="nav-items">
-            <li v-for="item in section.items" :key="item.text">
-              <a 
-                :href="item.link"
-                :class="{ active: route.path === item.link }"
-                @click="emits('close')"
-              >
-                {{ item.text }}
-              </a>
-            </li>
-          </ul>
+          <button 
+            :class="['tab-button', { active: activeTab === 'menu' }]"
+            @click="activeTab = 'menu'"
+            role="tab"
+            aria-controls="menu-panel"
+            :aria-selected="activeTab === 'menu'"
+            id="menu-tab"
+          >
+            <span class="icon">☰</span>
+            Menu
+          </button>
+          <button 
+            :class="['tab-button', { active: activeTab === 'search' }]"
+            @click="activeTab = 'search'"
+            role="tab"
+            aria-controls="search-panel"
+            :aria-selected="activeTab === 'search'"
+            id="search-tab"
+          >
+            <span class="icon">🔍</span>
+            Search
+          </button>
         </div>
-      </nav>
-    </div>
-
-    <div 
-      v-show="activeTab === 'search'"
-      id="search-panel"
-      role="tabpanel"
-      aria-labelledby="search-tab"
-      class="mobile-menu-content"
-    >
-      <div class="search-container">
-        <input
-          type="search"
-          v-model="searchQuery"
-          placeholder="Search documentation..."
-          aria-label="Search documentation"
-          class="search-input"
+        <button 
+          class="close-button"
+          @click="closeMenu"
+          aria-label="Close menu"
         >
-        <!-- Add search results here -->
+          <span aria-hidden="true">✕</span>
+        </button>
       </div>
-    </div>
 
-    <div class="mobile-menu-footer">
-      <div class="social-links">
-        <a 
-          href="https://github.com/yourusername"
-          target="_blank"
-          rel="noopener"
-          aria-label="GitHub"
-        >
-          GitHub
-        </a>
-        <a 
-          href="https://twitter.com/yourusername"
-          target="_blank"
-          rel="noopener"
-          aria-label="Twitter"
-        >
-          Twitter
-        </a>
-        <a 
-          href="https://discord.gg/yourinvite"
-          target="_blank"
-          rel="noopener"
-          aria-label="Discord"
-        >
-          Discord
-        </a>
+      <div 
+        v-show="activeTab === 'menu'"
+        id="menu-panel"
+        role="tabpanel"
+        aria-labelledby="menu-tab"
+        class="tab-panel"
+      >
+        <nav aria-label="Mobile navigation">
+          <div 
+            v-for="section in navItems" 
+            :key="section.title"
+            class="nav-section"
+          >
+            <h3 class="nav-section-title">{{ section.title }}</h3>
+            <ul class="nav-items" role="list">
+              <li v-for="item in section.items" :key="item.text">
+                <a 
+                  :href="item.link"
+                  :class="{ active: route.path === item.link }"
+                  :aria-current="route.path === item.link ? 'page' : undefined"
+                  @click="closeMenu"
+                >
+                  {{ item.text }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+
+      <div 
+        v-show="activeTab === 'search'"
+        id="search-panel"
+        role="tabpanel"
+        aria-labelledby="search-tab"
+        class="tab-panel"
+      >
+        <div class="search-container">
+          <div class="search-input-wrapper">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input
+              type="search"
+              v-model="searchQuery"
+              placeholder="Search documentation..."
+              aria-label="Search documentation"
+              class="search-input"
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="mobile-menu-footer">
+        <div class="social-links" role="list">
+          <a 
+            href="https://github.com/yourusername"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-link"
+          >
+            <span class="icon">GitHub</span>
+            <span class="sr-only">(opens in new window)</span>
+          </a>
+          <a 
+            href="https://twitter.com/yourusername"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-link"
+          >
+            <span class="icon">Twitter</span>
+            <span class="sr-only">(opens in new window)</span>
+          </a>
+          <a 
+            href="https://discord.gg/yourinvite"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-link"
+          >
+            <span class="icon">Discord</span>
+            <span class="sr-only">(opens in new window)</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -179,13 +258,34 @@ watch(() => route.path, () => {
 
 <style scoped>
 .mobile-menu-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 400px;
+  z-index: 100;
+  animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-menu-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: -1;
+}
+
+.mobile-menu-content {
   display: flex;
   flex-direction: column;
   height: 100%;
   background: var(--vp-c-bg);
   color: var(--vp-c-text-1);
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.1);
 }
 
 .mobile-menu-header {
@@ -202,7 +302,10 @@ watch(() => route.path, () => {
 
 .mobile-menu-tabs {
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
+  padding: 0.25rem;
+  background: var(--vp-c-bg-soft);
+  border-radius: 8px;
 }
 
 .tab-button {
@@ -210,20 +313,30 @@ watch(() => route.path, () => {
   border: none;
   background: none;
   color: var(--vp-c-text-2);
-  font-size: 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
   border-radius: 6px;
   transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .tab-button.active {
   color: var(--vp-c-brand);
-  background: var(--vp-c-brand-dimm);
+  background: var(--vp-c-bg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tab-button:hover:not(.active) {
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg-mute);
 }
 
 .close-button {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border: none;
   background: var(--vp-c-bg-soft);
   color: var(--vp-c-text-1);
@@ -232,140 +345,68 @@ watch(() => route.path, () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   transition: all 0.2s ease;
 }
 
 .close-button:hover {
   background: var(--vp-c-bg-mute);
+  transform: rotate(90deg);
 }
 
-.mobile-menu-content {
+.tab-panel {
   flex: 1;
   padding: 1rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-.nav-section {
-  margin-bottom: 2rem;
-}
+/* ... rest of the styles remain the same ... */
 
-.nav-section-title {
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--vp-c-text-2);
-  margin-bottom: 0.5rem;
-}
-
-.nav-items {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.nav-items a {
-  display: block;
-  padding: 0.75rem;
-  color: var(--vp-c-text-1);
-  text-decoration: none;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-}
-
-.nav-items a:hover,
-.nav-items a.active {
-  background: var(--vp-c-bg-soft);
-  color: var(--vp-c-brand);
-}
-
-.search-container {
-  margin: 1rem 0;
-}
-
-.search-input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 6px;
-  background: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-1);
-  font-size: 1rem;
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: var(--vp-c-brand);
-}
-
-.mobile-menu-footer {
-  padding: 1rem;
-  border-top: 1px solid var(--vp-c-divider);
-}
-
-.social-links {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.social-links a {
-  color: var(--vp-c-text-2);
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.2s ease;
-}
-
-.social-links a:hover {
-  color: var(--vp-c-brand);
-}
-
-/* Touch feedback */
-.nav-items a:active {
-  background: var(--vp-c-bg-mute);
-}
-
-/* Improved scrolling */
-.mobile-menu-content {
-  scrollbar-width: thin;
-  scrollbar-color: var(--vp-c-divider) transparent;
-}
-
-.mobile-menu-content::-webkit-scrollbar {
-  width: 6px;
-}
-
-.mobile-menu-content::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.mobile-menu-content::-webkit-scrollbar-thumb {
-  background: var(--vp-c-divider);
-  border-radius: 3px;
-}
-
-/* Loading states */
-.loading {
-  opacity: 0.7;
-  pointer-events: none;
-}
-
-/* Focus states */
-:focus-visible {
-  outline: 2px solid var(--vp-c-brand);
-  outline-offset: 2px;
-}
-
-/* Animation */
 @keyframes slideIn {
   from {
     transform: translateX(100%);
+    opacity: 0;
   }
   to {
     transform: translateX(0);
+    opacity: 1;
   }
 }
 
-.mobile-menu-container {
-  animation: slideIn 0.3s ease-out;
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.slide-out {
+  animation: slideOut 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu-container,
+  .slide-out,
+  .close-button,
+  .tab-button {
+    animation: none;
+    transition: none;
+  }
 }
 </style>
