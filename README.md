@@ -410,8 +410,6 @@ graph TD
     </span>
 </div>
 
-<div style="background: linear-gradient(45deg, #1a1a1a, #2d2d2d); border-radius: 10px; padding: 20px; margin: 20px 0;">
-
 ## 🛡️ Core Integration Functions
 
 ```solidity
