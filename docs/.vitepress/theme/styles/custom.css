@@ -1,12 +1,65 @@
 :root {
+  /* Brand Colors */
   --vp-c-brand: #646cff;
   --vp-c-brand-light: #747bff;
   --vp-c-brand-lighter: #9499ff;
   --vp-c-brand-dark: #535bf2;
   --vp-c-brand-darker: #454ce1;
+
+  /* Brand Soft Colors (for backgrounds) */
+  --vp-c-brand-soft: rgba(100, 108, 255, 0.14);
+  --vp-c-brand-mute: rgba(100, 108, 255, 0.08);
+
+  /* Brand Text Colors */
+  --vp-c-brand-text: var(--vp-c-brand);
+  --vp-c-brand-text-light: var(--vp-c-brand-light);
+  --vp-c-brand-text-dark: var(--vp-c-brand-dark);
+
+  /* Brand Button Colors */
+  --vp-button-brand-border: var(--vp-c-brand-dark);
+  --vp-button-brand-text: var(--vp-c-white);
+  --vp-button-brand-bg: var(--vp-c-brand);
+  --vp-button-brand-hover-border: var(--vp-c-brand-light);
+  --vp-button-brand-hover-text: var(--vp-c-white);
+  --vp-button-brand-hover-bg: var(--vp-c-brand-light);
+  --vp-button-brand-active-border: var(--vp-c-brand-darker);
+  --vp-button-brand-active-text: var(--vp-c-white);
+  --vp-button-brand-active-bg: var(--vp-c-brand-darker);
 }
 
+/* Logo Styles */
 .VPNavBarTitle .logo {
   height: 32px;
   width: auto;
+  transition: transform 0.3s ease;
+}
+
+@media (hover: hover) {
+  .VPNavBarTitle .logo:hover {
+    transform: scale(1.05);
+  }
+}
+
+/* Dark Mode Adjustments */
+.dark {
+  --vp-c-brand-soft: rgba(100, 108, 255, 0.16);
+  --vp-c-brand-mute: rgba(100, 108, 255, 0.1);
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: more) {
+  :root {
+    --vp-c-brand: #5158cc;
+    --vp-c-brand-light: #6169dd;
+    --vp-c-brand-lighter: #7c83ed;
+    --vp-c-brand-dark: #4147bb;
+    --vp-c-brand-darker: #363ca4;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .VPNavBarTitle .logo {
+    transition: none;
+  }
 }
