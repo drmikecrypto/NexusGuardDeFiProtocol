@@ -449,8 +449,6 @@ function submitClaim(
 
 </div>
 
-<div style="background: linear-gradient(45deg, #2d2d2d, #1a1a1a); border-radius: 10px; padding: 20px; margin: 20px 0;">
-
 ## ⚡ Quick Integration Example
 
 ```solidity
