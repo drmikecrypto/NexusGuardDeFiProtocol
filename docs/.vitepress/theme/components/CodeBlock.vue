@@ -99,44 +99,32 @@ const codeStyle = computed(() => ({
         <span class="language-tag">{{ language }}</span>
         <span v-if="showLineNumbers" class="line-count">{{ lineCount }} lines</span>
       </div>
-      
+
       <div class="header-right">
-        <button 
-          v-if="isOverflowing"
-          class="expand-button"
-          @click="toggleExpand"
-          :title="expanded ? 'Collapse' : 'Expand'"
-        >
+        <button v-if="isOverflowing" class="expand-button" @click="toggleExpand"
+          :title="expanded ? 'Collapse' : 'Expand'">
           {{ expanded ? 'Collapse' : 'Expand' }}
         </button>
-        <button 
-          class="copy-button"
-          @click="copyCode"
-          :class="{ copied }"
-          :title="copied ? 'Copied!' : 'Copy code'"
-        >
+        <button class="copy-button" @click="copyCode" :class="{ copied }" :title="copied ? 'Copied!' : 'Copy code'">
           <span class="copy-icon">{{ copied ? '✓' : '📋' }}</span>
           <span class="copy-text">{{ copied ? 'Copied!' : 'Copy' }}</span>
         </button>
       </div>
     </div>
-    
-    <div 
-      class="code-content"
-      :style="codeStyle"
-    >
-      <pre :class="`language-${language}`" :class="{ 'line-numbers': showLineNumbers }">
-        <code
-          ref="codeContainer"
-          :class="`language-${language}`"
-        >{{ formattedCode }}</code>
-      </pre>
-      
-      <div 
-        v-if="highlightLines.length"
-        class="highlight-lines"
-        :style="{ '--highlight-lines': highlightLines.join(',') }"
-      />
+
+    <div class="code-content" :style="codeStyle">
+      <pre :class="[
+        `language-${language}`,
+        { 'line-numbers': showLineNumbers }
+      ]">
+    <code
+      ref="codeContainer"
+      :class="`language-${language}`"
+    >{{ formattedCode }}</code>
+  </pre>
+
+      <div v-if="highlightLines.length" class="highlight-lines"
+        :style="{ '--highlight-lines': highlightLines.join(',') }" />
     </div>
   </div>
 </template>
