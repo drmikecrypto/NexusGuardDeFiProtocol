@@ -2,15 +2,16 @@
 
 > Decentralized insurance protocol for DeFi projects on Sonic blockchain
 
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Solidity](https://img.shields.io/badge/Solidity-%5E0.8.20-363636)
-![Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen)
-    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNiIgaGVpZ2h0PSIzNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM0RUNEQzQiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0iTTEyIDJMMiA3bDEwIDUgMTAtNS0xMC01ek0yIDE3bDEwIDUgMTAtNU0yIDEybDEwIDUgMTAtNSIvPjwvc3ZnPg==" width="32"/>
-  </h1>
-
-  <img src="https://img.shields.io/badge/Solidity-%23363636.svg?style=for-the-badge&logo=solidity&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Smart%20Contracts-DeFi-blue?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Coverage-Protocol-green?style=for-the-badge"/>
+<div align="center">
+  <p align="center" style="display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin: 20px 0;">
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" height="22"/>
+    <img src="https://img.shields.io/badge/Solidity-%5E0.8.20-363636" alt="Solidity" height="22"/>
+    <img src="https://img.shields.io/badge/coverage-95%25-brightgreen" alt="Coverage" height="22"/>
+    <img src="https://img.shields.io/badge/Solidity-%23363636.svg?style=for-the-badge&logo=solidity&logoColor=white" alt="Solidity" height="28"/>
+    <img src="https://img.shields.io/badge/Smart%20Contracts-DeFi-blue?style=for-the-badge" alt="Smart Contracts" height="28"/>
+    <img src="https://img.shields.io/badge/Coverage-Protocol-green?style=for-the-badge" alt="Coverage Protocol" height="28"/>
+  </p>
+</div>
 
 ## Overview
 
