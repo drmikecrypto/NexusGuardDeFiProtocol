@@ -1,21 +1,29 @@
 <!-- docs/.vitepress/theme/components/Partners.vue -->
 <template>
-  <div class="partners-container">
-    <h2 class="partners-title">Our Partners</h2>
+  <section class="partners-container" aria-labelledby="partners-title">
+    <h2 id="partners-title" class="partners-title">Our Partners</h2>
     <div class="partners-grid">
-      <div v-for="partner in partners" 
-           :key="partner.name" 
-           class="partner-card">
-        <div class="partner-logo">{{ partner.logo }}</div>
+      <article 
+        v-for="partner in partners" 
+        :key="partner.name" 
+        class="partner-card"
+      >
+        <div class="partner-logo" aria-hidden="true">{{ partner.logo }}</div>
         <h3>{{ partner.name }}</h3>
         <p>{{ partner.description }}</p>
-      </div>
+      </article>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
-const partners = [
+interface Partner {
+  logo: string
+  name: string
+  description: string
+}
+
+const partners: Partner[] = [
   {
     logo: '🏦',
     name: 'DeFi Protocols',
@@ -41,56 +49,63 @@ const partners = [
 
 <style scoped>
 .partners-container {
-  padding: 4rem 2rem;
+  padding: clamp(2rem, 5vw, 4rem);
   background: var(--vp-c-bg-soft);
 }
 
 .partners-title {
   text-align: center;
-  margin-bottom: 3rem;
-  font-size: 2.5rem;
+  margin-block-end: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2rem, 4vw, 2.5rem);
   color: var(--vp-c-brand);
 }
 
 .partners-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+  gap: clamp(1rem, 3vw, 2rem);
   max-width: 1200px;
-  margin: 0 auto;
+  margin-inline: auto;
+  padding-inline: 1rem;
 }
 
 .partner-card {
   background: var(--vp-c-bg);
   border-radius: 12px;
-  padding: 2rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
   text-align: center;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .partner-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .partner-logo {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+  font-size: clamp(2.5rem, 5vw, 3rem);
+  margin-block-end: 1rem;
 }
 
 .partner-card h3 {
-  margin: 1rem 0;
+  margin-block: 1rem;
   color: var(--vp-c-brand);
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
 }
 
-@media (max-width: 768px) {
-  .partners-grid {
-    grid-template-columns: 1fr 1fr;
+.partner-card p {
+  line-height: 1.5;
+  color: var(--vp-c-text-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partner-card {
+    transition: none;
   }
-}
-
-@media (max-width: 480px) {
-  .partners-grid {
-    grid-template-columns: 1fr;
+  
+  .partner-card:hover {
+    transform: none;
   }
 }
 </style>
