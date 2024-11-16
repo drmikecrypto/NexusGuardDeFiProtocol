@@ -7,9 +7,8 @@
     <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" height="22"/>
     <img src="https://img.shields.io/badge/Solidity-%5E0.8.20-363636" alt="Solidity" height="22"/>
     <img src="https://img.shields.io/badge/coverage-95%25-brightgreen" alt="Coverage" height="22"/>
-    <img src="https://img.shields.io/badge/Solidity-%23363636.svg?style=for-the-badge&logo=solidity&logoColor=white" alt="Solidity" height="28"/>
-    <img src="https://img.shields.io/badge/Smart%20Contracts-DeFi-blue?style=for-the-badge" alt="Smart Contracts" height="28"/>
-    <img src="https://img.shields.io/badge/Coverage-Protocol-green?style=for-the-badge" alt="Coverage Protocol" height="28"/>
+    <img src="https://img.shields.io/badge/Solidity-%23363636.svg?style=for-the-badge&logo=solidity&logoColor=white" alt="Solidity" height="22"/>
+    <img src="https://img.shields.io/badge/Smart%20Contracts-DeFi-blue?style=for-the-badge" alt="Smart Contracts" height="22"/>
   </p>
 </div>
 
