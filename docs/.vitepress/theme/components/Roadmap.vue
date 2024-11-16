@@ -1,33 +1,47 @@
 <template>
-  <div class="roadmap-container">
-    <h2 class="roadmap-title">Development Roadmap</h2>
-    <div class="roadmap-timeline" ref="timelineRef">
-      <div class="timeline-progress" :style="{ height: scrollProgress + '%' }"></div>
-      <div v-for="(phase, index) in phases" 
-           :key="index" 
-           class="phase" 
-           :class="{ 
-             'active': isActive(index),
-             'left': index % 2 === 0,
-             'right': index % 2 === 1 
-           }"
-           :ref="el => phaseElements[index] = el">
+  <section class="roadmap-container" aria-labelledby="roadmap-title">
+    <h2 id="roadmap-title" class="roadmap-title">Development Roadmap</h2>
+    <div 
+      class="roadmap-timeline" 
+      ref="timelineRef"
+      role="list"
+    >
+      <div 
+        class="timeline-progress" 
+        :style="{ height: scrollProgress + '%' }"
+        aria-hidden="true"
+      ></div>
+      <article 
+        v-for="(phase, index) in phases" 
+        :key="index" 
+        class="phase" 
+        :class="{ 
+          'active': isActive(index),
+          'left': index % 2 === 0,
+          'right': index % 2 === 1 
+        }"
+        :ref="el => phaseElements[index] = el"
+        role="listitem"
+      >
         <div class="phase-content">
-          <div class="phase-header">
+          <header class="phase-header">
             <h3>{{ phase.title }}</h3>
-            <span class="date">{{ phase.date }}</span>
-          </div>
-          <ul class="phase-items">
-            <li v-for="(item, i) in phase.items" 
-                :key="i"
-                :style="{ animationDelay: `${i * 0.2}s` }">
+            <time class="date">{{ phase.date }}</time>
+          </header>
+          <ul class="phase-items" role="list">
+            <li 
+              v-for="(item, i) in phase.items" 
+              :key="i"
+              :style="{ '--item-delay': `${i * 0.2}s` }"
+              role="listitem"
+            >
               {{ item }}
             </li>
           </ul>
         </div>
-      </div>
+      </article>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -83,7 +97,8 @@ const phases = [
 const isActive = (index) => {
   if (!phaseElements.value[index]) return false
   const rect = phaseElements.value[index].getBoundingClientRect()
-  return rect.top < window.innerHeight * 0.8 && rect.bottom > 0
+  const threshold = window.innerHeight * 0.8
+  return rect.top < threshold && rect.bottom > 0
 }
 
 const handleScroll = () => {
@@ -101,8 +116,17 @@ const handleScroll = () => {
   }
 }
 
+const debouncedScroll = () => {
+  let timeout
+  return () => {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => handleScroll(), 16)
+  }
+}
+
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
+  const scrollHandler = debouncedScroll()
+  window.addEventListener('scroll', scrollHandler, { passive: true })
   handleScroll()
 })
 
@@ -113,26 +137,27 @@ onUnmounted(() => {
 
 <style scoped>
 .roadmap-container {
-  padding: 4rem 2rem;
-  max-width: 1200px;
+  padding: clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 2rem);
+  max-width: min(1200px, 90vw);
   margin: 0 auto;
 }
 
 .roadmap-title {
   text-align: center;
-  margin-bottom: 4rem;
-  font-size: 2.5rem;
+  margin-block-end: clamp(2rem, 6vw, 4rem);
+  font-size: clamp(2rem, 5vw, 2.5rem);
   color: var(--vp-c-brand);
 }
 
 .roadmap-timeline {
   position: relative;
-  padding: 2rem 0;
+  padding-block: 2rem;
+  container-type: inline-size;
 }
 
 .timeline-progress {
   position: absolute;
-  left: 50%;
+  inset-inline-start: 50%;
   width: 4px;
   background: linear-gradient(to bottom, var(--vp-c-brand), var(--vp-c-brand-light));
   height: 0;
@@ -142,19 +167,19 @@ onUnmounted(() => {
 
 .phase {
   position: relative;
-  margin: 4rem 0;
+  margin-block: 4rem;
   opacity: 0;
   transform: translateX(-50px);
-  transition: all 0.5s ease;
+  transition: opacity 0.5s ease, transform 0.5s ease;
   width: 45%;
 }
 
 .phase.left {
-  left: 0;
+  inset-inline-start: 0;
 }
 
 .phase.right {
-  left: 55%;
+  inset-inline-start: 55%;
 }
 
 .phase.active {
@@ -165,28 +190,30 @@ onUnmounted(() => {
 .phase-content {
   background: var(--vp-c-bg-soft);
   border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: clamp(1.5rem, 4vw, 2rem);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
   transition: transform 0.3s ease;
 }
 
-.phase-content:hover {
-  transform: translateY(-5px);
+@media (hover: hover) {
+  .phase-content:hover {
+    transform: translateY(-5px);
+  }
 }
 
 .phase-header {
-  margin-bottom: 1.5rem;
+  margin-block-end: 1.5rem;
 }
 
 .phase-header h3 {
   color: var(--vp-c-brand);
   margin: 0;
-  font-size: 1.5rem;
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
 }
 
 .date {
   display: inline-block;
-  margin-top: 0.5rem;
+  margin-block-start: 0.5rem;
   padding: 0.25rem 0.75rem;
   background: var(--vp-c-brand-soft);
   border-radius: 20px;
@@ -200,18 +227,19 @@ onUnmounted(() => {
 }
 
 .phase-items li {
-  margin: 0.75rem 0;
-  padding-left: 1.5rem;
+  margin-block: 0.75rem;
+  padding-inline-start: 1.5rem;
   position: relative;
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 0.5s ease forwards;
+  animation-delay: var(--item-delay);
 }
 
 .phase-items li::before {
   content: "→";
   position: absolute;
-  left: 0;
+  inset-inline-start: 0;
   color: var(--vp-c-brand);
 }
 
@@ -222,14 +250,28 @@ onUnmounted(() => {
   }
 }
 
-@media (max-width: 768px) {
+@container (max-width: 768px) {
   .phase {
     width: 90%;
-    left: 5% !important;
+    inset-inline-start: 5% !important;
   }
   
   .timeline-progress {
-    left: 0;
+    inset-inline-start: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phase,
+  .phase-content,
+  .timeline-progress {
+    transition: none;
+  }
+  
+  .phase-items li {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }
 </style>
