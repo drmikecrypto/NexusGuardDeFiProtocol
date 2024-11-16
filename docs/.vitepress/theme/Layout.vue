@@ -9,7 +9,6 @@ import Roadmap from './components/Roadmap.vue'
 import Partners from './components/Partners.vue'
 import Features from './components/Features.vue'
 
-
 // Setup VitePress data
 const { Layout } = DefaultTheme
 const { frontmatter, theme, page } = useData()
@@ -218,10 +217,9 @@ watch(
   }
 )
 </script>
+
 <template>
-  
-  <!-- Main content if no error -->
-  <div v-else>
+  <div>
     <!-- Skip to main content link -->
     <a 
       ref="skipToMainRef"
@@ -240,141 +238,141 @@ watch(
       aria-atomic="true"
     ></div>
 
-  <Layout>
-    <!-- Progress bar -->
-    <div 
-      class="scroll-progress" 
-      :style="{ width: `${scrollProgress}%` }"
-      role="progressbar"
-      aria-valuemin="0"
-      aria-valuemax="100"
-      :aria-valuenow="scrollProgress"
-    />
+    <Layout>
+      <!-- Progress bar -->
+      <div 
+        class="scroll-progress" 
+        :style="{ width: `${scrollProgress}%` }"
+        role="progressbar"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        :aria-valuenow="scrollProgress"
+      />
 
-    <!-- Mobile menu button -->
-    <button
-      class="mobile-menu-toggle"
-      :aria-expanded="isMobileMenuOpen"
-      aria-controls="mobile-menu"
-      @click="toggleMobileMenu"
-      v-if="isMobile"
-    >
-      <span class="sr-only">Toggle menu</span>
-      <span class="menu-icon" aria-hidden="true"></span>
-    </button>
-
-    <!-- Mobile menu -->
-    <Teleport to="body">
-      <div
-        v-if="isMobile && isMobileMenuOpen"
-        id="mobile-menu"
-        class="mobile-menu"
-        :class="{ 'is-open': isMobileMenuOpen }"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Navigation menu"
+      <!-- Mobile menu button -->
+      <button
+        class="mobile-menu-toggle"
+        :aria-expanded="isMobileMenuOpen"
+        aria-controls="mobile-menu"
+        @click="toggleMobileMenu"
+        v-if="isMobile"
       >
-        <MobileMenu @close="toggleMobileMenu" />
-      </div>
-    </Teleport>
+        <span class="sr-only">Toggle menu</span>
+        <span class="menu-icon" aria-hidden="true"></span>
+      </button>
 
-    <!-- Theme toggle -->
-    <button 
-      class="theme-toggle"
-      @click="toggleTheme"
-      :aria-label="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
-    >
-      <span class="sr-only">
-        {{ isDarkMode ? 'Switch to light mode' : 'Switch to dark mode' }}
-      </span>
-      <span aria-hidden="true">{{ isDarkMode ? '🌞' : '🌙' }}</span>
-    </button>
-
-    <!-- Main content -->
-    <template #layout-top>
-      <main id="main-content">
-        <div 
-          v-if="showHero" 
-          class="custom-hero content-section"
-          :class="{ 'header-hidden': !isHeaderVisible }"
-          id="hero"
+      <!-- Mobile menu -->
+      <Teleport to="body">
+        <div
+          v-if="isMobile && isMobileMenuOpen"
+          id="mobile-menu"
+          class="mobile-menu"
+          :class="{ 'is-open': isMobileMenuOpen }"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation menu"
         >
-          <div class="container">
-            <h1 class="hero-title">{{ frontmatter.hero.name }}</h1>
-            <p class="hero-description">{{ frontmatter.hero.tagline }}</p>
-            
-            <div v-if="frontmatter.hero.actions" class="hero-actions">
-              <a 
-                v-for="action in frontmatter.hero.actions"
-                :key="action.link"
-                :href="action.link"
-                :class="['hero-action', `hero-action-${action.theme}`]"
-              >
-                {{ action.text }}
-              </a>
-            </div>
+          <MobileMenu @close="toggleMobileMenu" />
+        </div>
+      </Teleport>
 
-            <div v-if="frontmatter.hero.image" class="hero-image">
-              <img 
-                :src="frontmatter.hero.image.src"
-                :alt="frontmatter.hero.image.alt"
-                loading="eager"
-              >
+      <!-- Theme toggle -->
+      <button 
+        class="theme-toggle"
+        @click="toggleTheme"
+        :aria-label="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+      >
+        <span class="sr-only">
+          {{ isDarkMode ? 'Switch to light mode' : 'Switch to dark mode' }}
+        </span>
+        <span aria-hidden="true">{{ isDarkMode ? '🌞' : '🌙' }}</span>
+      </button>
+
+      <!-- Main content -->
+      <template #layout-top>
+        <main id="main-content">
+          <div 
+            v-if="showHero" 
+            class="custom-hero content-section"
+            :class="{ 'header-hidden': !isHeaderVisible }"
+            id="hero"
+          >
+            <div class="container">
+              <h1 class="hero-title">{{ frontmatter.hero.name }}</h1>
+              <p class="hero-description">{{ frontmatter.hero.tagline }}</p>
+              
+              <div v-if="frontmatter.hero.actions" class="hero-actions">
+                <a 
+                  v-for="action in frontmatter.hero.actions"
+                  :key="action.link"
+                  :href="action.link"
+                  :class="['hero-action', `hero-action-${action.theme}`]"
+                >
+                  {{ action.text }}
+                </a>
+              </div>
+
+              <div v-if="frontmatter.hero.image" class="hero-image">
+                <img 
+                  :src="frontmatter.hero.image.src"
+                  :alt="frontmatter.hero.image.alt"
+                  loading="eager"
+                >
+              </div>
             </div>
           </div>
-        </div>
 
-        <div 
-          v-if="showFeatures" 
-          class="features content-section" 
-          id="features"
-        >
-          <div class="container">
-            <Features :features="frontmatter.features" />
+          <div 
+            v-if="showFeatures" 
+            class="features content-section" 
+            id="features"
+          >
+            <div class="container">
+              <Features :features="frontmatter.features" />
+            </div>
+          </div>
+
+          <div v-if="isHomePage" class="home-sections">
+            <ProtocolMetrics 
+              class="metrics-section content-section" 
+              id="metrics" 
+            />
+            <Roadmap 
+              class="roadmap-section content-section" 
+              id="roadmap" 
+            />
+            <Partners 
+              class="partners-section content-section" 
+              id="partners" 
+            />
+          </div>
+        </main>
+      </template>
+
+      <template #aside-outline-before>
+        <div v-if="page.frontmatter.sidebar" class="custom-sidebar">
+          <slot name="sidebar-top" />
+        </div>
+      </template>
+
+      <template #doc-footer-before>
+        <div class="doc-footer-nav">
+          <div v-if="page.lastUpdated" class="last-updated">
+            Last updated: {{ new Date(page.lastUpdated).toLocaleDateString() }}
+          </div>
+          <div v-if="page.editLink" class="edit-link">
+            <a :href="page.editLink" target="_blank" rel="noopener">
+              {{ theme.editLink?.text || 'Edit this page' }}
+            </a>
           </div>
         </div>
-
-        <div v-if="isHomePage" class="home-sections">
-          <ProtocolMetrics 
-            class="metrics-section content-section" 
-            id="metrics" 
-          />
-          <Roadmap 
-            class="roadmap-section content-section" 
-            id="roadmap" 
-          />
-          <Partners 
-            class="partners-section content-section" 
-            id="partners" 
-          />
-        </div>
-      </main>
-    </template>
-
-    <template #aside-outline-before>
-      <div v-if="page.frontmatter.sidebar" class="custom-sidebar">
-        <slot name="sidebar-top" />
-      </div>
-    </template>
-
-    <template #doc-footer-before>
-      <div class="doc-footer-nav">
-        <div v-if="page.lastUpdated" class="last-updated">
-          Last updated: {{ new Date(page.lastUpdated).toLocaleDateString() }}
-        </div>
-        <div v-if="page.editLink" class="edit-link">
-          <a :href="page.editLink" target="_blank" rel="noopener">
-            {{ theme.editLink?.text || 'Edit this page' }}
-          </a>
-        </div>
-      </div>
-    </template>
-  </Layout>
-</div>
+      </template>
+    </Layout>
+  </div>
 </template>
 
 <style scoped>
-  .error-boundary {
+.error-boundary {
   padding: 20px;
   color: red;
   position: fixed;
