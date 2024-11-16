@@ -1,3 +1,4 @@
+<!-- docs/.vitepress/theme/components/ProtocolMetrics.vue -->
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
@@ -48,30 +49,55 @@ onMounted(() => {
     loading.value = false
   }, 500)
 })
+
+const getTrendIcon = (trend?: 'up' | 'down' | 'neutral') => {
+  switch (trend) {
+    case 'up': return '↗'
+    case 'down': return '↘'
+    case 'neutral': return '→'
+    default: return ''
+  }
+}
+
+const getTrendLabel = (trend?: 'up' | 'down' | 'neutral', change?: string) => {
+  if (!trend || !change) return ''
+  return `${trend === 'up' ? 'Increased by' : trend === 'down' ? 'Decreased by' : 'Changed by'} ${change}`
+}
 </script>
 
 <template>
-  <div class="protocol-metrics">
-    <h2 class="section-title">Protocol Metrics</h2>
+  <section class="protocol-metrics" aria-labelledby="metrics-title">
+    <h2 id="metrics-title" class="section-title">Protocol Metrics</h2>
     
-    <div v-if="loading" class="loading-state">
-      <div class="loading-spinner"></div>
+    <div 
+      v-if="loading" 
+      class="loading-state"
+      role="status"
+      aria-live="polite"
+    >
+      <div class="loading-spinner" aria-hidden="true"></div>
       <span>Loading metrics...</span>
     </div>
     
-    <div v-else class="metrics-grid">
-      <div 
+    <div 
+      v-else 
+      class="metrics-grid"
+      role="list"
+    >
+      <article 
         v-for="metric in metrics"
         :key="metric.label"
         class="metric-card"
+        role="listitem"
       >
         <div class="metric-header">
           <h3 class="metric-label">{{ metric.label }}</h3>
           <div 
             v-if="metric.trend"
             :class="['trend-indicator', `trend-${metric.trend}`]"
+            :aria-label="getTrendLabel(metric.trend, metric.change)"
           >
-            {{ metric.change }}
+            <span aria-hidden="true">{{ getTrendIcon(metric.trend) }} {{ metric.change }}</span>
           </div>
         </div>
         
@@ -83,52 +109,58 @@ onMounted(() => {
         >
           {{ metric.description }}
         </div>
-      </div>
+      </article>
     </div>
-  </div>
+  </section>
 </template>
 
 <style scoped>
 .protocol-metrics {
-  padding: 2rem;
+  padding: clamp(1rem, 4vw, 2rem);
   background: var(--vp-c-bg-soft);
   border-radius: 12px;
+  margin-inline: auto;
+  max-width: 1400px;
 }
 
 .section-title {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-block-end: clamp(1.5rem, 4vw, 2rem);
   color: var(--vp-c-text-1);
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
 }
 
 .metrics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+  gap: clamp(1rem, 3vw, 1.5rem);
 }
 
 .metric-card {
   background: var(--vp-c-bg);
-  padding: 1.5rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.metric-card:hover {
-  transform: translateY(-5px);
+@media (hover: hover) {
+  .metric-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgb(0 0 0 / 15%);
+  }
 }
 
 .metric-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  gap: 1rem;
+  margin-block-end: 1rem;
 }
 
 .metric-label {
-  font-size: 1.1rem;
+  font-size: clamp(1rem, 2.5vw, 1.1rem);
   color: var(--vp-c-text-2);
   margin: 0;
 }
@@ -138,6 +170,7 @@ onMounted(() => {
   font-weight: 500;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
+  white-space: nowrap;
 }
 
 .trend-up {
@@ -156,10 +189,10 @@ onMounted(() => {
 }
 
 .metric-value {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
   font-weight: 600;
   color: var(--vp-c-text-1);
-  margin: 0.5rem 0;
+  margin-block: 0.5rem;
 }
 
 .metric-description {
@@ -173,7 +206,7 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  padding: 2rem;
+  padding: clamp(1rem, 4vw, 2rem);
 }
 
 .loading-spinner {
@@ -191,17 +224,17 @@ onMounted(() => {
   }
 }
 
-@media (max-width: 768px) {
-  .protocol-metrics {
-    padding: 1rem;
+@media (prefers-reduced-motion: reduce) {
+  .metric-card {
+    transition: none;
   }
-
-  .section-title {
-    font-size: 1.5rem;
+  
+  .metric-card:hover {
+    transform: none;
   }
-
-  .metric-value {
-    font-size: 1.5rem;
+  
+  .loading-spinner {
+    animation: none;
   }
 }
 </style>
