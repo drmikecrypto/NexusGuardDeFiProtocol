@@ -396,9 +396,25 @@ graph TD
 
 </div>
 
-## Integration Examples
 
-### Core Integration Functions
+```html
+<div align="center">
+  <h1>
+    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNiIgaGVpZ2h0PSIzNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM2MURBRkIiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0iTTEyIDJMMiA3bDEwIDUgMTAtNS0xMC01ek0yIDE3bDEwIDUgMTAtNU0yIDEybDEwIDUgMTAtNSIvPjwvc3ZnPg==" width="32"/>
+    <span style="background: linear-gradient(45deg, #FF6B6B, #4ECDC4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+      Integration Examples
+    </span>
+    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNiIgaGVpZ2h0PSIzNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM0RUNEQzQiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0iTTEyIDJMMiA3bDEwIDUgMTAtNS0xMC01ek0yIDE3bDEwIDUgMTAtNU0yIDEybDEwIDUgMTAtNSIvPjwvc3ZnPg==" width="32"/>
+  </h1>
+
+  <img src="https://img.shields.io/badge/Solidity-%23363636.svg?style=for-the-badge&logo=solidity&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Smart%20Contracts-DeFi-blue?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Coverage-Protocol-green?style=for-the-badge"/>
+</div>
+
+<div style="background: linear-gradient(45deg, #1a1a1a, #2d2d2d); border-radius: 10px; padding: 20px; margin: 20px 0;">
+
+## 🛡️ Core Integration Functions
 
 ```solidity
 /// @notice Request coverage for a DeFi project
@@ -431,12 +447,15 @@ function submitClaim(
     uint256 amount,
     bytes calldata evidence
 ) external returns (uint256 claimId);
+```
 
-**## Quick Integration Example**
+</div>
 
-solidity
+<div style="background: linear-gradient(45deg, #2d2d2d, #1a1a1a); border-radius: 10px; padding: 20px; margin: 20px 0;">
 
+## ⚡ Quick Integration Example
 
+```solidity
 // 1. Request Coverage Quote
 uint256 premium = nexusGuard.requestCoverage(
     projectAddress,
@@ -456,3 +475,12 @@ uint256 claimId = nexusGuard.submitClaim(
     500 ether,  // 500 tokens claim
     evidenceData
 );
+```
+
+</div>
+
+<div align="center">
+  <img src="https://img.shields.io/badge/Made%20with-❤️-red?style=for-the-badge"/>
+</div>
+```
+
