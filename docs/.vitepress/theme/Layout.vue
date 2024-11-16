@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useData, useRoute } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
-import { computed, onMounted, ref, watch, onBeforeUnmount, onErrorCaptured } from 'vue'
+import { computed, onMounted, ref, watch, onBeforeUnmount, Teleport } from 'vue'
 import type { Theme } from 'vitepress'
 import MobileMenu from './components/MobileMenu.vue'
 import ProtocolMetrics from './components/ProtocolMetrics.vue'
@@ -9,18 +9,6 @@ import Roadmap from './components/Roadmap.vue'
 import Partners from './components/Partners.vue'
 import Features from './components/Features.vue'
 
-// Error handling
-const error = ref(null)
-
-onErrorCaptured((err, instance, info) => {
-  error.value = {
-    message: err.message,
-    component: instance?.$.type.name,
-    info
-  }
-  console.error('Error captured in Layout:', error.value)
-  return false // Prevent error from propagating
-})
 
 // Setup VitePress data
 const { Layout } = DefaultTheme
@@ -231,11 +219,6 @@ watch(
 )
 </script>
 <template>
-  <!-- Error boundary -->
-  <div v-if="error" class="error-boundary">
-    <h1>Something went wrong</h1>
-    <pre>{{ error }}</pre>
-  </div>
   
   <!-- Main content if no error -->
   <div v-else>
