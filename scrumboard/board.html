@@ -1049,6 +1049,333 @@ class StatusTrackingSystem {
 // Initialize Status Tracking
 const statusTracker = new StatusTrackingSystem();
 
+        // Component Dependency Visualization System
+class ComponentDependencyVisualizer {
+    constructor() {
+        this.dependencies = new Map();
+        this.graph = {
+            nodes: new Set(),
+            edges: new Set()
+        };
+        this.colors = {
+            security: '#ff4757',
+            analytics: '#2ed573',
+            core: '#1e90ff',
+            visualization: '#ffa502'
+        };
+    }
+
+    initializeGraph() {
+        // Parse component structure and build dependency graph
+        Object.entries(componentStructure).forEach(([category, data]) => {
+            this.processCategory(category, data);
+        });
+
+        // Create visualization using D3.js
+        this.createForceDirectedGraph();
+    }
+
+    processCategory(category, data) {
+        const components = this.flattenComponents(data.components);
+        components.forEach(component => {
+            this.graph.nodes.add({
+                id: component.name,
+                category: category,
+                color: this.colors[category] || '#747d8c'
+            });
+
+            if (component.dependencies) {
+                component.dependencies.forEach(dep => {
+                    this.graph.edges.add({
+                        source: component.name,
+                        target: dep,
+                        value: 1
+                    });
+                });
+            }
+        });
+    }
+
+    flattenComponents(components, result = []) {
+        Object.values(components).forEach(component => {
+            result.push(component);
+            if (component.components) {
+                this.flattenComponents(component.components, result);
+            }
+        });
+        return result;
+    }
+
+    createForceDirectedGraph() {
+        const width = document.querySelector('.dependency-chart').clientWidth;
+        const height = 800;
+
+        const svg = d3.select('.dependency-chart')
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height);
+
+        const simulation = d3.forceSimulation(Array.from(this.graph.nodes))
+            .force('link', d3.forceLink(Array.from(this.graph.edges))
+                .id(d => d.id)
+                .distance(100))
+            .force('charge', d3.forceManyBody().strength(-300))
+            .force('center', d3.forceCenter(width / 2, height / 2))
+            .force('collision', d3.forceCollide().radius(70));
+
+        // Create arrow markers
+        svg.append('defs').selectAll('marker')
+            .data(['end'])
+            .enter().append('marker')
+            .attr('id', 'arrow')
+            .attr('viewBox', '0 -5 10 10')
+            .attr('refX', 20)
+            .attr('refY', 0)
+            .attr('markerWidth', 6)
+            .attr('markerHeight', 6)
+            .attr('orient', 'auto')
+            .append('path')
+            .attr('d', 'M0,-5L10,0L0,5')
+            .attr('fill', '#666');
+
+        // Draw links
+        const link = svg.append('g')
+            .selectAll('line')
+            .data(Array.from(this.graph.edges))
+            .enter().append('line')
+            .attr('stroke', '#666')
+            .attr('stroke-width', 1.5)
+            .attr('marker-end', 'url(#arrow)');
+
+        // Create nodes
+        const node = svg.append('g')
+            .selectAll('.node')
+            .data(Array.from(this.graph.nodes))
+            .enter().append('g')
+            .attr('class', 'node')
+            .call(d3.drag()
+                .on('start', dragstarted)
+                .on('drag', dragged)
+                .on('end', dragended));
+
+        // Add circles to nodes
+        node.append('circle')
+            .attr('r', 30)
+            .attr('fill', d => d.color)
+            .attr('stroke', '#fff')
+            .attr('stroke-width', 2);
+
+        // Add labels to nodes
+        node.append('text')
+            .text(d => d.id)
+            .attr('text-anchor', 'middle')
+            .attr('dy', '.35em')
+            .attr('fill', '#fff')
+            .style('font-size', '12px');
+
+        // Update positions on simulation tick
+        simulation.on('tick', () => {
+            link
+                .attr('x1', d => d.source.x)
+                .attr('y1', d => d.source.y)
+                .attr('x2', d => d.target.x)
+                .attr('y2', d => d.target.y);
+
+            node
+                .attr('transform', d => `translate(${d.x},${d.y})`);
+        });
+
+        // Drag functions
+        function dragstarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+
+        function dragended(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+    }
+}
+
+// Real-time Update System
+class RealTimeUpdateSystem {
+    constructor() {
+        this.updateInterval = 5000; // 5 seconds
+        this.subscribers = new Map();
+        this.websocket = null;
+        this.initializeWebSocket();
+    }
+
+    initializeWebSocket() {
+        this.websocket = new WebSocket('wss://your-websocket-server');
+        
+        this.websocket.onopen = () => {
+            console.log('WebSocket connection established');
+            this.startPeriodicUpdates();
+        };
+
+        this.websocket.onmessage = (event) => {
+            const update = JSON.parse(event.data);
+            this.handleUpdate(update);
+        };
+
+        this.websocket.onerror = (error) => {
+            console.error('WebSocket error:', error);
+            this.fallbackToPolling();
+        };
+    }
+
+    startPeriodicUpdates() {
+        setInterval(() => {
+            this.requestUpdates();
+        }, this.updateInterval);
+    }
+
+    requestUpdates() {
+        if (this.websocket && this.websocket.readyState === WebSocket.OPEN) {
+            this.websocket.send(JSON.stringify({
+                type: 'request_updates',
+                components: Array.from(this.subscribers.keys())
+            }));
+        }
+    }
+
+    handleUpdate(update) {
+        const { type, data } = update;
+        
+        switch (type) {
+            case 'task_update':
+                this.updateTaskStatus(data);
+                break;
+            case 'component_update':
+                this.updateComponentStatus(data);
+                break;
+            case 'metrics_update':
+                this.updateMetrics(data);
+                break;
+            case 'security_alert':
+                this.handleSecurityAlert(data);
+                break;
+        }
+
+        // Notify subscribers
+        if (this.subscribers.has(type)) {
+            this.subscribers.get(type).forEach(callback => callback(data));
+        }
+    }
+
+    subscribe(type, callback) {
+        if (!this.subscribers.has(type)) {
+            this.subscribers.set(type, new Set());
+        }
+        this.subscribers.get(type).add(callback);
+    }
+
+    unsubscribe(type, callback) {
+        if (this.subscribers.has(type)) {
+            this.subscribers.get(type).delete(callback);
+        }
+    }
+
+    updateTaskStatus(data) {
+        const { taskId, status, progress } = data;
+        const taskElement = document.querySelector(`#task-${taskId}`);
+        if (taskElement) {
+            taskElement.querySelector('.progress-bar').style.width = `${progress}%`;
+            taskElement.setAttribute('data-status', status);
+        }
+    }
+
+    updateComponentStatus(data) {
+        const { componentId, status, metrics } = data;
+        const componentElement = document.querySelector(`#component-${componentId}`);
+        if (componentElement) {
+            componentElement.querySelector('.status-indicator').className = 
+                `status-indicator ${status.toLowerCase()}`;
+            
+            // Update component metrics
+            Object.entries(metrics).forEach(([key, value]) => {
+                const metricElement = componentElement.querySelector(`[data-metric="${key}"]`);
+                if (metricElement) {
+                    metricElement.textContent = value;
+                }
+            });
+        }
+    }
+
+    updateMetrics(data) {
+        Object.entries(data).forEach(([metricId, value]) => {
+            const metricCard = document.querySelector(`#metric-${metricId}`);
+            if (metricCard) {
+                metricCard.querySelector('.metric-value').textContent = value;
+                metricCard.querySelector('.progress-bar').style.width = `${value}%`;
+            }
+        });
+    }
+
+    handleSecurityAlert(data) {
+        const { level, message, componentId } = data;
+        const alertElement = document.createElement('div');
+        alertElement.className = `alert alert-${level} alert-dismissible fade show`;
+        alertElement.innerHTML = `
+            <strong>Security Alert:</strong> ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        document.querySelector('.alerts-container').appendChild(alertElement);
+
+        // Highlight affected component
+        const componentElement = document.querySelector(`#component-${componentId}`);
+        if (componentElement) {
+            componentElement.classList.add('security-alert');
+            setTimeout(() => {
+                componentElement.classList.remove('security-alert');
+            }, 5000);
+        }
+    }
+
+    fallbackToPolling() {
+        console.log('Falling back to polling updates');
+        this.startPolling();
+    }
+
+    startPolling() {
+        setInterval(() => {
+            fetch('/api/updates')
+                .then(response => response.json())
+                .then(updates => {
+                    updates.forEach(update => this.handleUpdate(update));
+                })
+                .catch(error => console.error('Polling error:', error));
+        }, this.updateInterval);
+    }
+}
+
+// Initialize systems
+const dependencyVisualizer = new ComponentDependencyVisualizer();
+const realTimeUpdates = new RealTimeUpdateSystem();
+
+// Initialize when document is ready
+document.addEventListener('DOMContentLoaded', () => {
+    dependencyVisualizer.initializeGraph();
+    
+    // Subscribe to updates
+    realTimeUpdates.subscribe('task_update', (data) => {
+        sprintBoard.handleTaskUpdate(data);
+    });
+    
+    realTimeUpdates.subscribe('security_alert', (data) => {
+        statusTracker.handleSecurityAlert(data);
+    });
+});
+
     </script>
 </body>
 </html>
