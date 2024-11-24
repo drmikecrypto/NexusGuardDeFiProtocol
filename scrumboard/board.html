@@ -732,6 +732,323 @@ document.addEventListener('DOMContentLoaded', function() {
         return new bootstrap.Tooltip(tooltipTriggerEl);
     });
 });
+
+        class SprintBoardManager {
+    constructor() {
+        this.draggedItem = null;
+        this.sprintColumns = ['backlog', 'inProgress', 'review', 'done'];
+        this.statusMapping = {
+            backlog: 'Pending',
+            inProgress: 'In Progress',
+            review: 'Under Review',
+            done: 'Completed'
+        };
+        this.taskStatusHistory = new Map();
+        this.initializeDragAndDrop();
+    }
+
+    initializeDragAndDrop() {
+        document.addEventListener('dragstart', (e) => {
+            if (e.target.classList.contains('task-card')) {
+                this.draggedItem = e.target;
+                e.target.classList.add('dragging');
+            }
+        });
+
+        document.addEventListener('dragend', (e) => {
+            if (e.target.classList.contains('task-card')) {
+                e.target.classList.remove('dragging');
+            }
+        });
+
+        this.sprintColumns.forEach(columnId => {
+            const column = document.getElementById(columnId);
+            if (column) {
+                column.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    const afterElement = this.getDragAfterElement(column, e.clientY);
+                    const draggable = this.draggedItem;
+                    if (afterElement == null) {
+                        column.appendChild(draggable);
+                    } else {
+                        column.insertBefore(draggable, afterElement);
+                    }
+                });
+            }
+        });
+    }
+
+    getDragAfterElement(container, y) {
+        const draggableElements = [...container.querySelectorAll('.task-card:not(.dragging)')];
+        
+        return draggableElements.reduce((closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if (offset < 0 && offset > closest.offset) {
+                return { offset: offset, element: child };
+            } else {
+                return closest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+
+    createTaskCard(task) {
+        const card = document.createElement('div');
+        card.className = `task-card priority-${task.priority}`;
+        card.draggable = true;
+        card.id = `task-${task.id}`;
+        card.innerHTML = `
+            <div class="task-header">
+                <span class="task-id">${task.id}</span>
+                <span class="badge bg-${this.getPriorityColor(task.priority)}">${task.priority}</span>
+            </div>
+            <h5 class="task-title">${task.title}</h5>
+            <p class="task-description">${task.description}</p>
+            <div class="task-footer">
+                <span class="assignee"><i class="fas fa-user"></i> ${task.assignee}</span>
+                <span class="task-metrics">
+                    <i class="fas fa-clock"></i> ${this.getTimeSpent(task.id)}
+                    <i class="fas fa-code-branch"></i> ${task.dependencies.length}
+                </span>
+            </div>
+            <div class="task-progress">
+                <div class="progress">
+                    <div class="progress-bar bg-${this.getPriorityColor(task.priority)}" 
+                         style="width: ${this.calculateProgress(task)}%"></div>
+                </div>
+            </div>
+        `;
+        
+        this.attachTaskEventListeners(card, task);
+        return card;
+    }
+
+    getPriorityColor(priority) {
+        const colors = {
+            critical: 'danger',
+            high: 'warning',
+            medium: 'info',
+            low: 'success'
+        };
+        return colors[priority] || 'secondary';
+    }
+
+    calculateProgress(task) {
+        if (task.subtasks && task.subtasks.length > 0) {
+            const completed = task.subtasks.filter(subtask => subtask.completed).length;
+            return (completed / task.subtasks.length) * 100;
+        }
+        return task.progress || 0;
+    }
+
+    getTimeSpent(taskId) {
+        const history = this.taskStatusHistory.get(taskId);
+        if (!history) return '0d';
+        const start = history[0].timestamp;
+        const now = Date.now();
+        const days = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+        return `${days}d`;
+    }
+
+    attachTaskEventListeners(card, task) {
+        card.addEventListener('click', () => this.openTaskDetails(task));
+        card.addEventListener('dragstart', () => this.updateTaskStatus(task.id, 'moving'));
+        card.addEventListener('dragend', (e) => this.handleTaskDrop(e, task));
+    }
+
+    openTaskDetails(task) {
+        // Create and show task details modal
+        const modal = document.createElement('div');
+        modal.className = 'modal fade';
+        modal.id = `taskModal-${task.id}`;
+        modal.innerHTML = `
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">${task.title} (${task.id})</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="task-details">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h6>Description</h6>
+                                    <p>${task.description}</p>
+                                    
+                                    <h6>Subtasks</h6>
+                                    <ul class="subtasks-list">
+                                        ${this.renderSubtasks(task)}
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="task-metadata">
+                                        <p><strong>Status:</strong> ${this.getTaskStatus(task.id)}</p>
+                                        <p><strong>Priority:</strong> ${task.priority}</p>
+                                        <p><strong>Assignee:</strong> ${task.assignee}</p>
+                                        <p><strong>Created:</strong> ${this.formatDate(task.created)}</p>
+                                        <p><strong>Dependencies:</strong></p>
+                                        <ul>
+                                            ${this.renderDependencies(task)}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        new bootstrap.Modal(modal).show();
+    }
+
+    renderSubtasks(task) {
+        if (!task.subtasks) return '';
+        return task.subtasks.map(subtask => `
+            <li class="subtask-item">
+                <input type="checkbox" ${subtask.completed ? 'checked' : ''} 
+                       onchange="sprintBoard.updateSubtask('${task.id}', '${subtask.id}')">
+                <span>${subtask}</span>
+            </li>
+        `).join('');
+    }
+
+    renderDependencies(task) {
+        if (!task.dependencies || task.dependencies.length === 0) {
+            return '<li>No dependencies</li>';
+        }
+        return task.dependencies.map(dep => `
+            <li>${dep}</li>
+        `).join('');
+    }
+
+    formatDate(date) {
+        return new Date(date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+    }
+
+    updateTaskStatus(taskId, newStatus) {
+        const history = this.taskStatusHistory.get(taskId) || [];
+        history.push({
+            status: newStatus,
+            timestamp: Date.now()
+        });
+        this.taskStatusHistory.set(taskId, history);
+        this.emitTaskUpdate(taskId, newStatus);
+    }
+
+    emitTaskUpdate(taskId, status) {
+        const event = new CustomEvent('taskUpdate', {
+            detail: { taskId, status }
+        });
+        document.dispatchEvent(event);
+    }
+}
+
+// Initialize Sprint Board
+const sprintBoard = new SprintBoardManager();
+
+// Status Tracking System
+class StatusTrackingSystem {
+    constructor() {
+        this.statusUpdates = new Map();
+        this.initializeListeners();
+    }
+
+    initializeListeners() {
+        document.addEventListener('taskUpdate', (e) => {
+            this.recordStatusUpdate(e.detail);
+            this.updateMetrics();
+        });
+    }
+
+    recordStatusUpdate(update) {
+        const { taskId, status } = update;
+        const updates = this.statusUpdates.get(taskId) || [];
+        updates.push({
+            status,
+            timestamp: Date.now()
+        });
+        this.statusUpdates.set(taskId, updates);
+    }
+
+    updateMetrics() {
+        const metrics = this.calculateMetrics();
+        this.updateDashboardMetrics(metrics);
+    }
+
+    calculateMetrics() {
+        // Calculate various metrics based on status updates
+        const metrics = {
+            completionRate: this.calculateCompletionRate(),
+            averageCycleTime: this.calculateAverageCycleTime(),
+            blockerCount: this.calculateBlockerCount()
+        };
+        return metrics;
+    }
+
+    // Add these to the existing StatusTrackingSystem class
+    calculateCompletionRate() {
+        const totalTasks = this.statusUpdates.size;
+        const completedTasks = Array.from(this.statusUpdates.values())
+            .filter(updates => updates[updates.length - 1].status === 'done').length;
+        return totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+    }
+
+    calculateAverageCycleTime() {
+        const cycleTimes = [];
+        this.statusUpdates.forEach(updates => {
+            if (updates.length >= 2) {
+                const start = updates[0].timestamp;
+                const end = updates[updates.length - 1].timestamp;
+                cycleTimes.push(end - start);
+            }
+        });
+        return cycleTimes.length > 0 ? 
+            cycleTimes.reduce((a, b) => a + b, 0) / cycleTimes.length / (1000 * 60 * 60 * 24) : 0;
+    }
+
+    calculateBlockerCount() {
+        return Array.from(this.statusUpdates.values())
+            .filter(updates => updates[updates.length - 1].status === 'blocked').length;
+    }
+
+    updateDashboardMetrics(metrics) {
+        // Update the dashboard with new metrics
+        document.querySelectorAll('.metric-card').forEach(card => {
+            const metricName = card.querySelector('h3').textContent;
+            switch(metricName) {
+                case 'Completion Rate':
+                    this.updateMetricCard(card, metrics.completionRate);
+                    break;
+                case 'Average Cycle Time':
+                    this.updateMetricCard(card, metrics.averageCycleTime);
+                    break;
+                case 'Active Blockers':
+                    this.updateMetricCard(card, metrics.blockerCount);
+                    break;
+            }
+        });
+    }
+
+    updateMetricCard(card, value) {
+        const valueElement = card.querySelector('.metric-value h4');
+        const progressBar = card.querySelector('.progress-bar');
+        
+        if (valueElement && progressBar) {
+            valueElement.textContent = typeof value === 'number' ? 
+                value.toFixed(1) + '%' : value;
+            progressBar.style.width = `${value}%`;
+        }
+    }
+}
+
+// Initialize Status Tracking
+const statusTracker = new StatusTrackingSystem();
+
     </script>
 </body>
 </html>
