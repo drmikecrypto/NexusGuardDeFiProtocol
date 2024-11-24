@@ -26,9 +26,27 @@
         }
 
         .dashboard-container {
-            max-width: 1800px;
+            max-width: 100%;
             margin: 0 auto;
             padding: 20px;
+        }
+
+        .nav-tabs {
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .nav-tabs .nav-link {
+            color: var(--primary-color);
+            border: none;
+            padding: 10px 20px;
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .nav-tabs .nav-link.active {
+            background-color: var(--secondary-color);
+            color: white;
         }
 
         .section-title {
@@ -45,13 +63,35 @@
             margin-bottom: 20px;
         }
 
-        .card-header {
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 10px 10px 0 0;
+        .module-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--secondary-color);
         }
 
-        .phase-column {
+        .component-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .component-item {
+            padding: 8px;
+            margin: 4px 0;
+            background: var(--light-bg);
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .sprint-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .sprint-column {
             background: white;
             padding: 15px;
             border-radius: 8px;
@@ -67,24 +107,9 @@
             transition: all 0.3s ease;
         }
 
-        .task-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .priority-high {
-            border-left: 4px solid var(--danger-color);
-        }
-
-        .priority-medium {
-            border-left: 4px solid var(--warning-color);
-        }
-
-        .priority-low {
-            border-left: 4px solid var(--success-color);
-        }
-
-        .component-diagram {
+        .dependency-chart {
+            width: 100%;
+            height: 800px;
             background: white;
             padding: 20px;
             border-radius: 10px;
@@ -92,7 +117,7 @@
 
         .metrics-panel {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 15px;
             margin-bottom: 20px;
         }
@@ -108,145 +133,82 @@
             height: 8px;
             margin-top: 10px;
         }
+
+        /* Custom styles for specific components */
+        .security-component {
+            border-left-color: var(--danger-color);
+        }
+
+        .analytics-component {
+            border-left-color: var(--success-color);
+        }
+
+        .visualization-component {
+            border-left-color: var(--warning-color);
+        }
     </style>
 </head>
 <body>
     <div class="dashboard-container">
-        <h1 class="section-title">
-            <i class="fas fa-shield-alt"></i> 
-            NexusGuard DeFi Protocol Dashboard
-        </h1>
+        <!-- Navigation Tabs -->
+        <ul class="nav nav-tabs" id="projectTabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#overview">Project Overview</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#architecture">Architecture</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#sprints">Sprint Board</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#components">Components</a>
+            </li>
+        </ul>
 
-        <!-- Metrics Overview -->
-        <div class="metrics-panel">
-            <div class="metric-card">
-                <h3>Security Score</h3>
-                <h4>94%</h4>
-                <div class="progress">
-                    <div class="progress-bar bg-success" style="width: 94%"></div>
-                </div>
-            </div>
-            <div class="metric-card">
-                <h3>Sprint Progress</h3>
-                <h4>67%</h4>
-                <div class="progress">
-                    <div class="progress-bar bg-warning" style="width: 67%"></div>
-                </div>
-            </div>
-            <div class="metric-card">
-                <h3>Code Coverage</h3>
-                <h4>88%</h4>
-                <div class="progress">
-                    <div class="progress-bar bg-info" style="width: 88%"></div>
-                </div>
-            </div>
-            <div class="metric-card">
-                <h3>Components</h3>
-                <h4>42/48</h4>
-                <div class="progress">
-                    <div class="progress-bar bg-primary" style="width: 87%"></div>
-                </div>
-            </div>
-        </div>
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- Overview Tab -->
+            <div class="tab-pane fade show active" id="overview">
+                <h1 class="section-title">
+                    <i class="fas fa-shield-alt"></i> 
+                    NexusGuard DeFi Protocol Overview
+                </h1>
 
-        <!-- Architecture Flowchart -->
-        <div class="card mb-4">
-            <div class="card-header">
-                <h2><i class="fas fa-project-diagram"></i> System Architecture</h2>
-            </div>
-            <div class="card-body">
-                <div class="component-diagram">
-                    <div class="mermaid">
-                        graph TB
-                            A[NexusGuardDeFiProtocolV1] --> B[SecurityManager]
-                            A --> C[Registry]
-                            A --> D[InsuranceSystem]
-                            A --> E[GovernanceSystem]
-                            
-                            B --> F[AccessControl]
-                            B --> G[BlocklistManager]
-                            B --> H[EmergencySystem]
-                            
-                            subgraph Security Components
-                            F --> I[SecurityValidator]
-                            G --> J[RateLimiter]
-                            H --> K[IntrusionDetection]
-                            end
-                            
-                            subgraph Core Services
-                            C --> L[ComponentRegistry]
-                            D --> M[ClaimProcessor]
-                            E --> N[ProposalManager]
-                            end
-                            
-                            subgraph Monitoring
-                            B --> O[SecurityMonitor]
-                            O --> P[AnalyticsEngine]
-                            P --> Q[VisualizationSystem]
-                            end
-                    </div>
+                <!-- Metrics Overview -->
+                <div class="metrics-panel">
+                    <!-- Project Metrics -->
                 </div>
-            </div>
-        </div>
 
-        <!-- Scrum Board -->
-        <div class="card">
-            <div class="card-header">
-                <h2><i class="fas fa-tasks"></i> Sprint Board</h2>
-            </div>
-            <div class="card-body">
+                <!-- Quick Status -->
                 <div class="row">
-                    <!-- Backlog -->
-                    <div class="col-md-3">
-                        <div class="phase-column">
-                            <h3>Backlog</h3>
-                            <div class="task-card priority-high">
-                                <h5>Implement SecurityManager Core</h5>
-                                <p>Setup base security validation flow</p>
-                                <span class="badge bg-danger">High Priority</span>
-                            </div>
-                            <!-- Add more task cards -->
-                        </div>
-                    </div>
+                    <!-- Status Cards -->
+                </div>
+            </div>
 
-                    <!-- In Progress -->
-                    <div class="col-md-3">
-                        <div class="phase-column">
-                            <h3>In Progress</h3>
-                            <div class="task-card priority-medium">
-                                <h5>ValidatorStateSynchronizer Integration</h5>
-                                <p>Implement state sync mechanisms</p>
-                                <span class="badge bg-warning">Medium Priority</span>
-                            </div>
-                            <!-- Add more task cards -->
-                        </div>
+            <!-- Architecture Tab -->
+            <div class="tab-pane fade" id="architecture">
+                <h2 class="section-title">System Architecture</h2>
+                <div class="dependency-chart">
+                    <div class="mermaid">
+                        <!-- Mermaid Diagram Here -->
                     </div>
+                </div>
+            </div>
 
-                    <!-- Review -->
-                    <div class="col-md-3">
-                        <div class="phase-column">
-                            <h3>Review</h3>
-                            <div class="task-card priority-low">
-                                <h5>Security Audit Implementation</h5>
-                                <p>Review security patterns</p>
-                                <span class="badge bg-info">In Review</span>
-                            </div>
-                            <!-- Add more task cards -->
-                        </div>
-                    </div>
+            <!-- Sprint Board Tab -->
+            <div class="tab-pane fade" id="sprints">
+                <h2 class="section-title">Active Sprint Board</h2>
+                <div class="sprint-board">
+                    <!-- Sprint Columns -->
+                </div>
+            </div>
 
-                    <!-- Done -->
-                    <div class="col-md-3">
-                        <div class="phase-column">
-                            <h3>Done</h3>
-                            <div class="task-card">
-                                <h5>Base Contract Setup</h5>
-                                <p>Initial contract structure</p>
-                                <span class="badge bg-success">Completed</span>
-                            </div>
-                            <!-- Add more task cards -->
-                        </div>
-                    </div>
+            <!-- Components Tab -->
+            <div class="tab-pane fade" id="components">
+                <h2 class="section-title">Project Components</h2>
+                <div class="row">
+                    <!-- Component Cards -->
                 </div>
             </div>
         </div>
@@ -255,12 +217,261 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Initialize Mermaid
         mermaid.initialize({
             theme: 'default',
             securityLevel: 'loose',
             flowchart: {
                 curve: 'basis'
             }
+        });
+
+        // Component data structure
+        const components = {
+            // Component definitions will go here
+        };
+
+        const componentStructure = {
+    core: {
+        name: 'Core Protocol',
+        components: {
+            protocol: {
+                name: 'NexusGuardDeFiProtocolV1',
+                status: 'in-progress',
+                priority: 'critical',
+                dependencies: ['SecurityManager', 'Registry'],
+                tasks: [
+                    { id: 'CORE-1', name: 'Initialize core protocol', status: 'in-progress' },
+                    { id: 'CORE-2', name: 'Setup component registration', status: 'pending' },
+                ]
+            },
+            registry: {
+                name: 'NexusGuardRegistry',
+                status: 'active',
+                priority: 'high',
+                components: ['BaseRegistry', 'ComponentRegistry']
+            },
+            bridge: {
+                name: 'Cross-Chain Components',
+                components: ['CrossChainManager', 'NexusGuardBridge']
+            }
+        }
+    },
+    security: {
+        name: 'Security Components',
+        components: {
+            manager: {
+                name: 'SecurityManager',
+                status: 'in-progress',
+                priority: 'critical',
+                subcomponents: [
+                    'AccessControl',
+                    'BlocklistManager',
+                    'EmergencySystem',
+                    'FraudDetection',
+                    'IntrusionDetection',
+                    'RateLimiter',
+                    'SecurityAudit',
+                    'SecurityBenchmark'
+                ]
+            },
+            validator: {
+                name: 'Security Validation',
+                components: [
+                    'SecurityValidator',
+                    'SecurityChecks',
+                    'SecurityMetrics',
+                    'SecurityPatterns'
+                ]
+            },
+            sync: {
+                name: 'State Synchronization',
+                components: [
+                    'ValidatorStateSynchronizer',
+                    'NexusGuardStateSynchronizer'
+                ]
+            }
+        }
+    },
+    analytics: {
+        name: 'Analytics System',
+        components: {
+            engine: {
+                name: 'AnalyticsEngine',
+                subcomponents: [
+                    'AnalyticsStorage',
+                    'AnalyticsValidator',
+                    'DataAggregator',
+                    'ReportGenerator'
+                ]
+            },
+            analysis: {
+                name: 'Analysis Components',
+                components: [
+                    'MarketSentimentAnalyzer',
+                    'NexusGuardAdvancedIndicators',
+                    'NexusGuardMathematicalAnalysis',
+                    'NexusGuardRiskModel'
+                ]
+            }
+        }
+    },
+    visualization: {
+        name: 'Visualization System',
+        components: {
+            core: {
+                name: 'Visualization Core',
+                components: [
+                    'VisualizationManager',
+                    'NexusGuardVisualization',
+                    'NexusGuardAdvancedCharting'
+                ]
+            },
+            advanced: {
+                name: 'Advanced Features',
+                components: [
+                    'AdvancedVisualizationBase',
+                    'MarketDepthVisualizations',
+                    'AnalyticalVisualizationEngine'
+                ]
+            },
+            formatters: {
+                name: 'Chart Formatters',
+                components: [
+                    'AmChartsFormatter',
+                    'ApexChartsFormatter',
+                    'EChartsFormatter',
+                    'HighchartsFormatter',
+                    'PlotlyFormatter'
+                ]
+            }
+        }
+    }
+};
+
+const sprintStructure = {
+    current: {
+        name: 'Sprint 1: Core Security Implementation',
+        startDate: '2024-02-01',
+        endDate: '2024-02-15',
+        status: 'in-progress',
+        tasks: {
+            backlog: [
+                {
+                    id: 'SEC-1',
+                    title: 'SecurityManager Implementation',
+                    description: 'Implement core security manager with validator integration',
+                    priority: 'critical',
+                    assignee: 'Security Team',
+                    dependencies: [],
+                    subtasks: [
+                        'Setup security roles',
+                        'Implement validation flow',
+                        'Add emergency handlers'
+                    ]
+                },
+                // Add more backlog items
+            ],
+            inProgress: [
+                {
+                    id: 'SYNC-1',
+                    title: 'State Synchronization',
+                    description: 'Implement validator state synchronization',
+                    priority: 'high',
+                    assignee: 'Core Team',
+                    dependencies: ['SEC-1']
+                },
+                // Add more in-progress items
+            ],
+            review: [
+                {
+                    id: 'VAL-1',
+                    title: 'Validation Framework',
+                    description: 'Setup base validation framework',
+                    priority: 'high',
+                    assignee: 'Validation Team',
+                    status: 'in-review'
+                },
+                // Add more review items
+            ],
+            done: [
+                {
+                    id: 'INIT-1',
+                    title: 'Project Setup',
+                    description: 'Initialize project structure and base contracts',
+                    priority: 'high',
+                    assignee: 'Core Team',
+                    status: 'completed'
+                },
+                // Add more completed items
+            ]
+        }
+    }
+};
+
+// Function to render component tree
+function renderComponentTree() {
+    const componentContainer = document.getElementById('components');
+    Object.keys(componentStructure).forEach(category => {
+        const categoryData = componentStructure[category];
+        const categoryElement = createCategoryElement(categoryData);
+        componentContainer.appendChild(categoryElement);
+    });
+}
+
+// Function to render sprint board
+function renderSprintBoard() {
+    const sprintBoard = document.querySelector('.sprint-board');
+    Object.keys(sprintStructure.current.tasks).forEach(column => {
+        const columnElement = createSprintColumn(column, sprintStructure.current.tasks[column]);
+        sprintBoard.appendChild(columnElement);
+    });
+}
+
+// Function to create category element
+function createCategoryElement(categoryData) {
+    const categoryDiv = document.createElement('div');
+    categoryDiv.className = 'col-md-6 mb-4';
+    categoryDiv.innerHTML = `
+        <div class="module-card ${categoryData.name.toLowerCase()}-component">
+            <h3>${categoryData.name}</h3>
+            <div class="component-list">
+                ${renderComponents(categoryData.components)}
+            </div>
+        </div>
+    `;
+    return categoryDiv;
+}
+
+// Function to render components
+function renderComponents(components) {
+    return Object.keys(components).map(key => {
+        const component = components[key];
+        return `
+            <div class="component-item">
+                <strong>${component.name}</strong>
+                ${component.subcomponents ? 
+                    `<ul>${component.subcomponents.map(sub => 
+                        `<li>${sub}</li>`).join('')}</ul>` : ''}
+            </div>
+        `;
+    }).join('');
+}
+
+// Initialize dashboard
+document.addEventListener('DOMContentLoaded', function() {
+    renderComponentTree();
+    renderSprintBoard();
+});
+
+        // Sprint data structure
+        const sprintTasks = {
+            // Sprint task definitions will go here
+        };
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dashboard initialization code will go here
         });
     </script>
 </body>
