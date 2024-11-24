@@ -473,6 +473,265 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('DOMContentLoaded', function() {
             // Dashboard initialization code will go here
         });
+
+        const mermaidConfig = {
+    graph: `
+    graph TB
+        %% Core Protocol Hub
+        NexusCore[NexusGuard DeFi Protocol V1]
+        
+        %% Main Hubs
+        NexusCore --> SecurityHub[Security Manager]
+        NexusCore --> AnalyticsHub[Analytics Engine]
+        NexusCore --> VisualizationHub[Visualization System]
+        NexusCore --> Registry[Protocol Registry]
+        
+        %% Security Components
+        subgraph Security Management
+            SecurityHub --> |Core Security|SecurityCore[Core Security]
+            SecurityHub --> |Validation|SecurityValidation[Validation System]
+            SecurityHub --> |Monitoring|SecurityMonitoring[Security Monitoring]
+            
+            %% Core Security Components
+            SecurityCore --> AccessControl
+            SecurityCore --> BlocklistManager
+            SecurityCore --> EmergencySystem
+            SecurityCore --> FraudDetection
+            SecurityCore --> IntrusionDetection
+            SecurityCore --> RateLimiter
+            SecurityCore --> SecurityAudit
+            SecurityCore --> SecurityUpdates
+            
+            %% Validation Components
+            SecurityValidation --> BaseValidator
+            SecurityValidation --> ComponentValidator
+            SecurityValidation --> TransactionValidator
+            SecurityValidation --> SecurityBenchmark
+            
+            %% Monitoring Components
+            SecurityMonitoring --> SecurityMonitor
+            SecurityMonitoring --> SecurityMetrics
+            SecurityMonitoring --> SecurityPatterns
+        end
+        
+        %% Analytics System
+        subgraph Analytics System
+            AnalyticsHub --> MarketAnalysis[Market Analysis]
+            AnalyticsHub --> RiskAnalysis[Risk Analysis]
+            AnalyticsHub --> DataProcessing[Data Processing]
+            
+            %% Market Analysis
+            MarketAnalysis --> MarketSentiment[Market Sentiment Analyzer]
+            MarketAnalysis --> AdvancedIndicators[Advanced Indicators]
+            
+            %% Risk Analysis
+            RiskAnalysis --> RiskModel[Risk Model]
+            RiskAnalysis --> MathAnalysis[Mathematical Analysis]
+            
+            %% Data Processing
+            DataProcessing --> DataAggregator
+            DataProcessing --> ReportGenerator
+        end
+        
+        %% Visualization System
+        subgraph Visualization
+            VisualizationHub --> ChartSystem[Charting System]
+            VisualizationHub --> DataViz[Data Visualization]
+            VisualizationHub --> RealTime[Real-Time Processing]
+            
+            %% Charting Components
+            ChartSystem --> AdvancedCharting
+            ChartSystem --> ChartFormatters[Chart Formatters]
+            
+            %% Data Visualization
+            DataViz --> MarketDepth[Market Depth]
+            DataViz --> TechnicalAnalysis[Technical Analysis]
+            
+            %% Real-Time Components
+            RealTime --> RealTimeHandler
+            RealTime --> CacheSystem[Cache System]
+        end
+        
+        %% Registry System
+        subgraph Registry System
+            Registry --> ComponentRegistry
+            Registry --> ValidationRegistry
+            Registry --> StorageRegistry
+        end
+        
+        %% Cross-Chain Components
+        subgraph Cross-Chain
+            CrossChainManager --> Bridge[NexusGuard Bridge]
+            CrossChainManager --> Verifier[Cross-Chain Verifier]
+        end
+        
+        %% Optimization System
+        subgraph System Optimization
+            CacheManager --> AdvancedCache
+            CacheManager --> GasOptimizer
+            CacheManager --> BatchProcessor
+        end
+    `,
+
+    // Mermaid configuration options
+    config: {
+        theme: 'default',
+        themeVariables: {
+            primaryColor: '#00bcd4',
+            primaryTextColor: '#fff',
+            primaryBorderColor: '#009db1',
+            lineColor: '#009db1',
+            secondaryColor: '#ff9800',
+            tertiaryColor: '#4caf50'
+        },
+        flowchart: {
+            curve: 'basis',
+            padding: 15
+        }
+    }
+};
+
+// Metrics Implementation
+const metricsSystem = {
+    categories: {
+        security: {
+            name: 'Security Metrics',
+            metrics: [
+                {
+                    name: 'Security Score',
+                    value: 94,
+                    trend: 'up',
+                    color: 'success',
+                    icon: 'shield-alt'
+                },
+                {
+                    name: 'Vulnerabilities',
+                    value: 0,
+                    trend: 'stable',
+                    color: 'success',
+                    icon: 'bug'
+                },
+                {
+                    name: 'Audit Status',
+                    value: 88,
+                    trend: 'up',
+                    color: 'info',
+                    icon: 'check-circle'
+                }
+            ]
+        },
+        performance: {
+            name: 'Performance Metrics',
+            metrics: [
+                {
+                    name: 'Gas Optimization',
+                    value: 92,
+                    trend: 'up',
+                    color: 'success',
+                    icon: 'gas-pump'
+                },
+                {
+                    name: 'Response Time',
+                    value: 95,
+                    trend: 'up',
+                    color: 'success',
+                    icon: 'clock'
+                },
+                {
+                    name: 'Cache Hit Rate',
+                    value: 89,
+                    trend: 'up',
+                    color: 'info',
+                    icon: 'database'
+                }
+            ]
+        },
+        development: {
+            name: 'Development Progress',
+            metrics: [
+                {
+                    name: 'Code Coverage',
+                    value: 91,
+                    trend: 'up',
+                    color: 'success',
+                    icon: 'code'
+                },
+                {
+                    name: 'Sprint Progress',
+                    value: 67,
+                    trend: 'up',
+                    color: 'warning',
+                    icon: 'tasks'
+                },
+                {
+                    name: 'Components Ready',
+                    value: 78,
+                    trend: 'up',
+                    color: 'info',
+                    icon: 'puzzle-piece'
+                }
+            ]
+        }
+    }
+};
+
+// Function to render metrics
+function renderMetrics() {
+    const metricsPanel = document.querySelector('.metrics-panel');
+    Object.values(metricsSystem.categories).forEach(category => {
+        category.metrics.forEach(metric => {
+            const metricCard = createMetricCard(metric);
+            metricsPanel.appendChild(metricCard);
+        });
+    });
+}
+
+// Function to create metric card
+function createMetricCard(metric) {
+    const card = document.createElement('div');
+    card.className = 'metric-card';
+    card.innerHTML = `
+        <div class="metric-header">
+            <i class="fas fa-${metric.icon} text-${metric.color}"></i>
+            <h3>${metric.name}</h3>
+        </div>
+        <div class="metric-value">
+            <h4>${metric.value}%</h4>
+            <i class="fas fa-arrow-${metric.trend} text-${metric.color}"></i>
+        </div>
+        <div class="progress">
+            <div class="progress-bar bg-${metric.color}" 
+                 role="progressbar" 
+                 style="width: ${metric.value}%" 
+                 aria-valuenow="${metric.value}" 
+                 aria-valuemin="0" 
+                 aria-valuemax="100">
+            </div>
+        </div>
+    `;
+    return card;
+}
+
+// Initialize mermaid diagram
+function initializeMermaid() {
+    const diagramContainer = document.querySelector('.mermaid');
+    diagramContainer.innerHTML = mermaidConfig.graph;
+    mermaid.initialize(mermaidConfig.config);
+}
+
+// Update dashboard initialization
+document.addEventListener('DOMContentLoaded', function() {
+    renderComponentTree();
+    renderSprintBoard();
+    renderMetrics();
+    initializeMermaid();
+    
+    // Initialize tooltips and popovers
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+});
     </script>
 </body>
 </html>
