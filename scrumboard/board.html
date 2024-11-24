@@ -364,27 +364,135 @@
     </div>
 
     <script>
-        // Initialize Mermaid
-        mermaid.initialize({
-            theme: 'default',
-            securityLevel: 'loose',
-            flowchart: {
-                curve: 'basis',
-                padding: 20,
-                useMaxWidth: false
-            }
-        });
+    mermaid.initialize({
+        theme: 'default',
+        securityLevel: 'loose',
+        flowchart: {
+            curve: 'basis',
+            padding: 30,
+            useMaxWidth: true,
+            htmlLabels: true,
+            wrap: true,
+            nodeSpacing: 100,
+            rankSpacing: 100,
+            diagramPadding: 50,
+        },
+        themeVariables: {
+            fontFamily: 'Segoe UI',
+            fontSize: '16px',
+            primaryColor: '#0d6efd',
+            primaryTextColor: '#fff',
+            primaryBorderColor: '#0b5ed7',
+            lineColor: '#666',
+            secondaryColor: '#73c0ff',
+            tertiaryColor: '#f5f5f5',
+        }
+    });
 
-        // Zoom functionality
-        let scale = 1;
-        function zoomIn() {
-            scale *= 1.2;
-            document.querySelector('.mermaid').style.transform = `scale(${scale})`;
+    // Update the mermaid diagram configuration
+    let config = {
+        graph: `
+        graph TB
+            %% Styling
+            classDef core fill:#0d6efd,stroke:#0b5ed7,color:white,stroke-width:2px;
+            classDef security fill:#dc3545,stroke:#b02a37,color:white,stroke-width:2px;
+            classDef analytics fill:#198754,stroke:#146c43,color:white,stroke-width:2px;
+            classDef visualization fill:#ffc107,stroke:#cc9a06,color:black,stroke-width:2px;
+            classDef integration fill:#6f42c1,stroke:#593696,color:white,stroke-width:2px;
+            classDef storage fill:#20c997,stroke:#19a27b,color:white,stroke-width:2px;
+
+            %% Core Protocol Hub
+            NexusCore[NexusGuardDeFiProtocolV1]:::core --> SecurityHub & Registry & Analytics & Visualization & Insurance & PriceFeed
+            
+            %% Security Components
+            subgraph Security["Security System"]
+                direction TB
+                SecurityHub[SecurityManager]:::security
+                SecurityValidation[Validation System]:::security
+                SecurityMonitoring[Monitoring System]:::security
+                
+                SecurityHub --> SecurityValidation
+                SecurityHub --> SecurityMonitoring
+                
+                SecurityValidation --> BaseValidator & ComponentValidator & TransactionValidator
+                SecurityMonitoring --> SecurityMonitor
+            end
+
+            %% Analytics Components
+            subgraph Analytics["Analytics System"]
+                direction TB
+                AnalyticsEngine[Analytics Engine]:::analytics
+                MarketAnalysis[Market Analysis]:::analytics
+                RiskAnalysis[Risk Analysis]:::analytics
+                
+                AnalyticsEngine --> MarketAnalysis & RiskAnalysis
+                MarketAnalysis --> MarketSentiment & AdvancedIndicators
+                RiskAnalysis --> RiskModel & MathAnalysis
+            end
+
+            %% Add more subgraphs and nodes with enhanced styling...
+        `
+    };
+
+    // Enhanced zoom functionality
+    let scale = 1;
+    let translateX = 0;
+    let translateY = 0;
+    const ZOOM_SPEED = 0.1;
+
+    function updateTransform() {
+        const diagram = document.querySelector('.mermaid');
+        diagram.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+    }
+
+    function zoomIn() {
+        scale += ZOOM_SPEED;
+        updateTransform();
+    }
+
+    function zoomOut() {
+        scale = Math.max(0.1, scale - ZOOM_SPEED);
+        updateTransform();
+    }
+
+    function resetZoom() {
+        scale = 1;
+        translateX = 0;
+        translateY = 0;
+        updateTransform();
+    }
+
+    // Add drag functionality
+    let isDragging = false;
+    let startX, startY;
+
+    document.querySelector('.mermaid-wrapper').addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.clientX - translateX;
+        startY = e.clientY - translateY;
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            updateTransform();
         }
-        function zoomOut() {
-            scale /= 1.2;
-            document.querySelector('.mermaid').style.transform = `scale(${scale})`;
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+    });
+
+    // Add mouse wheel zoom
+    document.querySelector('.mermaid-wrapper').addEventListener('wheel', (e) => {
+        e.preventDefault();
+        if (e.deltaY < 0) {
+            zoomIn();
+        } else {
+            zoomOut();
         }
+    });
     </script>
 </body>
 </html>
